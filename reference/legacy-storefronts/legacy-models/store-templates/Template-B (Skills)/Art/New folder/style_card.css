@@ -1,0 +1,165 @@
+:root{
+  --bg:#f5f8ff;
+  --card:#ffffff;
+  --line:#dce3f5;
+  --text:#152034;
+  --muted:#5f6f8d;
+
+  --brand:#3b82f6;
+  --brand2:#0f4cbd;
+  --accent:#60a5fa;
+
+  --radius:18px;
+  --shadow:0 10px 30px rgba(0,47,108,.12);
+  --shadowSoft:0 6px 18px rgba(0,47,108,.08);
+
+  --maxw:1200px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+.container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 18px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.space-between{justify-content:space-between}
+.muted{color:var(--muted)}
+.h3{font-size:18px;margin:0 0 6px}
+
+/* Badge */
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;
+  background:#eaf2ff;border:1px solid #d0e0ff;color:#1a3b7a;
+}
+.badge.good{background:#eafbf2;border-color:#b9f1d0;color:#136f3a}
+
+/* Card + hover */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadowSoft);
+}
+.card.hover{transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease}
+.card.hover:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:rgba(59,130,246,.55)}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 18px;border-radius:12px;
+  background:linear-gradient(90deg,var(--brand),var(--accent));
+  color:#fff;font-weight:900;border:0;cursor:pointer;
+  box-shadow:0 10px 20px rgba(59,130,246,.20);
+  transition:transform .18s ease, filter .18s ease;
+}
+.btn:hover{transform:translateY(-2px);filter:saturate(1.1)}
+.btn:active{transform:translateY(0)}
+.btn.secondary{background:#fff;border:1px solid #000;color:var(--text);box-shadow:none}
+.btn.compact{padding:10px 12px;font-size:13px;border-radius:12px}
+
+/* ===========================================================
+   Course Card (isolated)
+   =========================================================== */
+.course-card{
+  padding:18px;
+}
+
+.course-card .media-frame{
+  position:relative;
+  border-radius:16px;
+  background:#eef3ff;
+  border:1px solid #d6e2ff;
+  padding:14px;
+  min-height:240px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+.course-card .media-frame::before{
+  content:"";position:absolute;inset:-80px;opacity:.65;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(59,130,246,.18), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(34,197,94,.14), transparent 55%);
+  transform:rotate(-8deg);
+}
+.course-card .thumb{
+  width:100%;min-height:200px;border-radius:14px;border:0;background:transparent;
+  display:grid;place-items:center;font-weight:1000;color:#6b7a99;
+  position:relative;z-index:1;text-align:center;padding:10px;
+}
+.course-card .media-badge{position:absolute;top:12px;left:12px;z-index:2}
+
+.course-card .media-heart{
+  position:absolute;top:12px;right:12px;z-index:2;
+  width:40px;height:40px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;
+  display:grid;place-items:center;
+  box-shadow:0 10px 24px rgba(0,47,108,.12);
+}
+.course-card .heart-btn{background:none;border:none;cursor:pointer;color:#c9c9c9;transition:transform .2s ease,color .2s ease}
+.course-card .heart-btn:hover{color:#ef4444;transform:scale(1.08)}
+.course-card .heart-btn.active{color:#fbbf24}
+
+.course-card .media-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;opacity:.85;z-index:2}
+.course-card .media-dots span{width:7px;height:7px;border-radius:999px;border:1px solid #c8d6f6;background:#dfe9ff}
+.course-card .media-dots span.on{background:#8fb4ff;border-color:#8fb4ff}
+
+.course-card .meta{display:grid;gap:10px;margin-top:14px}
+.course-card .meta-category{font-size:12px;font-weight:950;letter-spacing:.02em}
+
+/* Perpendicular layout: engagement/price column beside title */
+.course-card .meta-head{
+  display:flex;gap:12px;align-items:flex-start;justify-content:space-between;
+}
+.course-card .meta-left{flex:1;min-width:0}
+.course-card .meta-right{
+  display:grid;gap:8px;justify-items:end;min-width:120px;
+}
+.course-card .price{font-weight:1000;font-size:18px}
+.course-card .eng-row{display:flex;gap:10px;align-items:center;justify-content:flex-end}
+.course-card .eng-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 12px;border-radius:999px;border:1px solid var(--line);
+  background:#fff;font-size:12px;font-weight:1000;color:#52658d;
+}
+
+.course-card .product-actions{
+  display:flex;gap:10px;flex-wrap:nowrap;align-items:center;margin-top:4px;
+}
+.course-card .product-actions .btn{flex:1 1 0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Comment dropdown */
+.course-card .comment-panel{
+  display:block;
+  max-height:0;opacity:0;transform:translateY(-8px);
+  overflow:hidden;pointer-events:none;
+  margin-top:8px;padding:0 12px;
+  background:#f9fbff;border:1px solid #e7eefc;border-radius:12px;
+  transition:max-height .38s ease, opacity .22s ease, transform .22s ease, padding .22s ease;
+}
+.course-card .comment-panel.open{
+  max-height:320px;opacity:1;transform:translateY(0);pointer-events:auto;padding:10px 12px;
+}
+.course-card .comment{font-size:13px;padding:6px 0}
+.course-card .comment .who{font-weight:900}
+.course-card .comment-form{display:flex;gap:10px;margin-top:10px}
+.course-card .comment-form input{
+  flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;outline:none
+}
+.course-card .comment-form input:focus{border-color:rgba(59,130,246,.6);box-shadow:0 0 0 3px rgba(59,130,246,.14)}
+.course-card .comment-form button{flex:0 0 auto}
+
+/* Tap anim */
+@keyframes commentTap{0%{transform:scale(1)}50%{transform:scale(.96)}100%{transform:scale(1)}}
+.course-card .comment-toggle.tap{animation:commentTap .25s ease}
+
+/* Toast (needed for card actions) */
+.toast{
+  position:fixed;right:18px;bottom:18px;z-index:100;
+  background:#fff;border:1px solid var(--line);padding:12px 14px;border-radius:14px;
+  box-shadow:var(--shadow);display:none;max-width:340px;color:var(--text)
+}
+.toast.show{display:block;animation:toastPop .2s ease}
+@keyframes toastPop{from{transform:translateY(6px);opacity:.4}to{transform:translateY(0);opacity:1}}

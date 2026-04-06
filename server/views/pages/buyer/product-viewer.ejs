@@ -1,0 +1,106 @@
+<div class="page-wrapper">
+  <header class="header">
+    <div class="logo">
+      <span class="logo-mark">Z</span>
+      <span class="logo-text" id="viewer-store-name">Zest Store</span>
+    </div>
+    <nav class="header-nav">
+      <a href="/marketplace" class="nav-link">Marketplace</a>
+      <a href="/marketplace" class="nav-link active" id="viewer-store-link">Store</a>
+      <a href="/feed" class="nav-link">Global Feed</a>
+    </nav>
+  </header>
+
+  <main class="product-layout">
+    <section class="product-gallery">
+      <div class="image-slider">
+        <button class="slider-control prev" id="prev-btn" aria-label="Previous image">&#8249;</button>
+        <img id="product-image" src="/assets/img/buyer/product-viewer/product-1.jpg" alt="Product image" />
+        <button class="slider-control next" id="next-btn" aria-label="Next image">&#8250;</button>
+      </div>
+
+      <div class="thumbnail-row" id="thumbnail-row">
+        <img src="/assets/img/buyer/product-viewer/product-1.jpg" class="thumb active" data-index="0" alt="Thumbnail 1" />
+      </div>
+    </section>
+
+    <section class="product-info">
+      <h1 class="product-title" id="viewer-product-title">Loading product...</h1>
+      <p class="product-subtitle" id="viewer-product-subtitle">Fetching live store details.</p>
+
+      <div class="price-row">
+        <span class="price-current" id="viewer-price-current">K0.00</span>
+        <span class="price-old" id="viewer-price-old"></span>
+        <span class="price-badge" id="viewer-price-badge">Live listing</span>
+      </div>
+
+      <p class="product-summary" id="viewer-product-summary">
+        Loading the seller's featured product.
+      </p>
+
+      <div class="variant-panel" id="viewer-variant-panel" hidden>
+        <div class="meta-item">
+          <span class="meta-label">Options:</span>
+          <div class="pill-group" id="viewer-variant-list"></div>
+          <p class="product-note" id="viewer-variant-note">Choose the option you want before checkout.</p>
+        </div>
+      </div>
+
+      <div class="product-meta">
+        <div class="meta-item">
+          <span class="meta-label">Store:</span>
+          <div class="pill-group">
+            <a class="pill active" id="viewer-store-pill" href="/marketplace">Open store</a>
+          </div>
+        </div>
+        <div class="meta-item" id="viewer-meta-selected-option" hidden>
+          <span class="meta-label">Selected option:</span>
+          <div class="pill-group">
+            <span class="pill" id="viewer-selected-variant-pill">Standard</span>
+          </div>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Quantity:</span>
+          <div class="qty-control">
+            <button class="qty-btn" id="qty-decrease" type="button">-</button>
+            <input type="text" id="qty-input" value="1" readonly />
+            <button class="qty-btn" id="qty-increase" type="button">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <button id="add-to-cart-btn" class="btn primary" type="button">Checkout now</button>
+        <button id="viewer-wishlist-btn" class="btn ghost" type="button">Save to wishlist</button>
+        <a id="back-to-store-btn" class="btn ghost" href="/marketplace">Back to store</a>
+      </div>
+
+      <div class="stock-row">
+        <span class="stock-indicator in-stock"></span>
+        <span id="viewer-stock-copy">Live listing available now</span>
+      </div>
+    </section>
+  </main>
+
+  <section class="tab-section">
+    <div class="tab-header">
+      <button class="tab-link active" data-tab="specs" type="button">Specifications</button>
+      <button class="tab-link" data-tab="shipping" type="button">Shipping</button>
+      <button class="tab-link" data-tab="delivery" type="button">Delivery</button>
+      <button class="tab-link" data-tab="review" type="button">Review</button>
+    </div>
+    <div class="tab-body" id="tab-content"></div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" type="button">&#10005;</button>
+      <img id="lightbox-image" src="/assets/img/buyer/product-viewer/product-1.jpg" alt="Zoomed product image" />
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 Zest Marketplace. All rights reserved.</p>
+  </footer>
+</div>

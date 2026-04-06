@@ -1,0 +1,43 @@
+<section class="seller-orders-hero">
+  <div>
+    <p class="eyebrow">Commerce engine</p>
+    <h1>Store orders</h1>
+    <p class="seller-orders-copy">Manage fulfillment, track revenue, and move paid orders through shipment and delivery.</p>
+  </div>
+  <div class="seller-orders-hero__actions">
+    <a class="btn btn-secondary btn-inline" href="/seller/dashboard">Back to dashboard</a>
+    <a class="btn btn-primary btn-inline" href="/seller/templates/products">Open listings</a>
+  </div>
+</section>
+
+<section class="seller-orders-metrics" id="sellerOrdersMetrics" aria-label="Seller order metrics">
+  <article class="seller-orders-metric-card">
+    <span class="seller-orders-metric-card__label">Orders</span>
+    <strong class="seller-orders-metric-card__value" id="sellerOrdersTotalMetric">0</strong>
+  </article>
+  <article class="seller-orders-metric-card">
+    <span class="seller-orders-metric-card__label">Paid</span>
+    <strong class="seller-orders-metric-card__value" id="sellerOrdersPaidMetric">0</strong>
+  </article>
+  <article class="seller-orders-metric-card">
+    <span class="seller-orders-metric-card__label">Shipped</span>
+    <strong class="seller-orders-metric-card__value" id="sellerOrdersShippedMetric">0</strong>
+  </article>
+  <article class="seller-orders-metric-card">
+    <span class="seller-orders-metric-card__label">Net revenue</span>
+    <strong class="seller-orders-metric-card__value" id="sellerOrdersRevenueMetric">K0.00</strong>
+  </article>
+</section>
+
+<section class="surface-card seller-orders-card">
+  <div class="section-heading compact">
+    <div>
+      <p class="eyebrow">Fulfillment queue</p>
+      <h2>Recent orders</h2>
+    </div>
+  </div>
+  <div class="ui-state ui-state--empty seller-orders-status" id="sellerOrdersStatusPanel">
+    <p class="ui-state__copy" id="sellerOrdersStatusText">Loading store orders.</p>
+  </div>
+  <div class="seller-orders-list" id="sellerOrdersList" aria-live="polite"></div>
+</section>

@@ -1,0 +1,300 @@
+/* ============================================
+   OCEAN STUDIO — UPDATED ENROLLMENT PAGE CSS
+   ============================================ */
+
+:root {
+  --reef-bg: #f5f5f3;
+  --reef-card: #ffffff;
+  --reef-text: #1a1a1a;
+  --reef-muted: #757575;
+  --reef-accent: #607a6c;
+  --reef-accent-dark: #415548;
+  --reef-border: #dfe2dd;
+  --reef-radius: 18px;
+  --reef-shadow: 0 14px 32px rgba(0,0,0,0.09);
+  --reef-transition: 0.28s ease;
+}
+
+/* GLOBAL */
+body.reef-body {
+  background: radial-gradient(circle at top left, #fafaf7, #f5f5f3 50%, #ebece7 100%);
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  color: var(--reef-text);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.reef-hero {
+  position: relative;
+  min-height: 280px;
+  border-radius: 0 0 40px 40px;
+  overflow: hidden;
+}
+
+.reef-hero-enroll {
+  background-image:
+    linear-gradient(to bottom, rgba(11,30,48,0.52), rgba(11,30,48,0.88)),
+    url("https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1400");
+  background-size: cover;
+  background-position: center;
+}
+
+.reef-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 0, rgba(255,255,255,0.15), transparent 55%);
+  pointer-events: none;
+}
+
+.reef-hero-avatar-shell {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.reef-hero-avatar-img {
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 6px solid #f4f4f1;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+}
+
+.reef-hero-content {
+  text-align: center;
+  color: #fff;
+  padding: 1rem 1rem 3rem;
+}
+
+.reef-hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.4rem;
+}
+
+.reef-hero-sub {
+  opacity: 0.92;
+  margin-bottom: 0;
+}
+
+.reef-hero-meta {
+  opacity: 0.75;
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   SECTION HEADERS
+   ============================================ */
+.reef-section-header {
+  margin-top: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.reef-section-title {
+  font-family: "Playfair Display", serif;
+  color: var(--reef-accent-dark);
+  font-size: 2rem;
+}
+
+.reef-section-sub {
+  color: var(--reef-muted);
+  font-size: 0.95rem;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.reef-card {
+  background: var(--reef-card);
+  border-radius: var(--reef-radius);
+  padding: 1.6rem;
+  border: 1px solid var(--reef-border);
+  box-shadow: var(--reef-shadow);
+}
+
+.reef-card-header {
+  margin-bottom: 1rem;
+}
+
+.reef-card-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  color: var(--reef-accent-dark);
+}
+
+.reef-card-sub {
+  color: var(--reef-muted);
+  font-size: 0.92rem;
+}
+
+/* ============================================
+   OUTLINE LIST
+   ============================================ */
+.reef-outline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reef-outline-list li {
+  margin-bottom: 1rem;
+  border-left: 2px solid rgba(96,122,108,0.3);
+  padding-left: 0.8rem;
+}
+
+.reef-outline-list h4 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: var(--reef-accent-dark);
+}
+
+.reef-outline-list p {
+  font-size: 0.9rem;
+  color: var(--reef-text);
+}
+
+/* ============================================
+   TOGGLE BUTTONS UNDER OUTLINE
+   ============================================ */
+.reef-toggle-buttons button {
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.reef-btn-primary {
+  background: linear-gradient(135deg, #607a6c, #415548);
+  color: white;
+  border: none;
+  padding: 0.65rem 1.4rem;
+  border-radius: 100px;
+  box-shadow: 0 10px 20px rgba(65,85,72,0.32);
+  transition: transform 0.18s ease;
+}
+
+.reef-btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.reef-btn-ghost {
+  background: #fafafa;
+  border: 1px solid rgba(96,122,108,0.35);
+  color: var(--reef-accent-dark);
+  border-radius: 100px;
+}
+
+.reef-btn-ghost:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   CARD HIDE/SHOW & ANIMATION
+   ============================================ */
+.hidden {
+  display: none !important;
+}
+
+.slide-in {
+  animation: slideIn 0.35s ease forwards;
+}
+
+.slide-out {
+  animation: slideOut 0.35s ease forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(25px); }
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+.reef-input-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--reef-muted);
+}
+
+.reef-input {
+  border-radius: 100px;
+  background: #fafafa;
+  border: 1px solid var(--reef-border);
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+}
+
+textarea.reef-input {
+  border-radius: 12px;
+}
+
+.reef-input:focus {
+  background: white;
+  border-color: var(--reef-accent);
+  box-shadow: 0 0 0 2px rgba(96,122,108,0.3);
+}
+
+/* ============================================
+   PRICE CARD
+   ============================================ */
+.reef-price-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--reef-muted);
+}
+
+.reef-price-amount {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  color: var(--reef-accent-dark);
+}
+
+.reef-price-note {
+  color: var(--reef-muted);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.reef-footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--reef-muted);
+  font-size: 0.9rem;
+}
+
+.reef-footer a {
+  color: var(--reef-accent-dark);
+  text-decoration: none;
+}
+
+.reef-footer a:hover {
+  opacity: 0.7;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 991px) {
+  .reef-card {
+    padding: 1.2rem;
+  }
+
+  .reef-hero-avatar-img {
+    width: 120px;
+    height: 120px;
+  }
+}

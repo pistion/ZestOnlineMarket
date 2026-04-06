@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("partials/head", { page: page }) %>
+</head>
+<body class="<%= page.bodyClass || '' %>"<% Object.entries(page.bodyAttrs || {}).forEach(([key, value]) => { %> data-<%= key %>="<%= value %>"<% }) %>>
+  <%- include("partials/header", { page: page }) %>
+  <%- include("partials/flash", { flash: flash }) %>
+  <%- include(page.view, { page: page, flash: flash }) %>
+  <%- include("partials/footer", { page: page }) %>
+  <%- include("partials/scripts", { page: page }) %>
+</body>
+</html>

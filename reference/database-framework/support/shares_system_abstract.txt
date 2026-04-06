@@ -1,0 +1,9 @@
+SHARES SYSTEM — ABSTRACT CONCEPT NOTE
+
+Concept Overview:
+The Shares system represents an outward engagement action where a user distributes or references content beyond its original context. A share indicates intent to amplify, recommend, or redistribute a piece of content either within the platform or externally.
+
+Conceptually, a share records that a user initiated a distribution action for a specific target, optionally including destination, method, or context. Shares differ from likes and comments in that they are directional and network-expanding rather than reactive. They are used to measure reach, virality, and content propagation.
+
+Design Intent:
+The Shares system exists to track content amplification and visibility growth. It is abstracted away from specific platforms, channels, or mechanics, allowing future systems to adapt it for internal feeds, external networks, referrals, or attribution models without altering its core structure.

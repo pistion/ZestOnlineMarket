@@ -1,0 +1,32 @@
+{
+  "createdAt": "2026-04-05",
+  "purpose": "Archive storefront template legacy sources and superseded runtime snapshots during the storefront system rebuild.",
+  "legacySourceRoot": "C:\\Users\\dpm\\Desktop\\CleanWebApp\\ZestOnlineMarket\\Legacy Models\\qqqqq\\Main\\public\\html\\extended\\Store",
+  "runtimeSnapshotRoot": "C:\\Users\\dpm\\Desktop\\CleanWebApp\\ZestOnlineMarket\\Main\\external\\legacy-storefronts\\runtime-snapshots\\2026-04-05",
+  "templates": {
+    "products": {
+      "legacySource": "Template-A (Products)",
+      "liveReference": "server/views/pages/seller/template-products.ejs"
+    },
+    "art": {
+      "legacySource": "Template-B (Skills)\\Art",
+      "runtimeSnapshot": ["template-art.ejs", "template-art.js", "template-art.css"]
+    },
+    "music": {
+      "legacySource": "Template-B (Skills)\\Music",
+      "runtimeSnapshot": ["template-music.ejs", "template-music.js", "music-store-v2.css", "style.css"]
+    },
+    "photography": {
+      "legacySource": "Template-B (Skills)\\Photography",
+      "runtimeSnapshot": ["template-photography.ejs", "template-photography.js", "template-photography.css"]
+    },
+    "programmer": {
+      "legacySource": "Template-B (Skills)\\Programmer",
+      "runtimeSnapshot": ["template-programmer.ejs", "template-programmer.js", "template-programmer.css"]
+    },
+    "classes": {
+      "legacySource": "Template-C (Educational)\\Classes",
+      "runtimeSnapshot": ["template-classes.ejs", "template-classes.js", "template-classes.css"]
+    }
+  }
+}

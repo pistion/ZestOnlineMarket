@@ -1,0 +1,39 @@
+Products
+ ├── Core Product Data
+ │     ├── title
+ │     ├── description
+ │     ├── category
+ │     ├── price
+ │     ├── status (draft, published)
+ │     └── created_at
+ │
+ ├── ProductVariants
+ │     ├── sku
+ │     ├── attributes (size, color, etc.)
+ │     ├── price_override
+ │     └── stock_quantity
+ │
+ ├── ProductImages
+ │     ├── image_url
+ │     ├── is_cover
+ │     └── sort_order
+ │
+ ├── ProductReviews
+ │     ├── customer_id
+ │     ├── rating
+ │     ├── comment
+ │     ├── review_images
+ │     └── created_at
+ │
+ ├── CommentsReactions
+ │     ├── comment_id
+ │     ├── customer_id
+ │     ├── text
+ │     ├── reactions (like, love, etc.)
+ │     └── created_at
+ │
+ └── ShippingSettings
+        ├── weight
+        ├── dimensions
+        ├── shipping_class
+        └── region_specific_rules

@@ -1,0 +1,560 @@
+<%
+  const templateKey =
+    (page.bodyAttrs && page.bodyAttrs["store-template-key"]) || storefrontTemplate || "art";
+  const isPublicStore = page.bodyAttrs && page.bodyAttrs["public-store"] === "1";
+  const paths = {
+    marketplace: (page.bodyAttrs && page.bodyAttrs["marketplace-path"]) || "/marketplace",
+    globalFeed: (page.bodyAttrs && page.bodyAttrs["global-feed-path"]) || "/feed",
+    cart: (page.bodyAttrs && page.bodyAttrs["checkout-path"]) || "/buyer/checkout",
+    settings: (page.bodyAttrs && page.bodyAttrs["seller-settings-path"]) || "/seller/store/settings",
+    dashboard: (page.bodyAttrs && page.bodyAttrs["seller-dashboard-path"]) || "/seller/dashboard",
+    templateManager:
+      (page.bodyAttrs && page.bodyAttrs["seller-template-manager-path"]) || "/seller/store/template",
+    products: (page.bodyAttrs && page.bodyAttrs["seller-products-path"]) || "/seller/templates/products",
+    store: (page.bodyAttrs && page.bodyAttrs["store-path"]) || "/marketplace",
+  };
+  const templateConfigs = {
+    art: {
+      brand: "Artists Store",
+      kicker: "Art and commissions",
+      heroTitle: "A storefront shaped for originals, commissions, and collector-friendly storytelling.",
+      heroCopy:
+        "Use your live catalog and studio updates to present original works, limited releases, and custom requests without losing the clear buying path.",
+      overviewCards: [
+        {
+          title: "Gallery-first storytelling",
+          copy: "Lead with mood, process, and finished pieces while still letting each listing flow into the real product page.",
+        },
+        {
+          title: "Commission ready",
+          copy: "Surface custom requests, framed offers, and limited works inside the same live storefront experience.",
+        },
+        {
+          title: "Collector confidence",
+          copy: "Pair strong visuals with clean delivery notes, pricing, and live updates buyers can trust.",
+        },
+      ],
+      updatesKicker: "Studio notes",
+      updatesTitle: "Latest updates from the studio",
+      updatesCopy:
+        "Share fresh drops, commission openings, and in-progress moments without switching to a separate demo layout.",
+      catalogKicker: "Available works",
+      catalogTitle: "Live pieces and creative offers",
+      catalogCopy:
+        "Every card below is powered by the active store catalog, so buyers move from discovery to listing view without hitting dead ends.",
+      highlightsTitle: "How this art template behaves live",
+      highlights: [
+        "Real listings stay visual-first without hiding price, delivery, or stock information.",
+        "Store updates read like studio notes and can still send buyers to linked live works.",
+        "Seller preview mode keeps management links visible without leaking them into public HTML.",
+      ],
+      faq: [
+        {
+          question: "Can this template show both originals and commissions?",
+          answer:
+            "Yes. The same live listing system can present finished works, made-to-order offers, and limited drops in one storefront.",
+        },
+        {
+          question: "Do buyers still reach the real listing page?",
+          answer:
+            "Yes. View listing and cart actions always point to the canonical product and checkout flow instead of a template-only shortcut.",
+        },
+        {
+          question: "Can updates announce new collections?",
+          answer:
+            "Yes. Store updates are pulled from the live feed layer and can reference one linked listing when needed.",
+        },
+      ],
+      listingLabel: "Artwork",
+    },
+    photography: {
+      brand: "Photography Studio",
+      kicker: "Sessions and visual work",
+      heroTitle: "A visual-first storefront for shoots, packages, edits, and portfolio-led selling.",
+      heroCopy:
+        "Use one live store to present shoot packages, event coverage, edits, and featured sessions while keeping the same Zest buying flow.",
+      overviewCards: [
+        {
+          title: "Portfolio-led layout",
+          copy: "Showcase your strongest visuals first, then let buyers move naturally into the real package listing.",
+        },
+        {
+          title: "Session-ready offers",
+          copy: "Use listings for portrait shoots, event coverage, retainer packages, and add-ons without fake placeholder cards.",
+        },
+        {
+          title: "Clear booking context",
+          copy: "Location notes, delivery details, and package structure stay readable instead of buried in demo copy.",
+        },
+      ],
+      updatesKicker: "Shoot updates",
+      updatesTitle: "Recent shoots, edits, and announcements",
+      updatesCopy:
+        "Publish quick updates about bookings, edits, event coverage, or seasonal packages and keep the storefront feeling active.",
+      catalogKicker: "Packages and offers",
+      catalogTitle: "Live photography listings",
+      catalogCopy:
+        "This section now runs on the same real catalog layer as the products template, so public and seller views stay aligned.",
+      highlightsTitle: "What this photography template emphasizes",
+      highlights: [
+        "Packages, add-ons, and featured sessions render from real store data instead of static demo pricing.",
+        "Update cards support visual storytelling while still linking buyers into the real listing path.",
+        "Public storefronts stay clean while seller mode keeps management routes one click away.",
+      ],
+      faq: [
+        {
+          question: "Can I use this for packages and one-off shoots?",
+          answer:
+            "Yes. Listings can represent event packages, portrait sessions, commercial shoots, and photography add-ons.",
+        },
+        {
+          question: "Will buyers still be able to add sessions to cart?",
+          answer:
+            "Yes. Public product cards use the same cart storage and checkout handoff already running elsewhere in the app.",
+        },
+        {
+          question: "Do updates work for booking announcements?",
+          answer:
+            "Yes. Use store updates for availability windows, recent work, mini-session drops, and linked featured packages.",
+        },
+      ],
+      listingLabel: "Session",
+    },
+    programmer: {
+      brand: "Developer Profile",
+      kicker: "Services and builds",
+      heroTitle: "A clean delivery-focused storefront for coding services, retainers, and shipped digital work.",
+      heroCopy:
+        "Present your services like a polished studio page while keeping the real listing, checkout, and update flows fully connected.",
+      overviewCards: [
+        {
+          title: "Service-led clarity",
+          copy: "Package consulting, builds, reviews, and retainers as live listings instead of static portfolio mock cards.",
+        },
+        {
+          title: "Proof through updates",
+          copy: "Use update posts for launches, client wins, maintenance notes, and release communication.",
+        },
+        {
+          title: "Trust and process",
+          copy: "Keep scope, delivery, and pricing readable so buyers understand the offer without bouncing to another template.",
+        },
+      ],
+      updatesKicker: "Build notes",
+      updatesTitle: "Latest delivery and release updates",
+      updatesCopy:
+        "Share deployment notes, launch announcements, support updates, or featured builds while preserving real listing links.",
+      catalogKicker: "Service catalog",
+      catalogTitle: "Live development listings",
+      catalogCopy:
+        "Every service card here now comes from the same production catalog engine as the products storefront, just framed for developer work.",
+      highlightsTitle: "What this developer template now does well",
+      highlights: [
+        "Live services replace older static portfolio cards and off-template cart behavior.",
+        "Seller mode routes back into the products workspace for full catalog management instead of duplicating fragile controls.",
+        "Public buyers get a coherent service storefront with working listing and cart actions.",
+      ],
+      faq: [
+        {
+          question: "Can this template handle retainers and one-off projects?",
+          answer:
+            "Yes. Listings can represent scoped projects, retainers, audits, code reviews, and packaged delivery work.",
+        },
+        {
+          question: "Does it still feel like a developer profile?",
+          answer:
+            "Yes. The language and presentation stay service-oriented while the underlying logic stays aligned with the live catalog engine.",
+        },
+        {
+          question: "Where do sellers manage the real listings?",
+          answer:
+            "Seller preview mode points straight to the products workspace, which remains the canonical catalog management surface.",
+        },
+      ],
+      listingLabel: "Service",
+    },
+    music: {
+      brand: "Music Studio",
+      kicker: "Releases and music offers",
+      heroTitle: "A release-led storefront for tracks, lessons, beats, licensing, and artist updates.",
+      heroCopy:
+        "Keep the music personality of the template while making the cards, updates, and catalog actions run on the same dependable live store system.",
+      overviewCards: [
+        {
+          title: "Release-first framing",
+          copy: "Singles, albums, lessons, and production offers can all live in one store without splitting into disconnected template logic.",
+        },
+        {
+          title: "Artist updates that convert",
+          copy: "Use feed-driven updates for announcements, launch notes, and linked drops that send buyers into the real listing page.",
+        },
+        {
+          title: "Cleaner public storefront",
+          copy: "Public buyers see one coherent artist storefront instead of mixed placeholder links and static sections.",
+        },
+      ],
+      updatesKicker: "Artist updates",
+      updatesTitle: "Latest releases, announcements, and drop notes",
+      updatesCopy:
+        "Keep fans in sync with new tracks, lessons, licensing offers, or event announcements from the live update stream.",
+      catalogKicker: "Live catalog",
+      catalogTitle: "Tracks, lessons, and featured offers",
+      catalogCopy:
+        "The music template now pulls from live listings and updates, so the UI feels expressive without falling back to dead sections.",
+      highlightsTitle: "How this music template stays production-ready",
+      highlights: [
+        "Shared store logic handles the live listing path while the template keeps its music-first tone.",
+        "Public and seller modes now use the same coherent data structure instead of split demo behaviors.",
+        "Catalog actions stay real: buyers can view listings or add them to cart, sellers can jump into catalog management.",
+      ],
+      faq: [
+        {
+          question: "Can I sell both lessons and music products here?",
+          answer:
+            "Yes. The live catalog can present tracks, beat packs, licensing offers, lessons, and other artist services together.",
+        },
+        {
+          question: "Will release updates still look like posts?",
+          answer:
+            "Yes. Updates remain social-style cards so announcements feel alive without breaking the real storefront flow.",
+        },
+        {
+          question: "Does the template still support a strong artist identity?",
+          answer:
+            "Yes. The visual theme stays music-oriented while the runtime behavior is normalized with the rest of the storefront system.",
+        },
+      ],
+      listingLabel: "Release",
+    },
+    classes: {
+      brand: "Classes Studio",
+      kicker: "Courses and guided offers",
+      heroTitle: "A calm teaching storefront for programs, cohorts, workshops, and structured guidance.",
+      heroCopy:
+        "This rebuild keeps the studio feel of the classes template while removing the old Bootstrap-heavy drift and reconnecting it to the live store engine.",
+      overviewCards: [
+        {
+          title: "Teaching-first structure",
+          copy: "Frame lessons, workshops, and recurring programs in a way that still respects the shared listing and checkout contract.",
+        },
+        {
+          title: "Clear next steps",
+          copy: "Public buyers move through real listing and cart actions instead of dead buttons or isolated course cards.",
+        },
+        {
+          title: "Seller preview without clutter",
+          copy: "Management actions stay visible in seller mode but no longer leak into public storefront HTML.",
+        },
+      ],
+      updatesKicker: "Studio journal",
+      updatesTitle: "Program news and teaching updates",
+      updatesCopy:
+        "Use updates for cohort openings, new lessons, student reminders, or linked featured programs.",
+      catalogKicker: "Programs",
+      catalogTitle: "Live courses, workshops, and sessions",
+      catalogCopy:
+        "The classes template now behaves like the rest of the storefront system, while preserving a softer teaching-oriented presentation.",
+      highlightsTitle: "What changed in this classes template",
+      highlights: [
+        "The live storefront no longer depends on the older Bootstrap divergence to feel structured.",
+        "Listings, updates, and CTA behavior now match the same runtime rules as the other service templates.",
+        "Seller mode stays clean by routing management work back into the canonical workspace instead of duplicating fragile controls.",
+      ],
+      faq: [
+        {
+          question: "Can this template support workshops and full programs?",
+          answer:
+            "Yes. Listings can represent one-off sessions, workshops, courses, cohorts, or structured recurring offers.",
+        },
+        {
+          question: "Will buyers still use the same checkout path?",
+          answer:
+            "Yes. Even when the copy feels course-led, the underlying buyer flow still goes through the canonical listing and checkout routes.",
+        },
+        {
+          question: "Does seller mode still let me manage the catalog?",
+          answer:
+            "Yes. Seller preview mode links directly to the catalog workspace, which remains the authoritative editing surface.",
+        },
+      ],
+      listingLabel: "Program",
+    },
+  };
+  const template = templateConfigs[templateKey] || templateConfigs.art;
+%>
+
+<div class="service-storefront">
+  <header class="service-topbar">
+    <div class="service-topbar__inner">
+      <a class="service-brand" id="serviceStoreBrand" href="<%= paths.store %>">
+        <span class="service-brand__mark" aria-hidden="true"></span>
+        <span id="serviceStoreBrandLabel"><%= template.brand %></span>
+      </a>
+
+      <button
+        class="service-chip service-nav-toggle"
+        type="button"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="service-storefront-nav"
+        aria-label="Toggle navigation"
+      >
+        <i class="fa-solid fa-bars"></i>
+        <span>Menu</span>
+      </button>
+
+      <nav class="service-nav" id="service-storefront-nav" data-nav aria-label="Store navigation">
+        <a href="<%= paths.globalFeed %>" data-page="global-feed">
+          <i class="fa-solid fa-earth-americas"></i>
+          <span>Global Feed</span>
+        </a>
+        <a href="<%= paths.marketplace %>" data-page="marketplace">
+          <i class="fa-solid fa-compass"></i>
+          <span>Marketplace</span>
+        </a>
+        <% if (isPublicStore) { %>
+          <a href="<%= paths.cart %>" data-page="cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Cart</span>
+          </a>
+        <% } else { %>
+          <a href="<%= paths.settings %>" data-page="settings">
+            <i class="fa-solid fa-store"></i>
+            <span>Store Settings</span>
+          </a>
+          <a href="<%= paths.dashboard %>" data-page="dashboard">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="<%= paths.products %>">
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span>Manage Catalog</span>
+          </a>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+
+  <main class="service-shell">
+    <section class="service-hero">
+      <div class="service-hero__cover" id="serviceStoreCover">
+        <div class="service-hero__cover-wash"></div>
+      </div>
+
+      <div class="service-hero__panel">
+        <div class="service-hero__identity">
+          <div class="service-hero__avatar" id="serviceStoreAvatar">S</div>
+
+          <div class="service-hero__copy">
+            <p class="service-hero__kicker"><%= template.kicker %></p>
+            <h1 class="service-hero__title" id="serviceStoreName"><%= template.brand %></h1>
+            <p class="service-hero__handle" id="serviceStoreHandle">@store</p>
+            <p class="service-hero__tagline" id="serviceStoreTagline"><%= template.heroTitle %></p>
+            <p class="service-hero__about" id="serviceStoreAbout"><%= template.heroCopy %></p>
+            <div class="service-hero__meta" id="serviceStoreMetaPills"></div>
+          </div>
+        </div>
+
+        <div class="service-hero__actions">
+          <% if (isPublicStore) { %>
+            <button class="service-btn service-btn--secondary" id="serviceFollowBtn" type="button">
+              <i class="fa-regular fa-heart"></i>
+              <span>Follow</span>
+            </button>
+            <button class="service-btn service-btn--ghost" id="serviceShareBtn" type="button">
+              <i class="fa-solid fa-share-nodes"></i>
+              <span>Share</span>
+            </button>
+            <a class="service-btn" id="serviceOpenCartLink" href="<%= paths.cart %>">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span>Open cart</span>
+            </a>
+          <% } else { %>
+            <a class="service-btn service-btn--secondary" id="servicePreviewStoreBtn" href="<%= paths.store %>">
+              <i class="fa-regular fa-eye"></i>
+              <span>Preview public store</span>
+            </a>
+            <a class="service-btn service-btn--ghost" href="<%= paths.settings %>">
+              <i class="fa-solid fa-sliders"></i>
+              <span>Store settings</span>
+            </a>
+            <a class="service-btn" href="<%= paths.products %>">
+              <i class="fa-solid fa-boxes-stacked"></i>
+              <span>Manage listings</span>
+            </a>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="service-hero__socials" id="serviceStoreSocials" hidden></div>
+
+      <nav class="service-section-nav" aria-label="Store sections">
+        <a href="#overview">Overview</a>
+        <a href="#updates">Updates</a>
+        <a href="#catalog">Catalog</a>
+        <a href="#highlights">Highlights</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </section>
+
+    <section class="service-overview" id="overview">
+      <div class="service-section-head">
+        <div>
+          <p class="service-section-kicker">Store overview</p>
+          <h2 class="service-section-title"><%= template.heroTitle %></h2>
+          <p class="service-section-copy"><%= template.heroCopy %></p>
+        </div>
+      </div>
+
+      <div class="service-overview__grid">
+        <% template.overviewCards.forEach((card) => { %>
+          <article class="service-info-card">
+            <h3><%= card.title %></h3>
+            <p><%= card.copy %></p>
+          </article>
+        <% }); %>
+      </div>
+
+      <div class="service-metric-grid">
+        <article class="service-metric-card">
+          <span class="service-metric-card__label">Live listings</span>
+          <strong class="service-metric-card__value" id="serviceMetricListings">0</strong>
+        </article>
+        <article class="service-metric-card">
+          <span class="service-metric-card__label">Store updates</span>
+          <strong class="service-metric-card__value" id="serviceMetricUpdates">0</strong>
+        </article>
+        <article class="service-metric-card">
+          <span class="service-metric-card__label">Store status</span>
+          <strong class="service-metric-card__value" id="serviceMetricStatus">Draft</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="service-updates" id="updates">
+      <div class="service-section-head">
+        <div>
+          <p class="service-section-kicker"><%= template.updatesKicker %></p>
+          <h2 class="service-section-title"><%= template.updatesTitle %></h2>
+          <p class="service-section-copy"><%= template.updatesCopy %></p>
+        </div>
+
+        <% if (!isPublicStore) { %>
+          <div class="service-section-actions">
+            <a class="service-chip" href="<%= paths.products %>#updatesSection">
+              <i class="fa-solid fa-bullhorn"></i>
+              <span>Manage updates</span>
+            </a>
+          </div>
+        <% } %>
+      </div>
+
+      <div class="service-updates__list" id="serviceUpdatesList" role="feed" aria-live="polite"></div>
+
+      <div class="service-empty-state" id="serviceUpdatesEmpty" hidden>
+        <div class="service-empty-state__icon">
+          <i class="fa-solid fa-bullhorn"></i>
+        </div>
+        <h3>No updates yet</h3>
+        <p>The live store feed has not published an update here yet.</p>
+      </div>
+    </section>
+
+    <section class="service-catalog" id="catalog">
+      <div class="service-section-head">
+        <div>
+          <p class="service-section-kicker"><%= template.catalogKicker %></p>
+          <h2 class="service-section-title"><%= template.catalogTitle %></h2>
+          <p class="service-section-copy"><%= template.catalogCopy %></p>
+        </div>
+
+        <div class="service-section-actions">
+          <% if (isPublicStore) { %>
+            <a class="service-chip" href="<%= paths.marketplace %>">
+              <i class="fa-solid fa-compass"></i>
+              <span>Back to marketplace</span>
+            </a>
+          <% } else { %>
+            <a class="service-chip" href="<%= paths.products %>">
+              <i class="fa-solid fa-pen-ruler"></i>
+              <span>Open products workspace</span>
+            </a>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="service-featured-rail" id="serviceFeaturedRail"></div>
+      <div class="service-products-grid" id="serviceProductsGrid"></div>
+
+      <div class="service-empty-state" id="serviceProductsEmpty" hidden>
+        <div class="service-empty-state__icon">
+          <i class="fa-solid fa-box-open"></i>
+        </div>
+        <h3>No live <%= template.listingLabel.toLowerCase() %> listings yet</h3>
+        <p>
+          <% if (isPublicStore) { %>
+            This store has not published any public listings yet.
+          <% } else { %>
+            Add listings from the products workspace and they will appear here automatically.
+          <% } %>
+        </p>
+      </div>
+    </section>
+
+    <section class="service-highlights" id="highlights">
+      <div class="service-section-head">
+        <div>
+          <p class="service-section-kicker">Template highlights</p>
+          <h2 class="service-section-title"><%= template.highlightsTitle %></h2>
+        </div>
+      </div>
+
+      <div class="service-highlights__grid">
+        <% template.highlights.forEach((copy) => { %>
+          <article class="service-highlight-card">
+            <div class="service-highlight-card__icon">
+              <i class="fa-solid fa-sparkles"></i>
+            </div>
+            <p><%= copy %></p>
+          </article>
+        <% }); %>
+      </div>
+    </section>
+
+    <section class="service-faq" id="faq">
+      <div class="service-section-head">
+        <div>
+          <p class="service-section-kicker">FAQ</p>
+          <h2 class="service-section-title">Common questions</h2>
+        </div>
+      </div>
+
+      <div class="service-faq__list">
+        <% template.faq.forEach((item) => { %>
+          <article class="service-faq__item">
+            <button class="service-faq__question" type="button">
+              <span><%= item.question %></span>
+              <i class="fa-solid fa-plus"></i>
+            </button>
+            <div class="service-faq__answer">
+              <p><%= item.answer %></p>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+    </section>
+  </main>
+
+  <footer class="service-footer">
+    <div class="service-footer__inner">
+      <p>&copy; 2026 Zest Marketplace. Storefront templates run on the live catalog and feed system.</p>
+      <div class="service-footer__links">
+        <a href="<%= paths.marketplace %>">Marketplace</a>
+        <a href="<%= paths.globalFeed %>">Global Feed</a>
+        <% if (!isPublicStore) { %>
+          <a href="<%= paths.dashboard %>">Dashboard</a>
+        <% } %>
+      </div>
+    </div>
+  </footer>
+</div>

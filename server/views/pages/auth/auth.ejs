@@ -1,0 +1,107 @@
+<div class="auth-shell">
+  <aside class="auth-aside">
+    <div class="auth-aside__copy">
+      <span class="auth-eyebrow">Zest Access</span>
+      <h2>One account, two clear paths.</h2>
+      <p>
+        Buyers move into profile and discovery. Sellers move into store setup and workspace tools.
+        This entry page keeps those flows clean without mixing them.
+      </p>
+    </div>
+
+    <div class="auth-aside__highlights" aria-label="Access overview">
+      <article class="auth-highlight">
+        <strong>Buyer flow</strong>
+        <span>/buyer/profile</span>
+        <p>Profile, feed, marketplace, and checkout stay connected.</p>
+      </article>
+      <article class="auth-highlight">
+        <strong>Seller flow</strong>
+        <span>/seller/store</span>
+        <p>Store setup, dashboard, listings, and storefront tools stay separate.</p>
+      </article>
+    </div>
+
+    <div class="auth-chip-row">
+      <span class="auth-chip">Cookie session</span>
+      <span class="auth-chip">Role-aware routing</span>
+      <span class="auth-chip">Buyer onboarding</span>
+      <span class="auth-chip">Seller setup</span>
+    </div>
+  </aside>
+
+  <section class="auth-panel">
+    <div class="auth-brand">ZEST MARKET</div>
+
+    <section class="auth-session" id="authSessionBanner" hidden>
+      <div class="auth-session__copy">
+        <span class="auth-eyebrow">Active session</span>
+        <p>
+          You are already signed in as <strong id="authSessionEmail">your account</strong>.
+          Continue, switch account, or sign out first.
+        </p>
+        <div class="auth-session__timer" id="authSessionTimerRow" hidden>
+          <span class="auth-session__timer-label">Session expires in</span>
+          <strong id="authSessionTimer">--:--</strong>
+        </div>
+      </div>
+      <div class="auth-session__actions">
+        <a class="auth-btn auth-btn--primary" id="authSessionContinueLink" href="/auth/signin">Continue</a>
+        <button class="auth-btn auth-btn--secondary" id="authSessionSwitchBtn" type="button">Switch account</button>
+        <button class="auth-btn auth-btn--secondary" id="authSessionLogoutBtn" type="button">Sign out</button>
+      </div>
+    </section>
+
+    <section class="auth-card" id="authCard">
+      <header class="auth-card__header">
+        <div>
+          <p class="auth-card__kicker" id="authRoleLabel">Buyer Access</p>
+          <h1 class="auth-card__title" id="authTitle">Welcome back</h1>
+          <p class="auth-card__copy" id="authIntro">
+            Sign in or create an account to continue into the correct buyer or seller flow.
+          </p>
+        </div>
+      </header>
+
+      <div class="auth-tabs" id="authRoleTabs" role="tablist" aria-label="Choose account type">
+        <button class="auth-tab is-active" data-role="buyer" id="authTabBuyer" type="button" role="tab" aria-selected="true">
+          <i class="fas fa-shopping-bag"></i>
+          <span>Buyer</span>
+        </button>
+        <button class="auth-tab" data-role="seller" id="authTabSeller" type="button" role="tab" aria-selected="false">
+          <i class="fas fa-store"></i>
+          <span>Seller</span>
+        </button>
+      </div>
+
+      <form class="auth-form" id="authForm" novalidate>
+        <label class="auth-field">
+          <span>Email</span>
+          <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com" />
+        </label>
+
+        <label class="auth-field">
+          <span>Password</span>
+          <input id="authPassword" type="password" autocomplete="current-password" required placeholder="Enter your password" />
+        </label>
+
+        <button class="auth-btn auth-btn--primary auth-btn--block" id="authSubmitBtn" type="submit">
+          <span id="authSubmitText">Sign in</span>
+          <span class="auth-spinner" id="authSpinner" hidden aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <p class="auth-error" id="authError" aria-live="polite" hidden></p>
+      <p class="auth-notice" id="authNotice" aria-live="polite"></p>
+
+      <div class="auth-toggle">
+        <span id="authToggleCopy">Need an account?</span>
+        <a href="#" id="authModeToggle">Create one</a>
+      </div>
+
+      <div class="auth-helper" id="authHelper">
+        Buyer sign-up opens buyer setup first. Seller sign-in resumes the seller workspace based on store completion.
+      </div>
+    </section>
+  </section>
+</div>

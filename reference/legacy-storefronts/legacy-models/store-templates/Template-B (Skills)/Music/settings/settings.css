@@ -1,0 +1,517 @@
+/* Clean Professional Settings UI */
+:root {
+  --radius: 10px;
+  --bg: #f7f9fb;
+  --card: #ffffff;
+  --border: #dde3ea;
+  --text: #1e293b;
+  --muted: #64748b;
+  --brand: #2563eb;
+  --accent: #3b82f6;
+  --green: #16a34a;
+}
+
+body[data-page="settings"] {
+  background: var(--bg);
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--text);
+  padding: 10px;
+}
+
+.settings-layout {
+  padding: 40px 0 80px;
+}
+
+.container-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 28px;
+}
+
+@media(max-width:900px) {
+  .container-grid { grid-template-columns: 1fr; }
+}
+
+/* Sidebar */
+.settings-sidebar {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  position: sticky;
+  top: 80px;
+}
+
+.settings-sidebar-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.settings-avatar-circle {
+  width: 180px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.settings-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-menu-section-label {
+  margin: 14px 0 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.settings-menu-item {
+  border: none;
+  background: none;
+  border-radius: var(--radius);
+  padding: 9px 12px;
+  text-align: left;
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.settings-menu-item:hover {
+  background: #f1f5f9;
+  color: var(--text);
+}
+
+.settings-menu-item.is-active {
+  background: var(--brand);
+  color: #fff;
+}
+
+/* Main panels */
+.settings-panel {
+  display: none;
+}
+.settings-panel.is-active { display: block; }
+
+.settings-panel-title {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.settings-panel-subtitle {
+  color: var(--muted);
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px;
+  border: 1px solid var(--border);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+}
+@media(max-width:700px){
+  .grid-2{ grid-template-columns:1fr; }
+}
+
+/* Forms */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+label { font-size: 14px; font-weight: 500; }
+
+.input, textarea.input, select.input {
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  padding: 9px 12px;
+  font-size: 14px;
+  color: var(--text);
+  background: #fff;
+}
+
+.input:focus, textarea.input:focus, select.input:focus {
+  border-color: var(--brand);
+  outline: none;
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn.green { background: var(--green); color: #fff; }
+.btn.secondary { background: #e2e8f0; color: #0f172a; }
+.btn.ghost { background: #f1f5f9; color: var(--text); }
+
+.settings-actions-row {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Upload fields */
+.upload-field { display: flex; gap: 10px; align-items: center; }
+.upload-preview {
+  background: #f8fafc;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  display:flex;align-items:center;justify-content:center;
+  width:80px;height:80px;font-size:12px;color:var(--muted);
+  overflow: hidden;
+}
+.upload-preview.cover { width: 100%; max-width: 260px; height: 90px; }
+.upload-preview img { width: 100%; height: 100%; object-fit: cover; display:block; }
+
+/* Lists */
+.settings-list { display:flex; flex-direction:column; gap:14px; }
+.settings-list-item { background:#fff;border:1px solid var(--border);padding:14px;border-radius:var(--radius); }
+
+.btn-ghost-small {
+  background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;
+}
+.btn-ghost-small:hover { color:var(--brand); }
+
+.social-row {
+  display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:center;
+}
+
+/* HEADER + FOOTER UPDATED */
+.topbar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.footer {
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  padding: 48px 0 32px;
+  margin-top: 60px;
+}
+
+/* ==========================================
+   🔥 Professional NAV + underline animation
+   ========================================== */
+.topbar .wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.topbar nav a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 2px;
+  position: relative;
+}
+
+.topbar nav a::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-2px;
+  width:0%;
+  height:2px;
+  background:var(--brand);
+  transition:width .25s ease;
+}
+
+.topbar nav a:hover {
+  color:var(--text);
+}
+.topbar nav a:hover::after { width:100%; }
+
+/* Active page highlight */
+.topbar nav a[data-page="settings"] {
+  color: var(--brand);
+}
+.topbar nav a[data-page="settings"]::after {
+  width:100%;
+}
+
+/* ==========================================
+   🔥 Professional Footer Grid + Hover Lines
+   ========================================== */
+.footer .cols {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 34px;
+}
+
+@media(max-width:900px){
+  .footer .cols { grid-template-columns: repeat(2,1fr); }
+}
+@media(max-width:550px){
+  .footer .cols { grid-template-columns: 1fr; }
+}
+
+.footer h4 {
+  font-size: 15px;
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.footer .form-row a {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+}
+
+.footer .form-row a::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-2px;
+  width:0%;
+  height:2px;
+  background:var(--brand);
+  transition:width .25s ease;
+}
+
+.footer .form-row a:hover {
+  color:var(--text);
+}
+.footer .form-row a:hover::after { width:100%; }
+
+.footer small {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer .section-tight {
+  max-width: 1280px;
+  margin: 24px auto 0;
+  padding: 24px 24px 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* ===============================
+   Settings layout refinements
+   =============================== */
+
+/* Give the main settings column a clear vertical rhythm */
+.settings-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Tidy the two-column profile cards */
+.settings-grid-stack {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+  align-items: flex-start;
+}
+
+@media (max-width: 700px) {
+  .settings-grid-stack {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Ensure cards in the top grid stretch evenly */
+.settings-grid-stack > .card {
+  height: 120%;
+  width: 100%;
+}
+
+/* Make section wrapper align nicely with header/footer */
+.section > .container.settings-layout {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+/* Slightly soften sidebar + cards for a neater look */
+.settings-sidebar,
+.card {
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.03);
+}
+
+/* Header nav fine-tune: icon + label spacing */
+.topbar nav a i {
+  font-size: 14px;
+}
+
+.topbar nav a span {
+  line-height: 1.4;
+}
+
+/* Footer badges */
+.footer .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.footer .badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  background: #e5f0ff;
+  color: #1e293b;
+}
+
+.footer .badge.good {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* Small footer brand alignment */
+.footer .brandmark {
+  margin-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer .brandmark .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--brand);
+}
+
+/* ---------------------------
+   Minimal additions (neat)
+   --------------------------- */
+.container { width: 100%; }
+.grid { display:block; }
+.muted { color: var(--muted); }
+.sr-only {
+  position:absolute !important;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);
+  white-space:nowrap;border:0;
+}
+
+.settings-list-item-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom: 10px;
+}
+
+.settings-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  color: var(--text);
+  background:#f1f5f9;
+  border:1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.inline-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap: wrap;
+  align-items:center;
+}
+
+.sidebar-card{
+  margin-top: 16px;
+}
+
+.toast{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  background: #0f172a;
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 13px;
+  box-shadow: 0 16px 40px rgba(2,6,23,0.22);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 9999;
+  max-width: 360px;
+}
+.toast.is-show{
+  opacity: 1;
+  transform: translateY(0);
+}
+.toast .toast-title{ font-weight: 700; margin-bottom: 2px; }
+.toast .toast-sub{ color: rgba(255,255,255,0.82); }
+
+.modal{
+  position: fixed;
+  inset: 0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background: rgba(15,23,42,0.45);
+  z-index: 9998;
+  padding: 24px;
+}
+.modal.is-open{ display:flex; }
+.modal .panel{
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  width: min(820px, 100%);
+  padding: 18px;
+  box-shadow: 0 20px 60px rgba(2,6,23,0.25);
+}
+
+code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+}

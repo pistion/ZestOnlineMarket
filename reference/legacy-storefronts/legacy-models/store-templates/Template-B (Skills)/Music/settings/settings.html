@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Music Store Settings • Glondia Marketplace</title>
+  <link rel="stylesheet" href="settings.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body data-page="settings" class="settings-open">
+<header class="topbar">
+  <div class="container wrap">
+    <a class="brandmark" href="music-store-v2.html" title="Back to Music Store">
+      <span class="dot"></span>
+      <span data-bind-text="storeName">Artists Store</span>
+    </a>
+
+    <nav class="nav" data-nav>
+      <a href="#" data-page="feed"><i class="fa-solid fa-globe"></i><span>Global Feed</span></a>
+      <a href="#" data-page="templates"><i class="fa-solid fa-store"></i><span>StoreHub</span></a>
+      <a href="#" data-page="dashboard"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+      <a href="settings.html" data-page="settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container settings-layout">
+    <div class="container-grid">
+
+      <!-- Sidebar -->
+      <aside class="settings-sidebar" data-settings-sidebar>
+        <div class="settings-sidebar-header">
+          <div class="settings-avatar-circle" data-preview="store-avatar-initial" aria-label="Store initials">
+            <span data-bind-initials>AS</span>
+          </div>
+          <div class="settings-avatar-meta">
+            <h1 class="settings-store-name" data-bind-text="storeName">Artists Store</h1>
+            <p class="settings-store-tagline" data-bind-text="storeTagline">Tune how your store looks, feels and sells.</p>
+          </div>
+        </div>
+
+        <div class="settings-menu">
+          <span class="settings-menu-section-label">Store</span>
+          <button class="settings-menu-item is-active" type="button" data-settings-target="profile">
+            <i class="fa-solid fa-store"></i>
+            <span>Store profile</span>
+          </button>
+          <button class="settings-menu-item" type="button" data-settings-target="about">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>About & bio</span>
+          </button>
+
+          <span class="settings-menu-section-label">Music</span>
+          <button class="settings-menu-item" type="button" data-settings-target="tracks">
+            <i class="fa-solid fa-music"></i>
+            <span>Tracks</span>
+          </button>
+          <button class="settings-menu-item" type="button" data-settings-target="albums">
+            <i class="fa-solid fa-compact-disc"></i>
+            <span>Albums</span>
+          </button>
+
+          <span class="settings-menu-section-label">Monetization</span>
+          <button class="settings-menu-item" type="button" data-settings-target="licensing">
+            <i class="fa-solid fa-file-signature"></i>
+            <span>Licensing</span>
+          </button>
+          <button class="settings-menu-item" type="button" data-settings-target="packs">
+            <i class="fa-solid fa-box-open"></i>
+            <span>Producer packs</span>
+          </button>
+
+          <span class="settings-menu-section-label">Engagement</span>
+          <button class="settings-menu-item" type="button" data-settings-target="reviews">
+            <i class="fa-solid fa-star"></i>
+            <span>Reviews</span>
+          </button>
+          <button class="settings-menu-item" type="button" data-settings-target="faq">
+            <i class="fa-solid fa-circle-question"></i>
+            <span>FAQ</span>
+          </button>
+
+          <span class="settings-menu-section-label">Presence</span>
+          <button class="settings-menu-item" type="button" data-settings-target="social">
+            <i class="fa-solid fa-share-nodes"></i>
+            <span>Social links</span>
+          </button>
+        </div>
+
+        <div class="card sidebar-card">
+          <div class="form-row">
+            <label>Editor actions</label>
+            <div class="inline-actions">
+              <button class="btn secondary" type="button" data-action="load">Load saved</button>
+              <button class="btn green" type="button" data-action="save">Save all</button>
+            </div>
+            <div class="inline-actions">
+              <button class="btn ghost" type="button" data-action="export"><i class="fa-solid fa-download"></i> Export JSON</button>
+              <label class="btn ghost" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;">
+                <i class="fa-solid fa-upload"></i> Import JSON
+                <input type="file" accept="application/json" class="sr-only" data-action="import">
+              </label>
+            </div>
+            <small class="muted">Saved locally in your browser. Your Music Store page can read the same data key.</small>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- Main -->
+      <main class="settings-main" data-settings-main>
+
+        <!-- Store Profile -->
+        <section class="settings-panel is-active" data-settings-panel="profile">
+          <h2 class="settings-panel-title">Store profile</h2>
+          <p class="settings-panel-subtitle">Update your store name, logo and header so buyers instantly recognise you.</p>
+
+          <div class="grid grid-2 settings-grid-stack">
+            <div class="card">
+              <div class="form-row">
+                <label>Store name</label>
+                <input class="input" type="text" placeholder="e.g. Highlands Sounds" data-bind="storeName" />
+              </div>
+              <div class="form-row">
+                <label>Store tagline</label>
+                <input class="input" type="text" placeholder="e.g. Premium PNG sound, worldwide." data-bind="storeTagline" />
+              </div>
+              <div class="form-row">
+                <label>Store handle / URL slug</label>
+                <input class="input" type="text" placeholder="e.g. highlands-sounds" data-bind="storeSlug" />
+                <small class="muted">This becomes part of your public store link.</small>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="form-row">
+                <label>Store logo</label>
+                <div class="upload-field">
+                  <div class="upload-preview avatar" data-preview="store-avatar">
+                    <span>Logo</span>
+                  </div>
+                  <div class="upload-meta">
+                    <label class="btn ghost">
+                      <span><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload logo</span>
+                      <input type="file" accept="image/*" class="sr-only" data-preview-target="store-avatar" data-store-field="storeLogoDataUrl">
+                    </label>
+                    <small>PNG or JPG, at least 400×400px.</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <label>Store cover image</label>
+                <div class="upload-field">
+                  <div class="upload-preview cover" data-preview="store-cover">
+                    <span>Cover</span>
+                  </div>
+                  <div class="upload-meta">
+                    <label class="btn ghost">
+                      <span><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload cover</span>
+                      <input type="file" accept="image/*" class="sr-only" data-preview-target="store-cover" data-store-field="storeCoverDataUrl">
+                    </label>
+                    <small>Wide image works best, 1600×500px or similar.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-actions-row">
+            <button class="btn secondary" type="button" data-action="reset-section" data-section="profile">Reset changes</button>
+            <button class="btn green" type="button" data-action="save-section" data-section="profile">Save store profile</button>
+          </div>
+        </section>
+
+        <!-- About & Bio -->
+        <section class="settings-panel" data-settings-panel="about">
+          <h2 class="settings-panel-title">About the store</h2>
+          <p class="settings-panel-subtitle">Tell buyers who you are, your style and what makes your music unique.</p>
+
+          <div class="card">
+            <div class="form-row">
+              <label>Short headline</label>
+              <input class="input" type="text" placeholder="e.g. Cinematic PNG soundscapes" data-bind="aboutHeadline" />
+            </div>
+            <div class="form-row">
+              <label>About the store</label>
+              <textarea class="input" rows="6" placeholder="Share a short story about your sound, your process, and what you offer." data-bind="aboutText"></textarea>
+              <small class="muted">Aim for 3–6 sentences. You can update this any time.</small>
+            </div>
+          </div>
+
+          <div class="settings-actions-row">
+            <span class="muted" style="font-size:12px">This text appears on your main Music Store profile.</span>
+            <button class="btn green" type="button" data-action="save-section" data-section="about">Save about section</button>
+          </div>
+        </section>
+
+        <!-- Tracks -->
+        <section class="settings-panel" data-settings-panel="tracks">
+          <h2 class="settings-panel-title">Tracks</h2>
+          <p class="settings-panel-subtitle">Add tracks for New Releases / Library. Use audio URLs so your store can play previews.</p>
+
+          <div class="card">
+            <div class="settings-list" data-tracks-list>
+              <!-- Track Item Template -->
+              <div class="settings-list-item" data-track-item>
+                <div class="settings-list-item-header">
+                  <span class="settings-chip"><i class="fa-solid fa-music"></i> Track</span>
+                  <button class="btn-ghost-small" type="button" data-remove-track><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Title</label>
+                    <input class="input" type="text" placeholder="e.g. Coral Skies" data-field="title">
+                  </div>
+                  <div class="form-row">
+                    <label>Artist / Credits</label>
+                    <input class="input" type="text" placeholder="e.g. John Wesley Tawa" data-field="artist">
+                  </div>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Genre</label>
+                    <input class="input" type="text" placeholder="e.g. Afro Fusion" data-field="genre">
+                  </div>
+                  <div class="form-row">
+                    <label>Price (PGK)</label>
+                    <input class="input" type="number" min="0" step="1" placeholder="e.g. 10" data-field="price">
+                  </div>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Preview audio URL</label>
+                    <input class="input" type="url" placeholder="e.g. assets/audio/track.mp3" data-field="audioUrl">
+                    <small class="muted">Tip: use the same paths your Music Store page can access.</small>
+                  </div>
+                  <div class="form-row">
+                    <label>Cover image</label>
+                    <div class="upload-field">
+                      <div class="upload-preview artwork" data-preview="track-cover-1"><span>Image</span></div>
+                      <div class="upload-meta">
+                        <label class="btn ghost">
+                          <span><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload cover</span>
+                          <input type="file" accept="image/*" class="sr-only" data-preview-target="track-cover-1" data-file-field="coverDataUrl">
+                        </label>
+                        <small>Optional. If empty, your store can show a default cover.</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>Description</label>
+                  <textarea class="input" rows="3" placeholder="Short description for the library / track card." data-field="description"></textarea>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Tags (comma separated)</label>
+                    <input class="input" type="text" placeholder="e.g. upbeat, radio, png" data-field="tags">
+                  </div>
+                  <div class="form-row">
+                    <label>Feature</label>
+                    <select class="input" data-field="featured">
+                      <option value="new">New release</option>
+                      <option value="library">Library only</option>
+                      <option value="both">New + Library</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <!-- /template -->
+            </div>
+
+            <div class="settings-actions-row">
+              <button class="btn ghost" type="button" data-add-track><i class="fa-solid fa-plus"></i> Add another track</button>
+              <button class="btn green" type="button" data-action="save-section" data-section="tracks">Save tracks</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Albums -->
+        <section class="settings-panel" data-settings-panel="albums">
+          <h2 class="settings-panel-title">Albums</h2>
+          <p class="settings-panel-subtitle">Create album cards for the Albums section.</p>
+
+          <div class="card">
+            <div class="settings-list" data-albums-list>
+              <div class="settings-list-item" data-album-item>
+                <div class="settings-list-item-header">
+                  <span class="settings-chip"><i class="fa-solid fa-compact-disc"></i> Album</span>
+                  <button class="btn-ghost-small" type="button" data-remove-album><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Album title</label>
+                    <input class="input" type="text" placeholder="e.g. Highlands Vol. 1" data-field="title">
+                  </div>
+                  <div class="form-row">
+                    <label>Artist</label>
+                    <input class="input" type="text" placeholder="e.g. Highlands Sounds" data-field="artist">
+                  </div>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Price (PGK)</label>
+                    <input class="input" type="number" min="0" step="1" placeholder="e.g. 35" data-field="price">
+                  </div>
+                  <div class="form-row">
+                    <label>Release year</label>
+                    <input class="input" type="number" min="1900" max="2100" step="1" placeholder="e.g. 2025" data-field="year">
+                  </div>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Album cover</label>
+                    <div class="upload-field">
+                      <div class="upload-preview artwork" data-preview="album-cover-1"><span>Image</span></div>
+                      <div class="upload-meta">
+                        <label class="btn ghost">
+                          <span><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload cover</span>
+                          <input type="file" accept="image/*" class="sr-only" data-preview-target="album-cover-1" data-file-field="coverDataUrl">
+                        </label>
+                        <small>Recommended: square cover.</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <label>Album link / page URL</label>
+                    <input class="input" type="url" placeholder="e.g. album.html?id=1" data-field="linkUrl">
+                    <small class="muted">Optional deep link if you build album pages later.</small>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>Description</label>
+                  <textarea class="input" rows="3" placeholder="Short summary shown on the album card." data-field="description"></textarea>
+                </div>
+
+                <div class="form-row">
+                  <label>Tracklist (one per line)</label>
+                  <textarea class="input" rows="4" placeholder="Track 01&#10;Track 02&#10;Track 03" data-field="tracklist"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <button class="btn ghost" type="button" data-add-album><i class="fa-solid fa-plus"></i> Add another album</button>
+              <button class="btn green" type="button" data-action="save-section" data-section="albums">Save albums</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Licensing -->
+        <section class="settings-panel" data-settings-panel="licensing">
+          <h2 class="settings-panel-title">Licensing</h2>
+          <p class="settings-panel-subtitle">Manage license options (Basic / Premium / Exclusive, etc.).</p>
+
+          <div class="card">
+            <div class="settings-list" data-licenses-list>
+              <div class="settings-list-item" data-license-item>
+                <div class="settings-list-item-header">
+                  <span class="settings-chip"><i class="fa-solid fa-file-signature"></i> License</span>
+                  <button class="btn-ghost-small" type="button" data-remove-license><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>License name</label>
+                    <input class="input" type="text" placeholder="e.g. Premium License" data-field="name">
+                  </div>
+                  <div class="form-row">
+                    <label>Price (PGK)</label>
+                    <input class="input" type="number" min="0" step="1" placeholder="e.g. 150" data-field="price">
+                  </div>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Best for</label>
+                    <input class="input" type="text" placeholder="e.g. YouTube, ads, radio" data-field="bestFor">
+                  </div>
+                  <div class="form-row">
+                    <label>Badge label</label>
+                    <input class="input" type="text" placeholder="e.g. Most Popular" data-field="badge">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>What’s included (one per line)</label>
+                  <textarea class="input" rows="4" placeholder="Commercial use&#10;Unlimited streams&#10;Credit required" data-field="includes"></textarea>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>CTA button label</label>
+                    <input class="input" type="text" placeholder="e.g. Buy license" data-field="ctaLabel">
+                  </div>
+                  <div class="form-row">
+                    <label>CTA link URL</label>
+                    <input class="input" type="url" placeholder="e.g. checkout.html?license=premium" data-field="ctaUrl">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <button class="btn ghost" type="button" data-add-license><i class="fa-solid fa-plus"></i> Add another license</button>
+              <button class="btn green" type="button" data-action="save-section" data-section="licensing">Save licensing</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Producer Packs -->
+        <section class="settings-panel" data-settings-panel="packs">
+          <h2 class="settings-panel-title">Producer packs</h2>
+          <p class="settings-panel-subtitle">Add producer packs / sample packs / beat packs.</p>
+
+          <div class="card">
+            <div class="settings-list" data-packs-list>
+              <div class="settings-list-item" data-pack-item>
+                <div class="settings-list-item-header">
+                  <span class="settings-chip"><i class="fa-solid fa-box-open"></i> Pack</span>
+                  <button class="btn-ghost-small" type="button" data-remove-pack><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Pack title</label>
+                    <input class="input" type="text" placeholder="e.g. Island Drums Pack" data-field="title">
+                  </div>
+                  <div class="form-row">
+                    <label>Price (PGK)</label>
+                    <input class="input" type="number" min="0" step="1" placeholder="e.g. 25" data-field="price">
+                  </div>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Pack cover</label>
+                    <div class="upload-field">
+                      <div class="upload-preview artwork" data-preview="pack-cover-1"><span>Image</span></div>
+                      <div class="upload-meta">
+                        <label class="btn ghost">
+                          <span><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload cover</span>
+                          <input type="file" accept="image/*" class="sr-only" data-preview-target="pack-cover-1" data-file-field="coverDataUrl">
+                        </label>
+                        <small>Optional.</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <label>Download URL</label>
+                    <input class="input" type="url" placeholder="e.g. assets/packs/island-drums.zip" data-field="downloadUrl">
+                    <small class="muted">This is the file link customers receive after purchase.</small>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>Description</label>
+                  <textarea class="input" rows="3" placeholder="What’s inside the pack?" data-field="description"></textarea>
+                </div>
+
+                <div class="form-row">
+                  <label>Contents (one per line)</label>
+                  <textarea class="input" rows="4" placeholder="20 drum loops&#10;10 one-shots&#10;5 FX" data-field="contents"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <button class="btn ghost" type="button" data-add-pack><i class="fa-solid fa-plus"></i> Add another pack</button>
+              <button class="btn green" type="button" data-action="save-section" data-section="packs">Save packs</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Reviews -->
+        <section class="settings-panel" data-settings-panel="reviews">
+          <h2 class="settings-panel-title">Reviews</h2>
+          <p class="settings-panel-subtitle">Manage featured testimonials shown on your store.</p>
+
+          <div class="card">
+            <div class="settings-list" data-reviews-list>
+              <div class="settings-list-item" data-review-item>
+                <div class="settings-list-item-header">
+                  <span class="settings-chip"><i class="fa-solid fa-star"></i> Review</span>
+                  <button class="btn-ghost-small" type="button" data-remove-review><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-row">
+                    <label>Name</label>
+                    <input class="input" type="text" placeholder="e.g. Mark, YouTuber" data-field="name">
+                  </div>
+                  <div class="form-row">
+                    <label>Rating</label>
+                    <select class="input" data-field="rating">
+                      <option value="5">5 ★★★★★</option>
+                      <option value="4">4 ★★★★</option>
+                      <option value="3">3 ★★★</option>
+                      <option value="2">2 ★★</option>
+                      <option value="1">1 ★</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>Review text</label>
+                  <textarea class="input" rows="3" placeholder="Write the testimonial." data-field="text"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <button class="btn ghost" type="button" data-add-review><i class="fa-solid fa-plus"></i> Add another review</button>
+              <button class="btn green" type="button" data-action="save-section" data-section="reviews">Save reviews</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="settings-panel" data-settings-panel="faq">
+          <h2 class="settings-panel-title">FAQ</h2>
+          <p class="settings-panel-subtitle">Edit the questions shown in your store FAQ section.</p>
+
+          <div class="card">
+            <div class="settings-list" data-faq-list>
+              <div class="settings-list-item" data-faq-item>
+                <div class="settings-list-item-header">
+                  <span class="settings-chip"><i class="fa-solid fa-circle-question"></i> Question</span>
+                  <button class="btn-ghost-small" type="button" data-remove-faq><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+
+                <div class="form-row">
+                  <label>Question</label>
+                  <input class="input" type="text" placeholder="e.g. Can I use these beats commercially?" data-field="q">
+                </div>
+                <div class="form-row">
+                  <label>Answer</label>
+                  <textarea class="input" rows="3" placeholder="Write the answer." data-field="a"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <button class="btn ghost" type="button" data-add-faq><i class="fa-solid fa-plus"></i> Add another question</button>
+              <button class="btn green" type="button" data-action="save-section" data-section="faq">Save FAQ</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Social links -->
+        <section class="settings-panel" data-settings-panel="social">
+          <h2 class="settings-panel-title">Social links</h2>
+          <p class="settings-panel-subtitle">Connect your profiles so buyers can follow your work.</p>
+
+          <div class="card">
+            <div class="settings-list">
+              <div class="social-row">
+                <label><i class="fa-brands fa-instagram"></i> Instagram</label>
+                <input class="input" type="url" placeholder="https://instagram.com/your-handle" data-bind="socialInstagram" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-brands fa-facebook"></i> Facebook</label>
+                <input class="input" type="url" placeholder="https://facebook.com/your-page" data-bind="socialFacebook" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-brands fa-tiktok"></i> TikTok</label>
+                <input class="input" type="url" placeholder="https://www.tiktok.com/@your-handle" data-bind="socialTikTok" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-brands fa-youtube"></i> YouTube</label>
+                <input class="input" type="url" placeholder="https://youtube.com/@yourchannel" data-bind="socialYouTube" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-brands fa-spotify"></i> Spotify</label>
+                <input class="input" type="url" placeholder="https://open.spotify.com/artist/..." data-bind="socialSpotify" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-solid fa-globe"></i> Website</label>
+                <input class="input" type="url" placeholder="https://yourstudio.com" data-bind="socialWebsite" />
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <span class="muted" style="font-size:12px">We’ll show these as icons on your public profile.</span>
+              <button class="btn green" type="button" data-action="save-section" data-section="social">Save social links</button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</section>
+
+<div class="toast" aria-live="polite" aria-atomic="true"></div>
+
+<div class="modal" data-modal aria-hidden="true">
+  <div class="panel container" data-modal-body></div>
+</div>
+
+<footer class="footer">
+  <div class="cols">
+    <div>
+      <div class="brandmark">
+        <span class="dot"></span>
+        <strong>Glondia</strong>
+      </div>
+      <small>Music Store Settings is your editor platform. Save here, render on your store page.</small>
+      <div class="row" style="margin-top:12px">
+        <span class="badge good">Local Save</span>
+        <span class="badge">JSON Export</span>
+        <span class="badge">Import</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <h4>Store</h4>
+      <a href="music-store-v2.html">Open Music Store</a>
+      <a href="settings.html">Settings</a>
+    </div>
+    <div class="form-row">
+      <h4>Help</h4>
+      <a href="#" data-action="load">Load saved</a>
+      <a href="#" data-action="save">Save all</a>
+      <a href="#" data-action="export">Export JSON</a>
+    </div>
+    <div class="form-row">
+      <h4>Status</h4>
+      <small class="muted">Storage key: <code>glondia_music_store_settings_v1</code></small>
+      <small class="muted">Works offline (localStorage).</small>
+    </div>
+  </div>
+  <div class="section-tight">
+    <small>© <span data-year></span> Glondia Marketplace</small>
+    <small class="muted">Built to match the existing Settings UI style.</small>
+  </div>
+</footer>
+
+<script src="settings.js"></script>
+</body>
+</html>

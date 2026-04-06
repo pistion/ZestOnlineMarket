@@ -1,0 +1,25 @@
+Analytics
+ ├── TrafficEvents
+ │     ├── source (fb, tiktok, direct)
+ │     ├── session_id
+ │     ├── user_agent
+ │     └── timestamp
+ │
+ ├── InteractionEvents
+ │     ├── product_id
+ │     ├── event_type (view, add-to-cart, like)
+ │     └── timestamp
+ │
+ ├── ConversionEvents
+ │     ├── funnel_stage (view → cart → checkout → purchase)
+ │     ├── session_id
+ │     ├── order_id
+ │     └── timestamp
+ │
+ └── AnalyticsSummary
+        ├── total_visits
+        ├── conversion_rate
+        ├── best_selling_products
+        ├── average_order_value
+        ├── repeat_customer_rate
+        └── generated_at

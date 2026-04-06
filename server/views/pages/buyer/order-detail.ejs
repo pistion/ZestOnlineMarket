@@ -1,0 +1,47 @@
+<section class="order-detail-hero">
+  <div>
+    <p class="eyebrow">Order detail</p>
+    <h1 id="buyerOrderTitle">Loading order</h1>
+    <p class="order-detail-copy" id="buyerOrderCopy">We are loading payment, shipment, and line item details.</p>
+  </div>
+  <div class="order-detail-actions">
+    <a class="btn btn-secondary btn-inline" href="/buyer/purchases">Back to orders</a>
+    <a class="btn btn-primary btn-inline" id="buyerOrderStoreLink" href="/marketplace">Visit store</a>
+  </div>
+</section>
+
+<div class="ui-state ui-state--empty order-detail-status" id="buyerOrderStatusPanel">
+  <p class="ui-state__copy" id="buyerOrderStatusText">Loading this order.</p>
+</div>
+
+<div class="order-detail-grid" id="buyerOrderDetailGrid">
+  <section class="surface-card order-detail-card">
+    <div class="section-heading compact">
+      <div>
+        <p class="eyebrow">Summary</p>
+        <h2>Order summary</h2>
+      </div>
+    </div>
+    <div class="order-summary-grid" id="buyerOrderSummaryGrid"></div>
+  </section>
+
+  <section class="surface-card order-detail-card">
+    <div class="section-heading compact">
+      <div>
+        <p class="eyebrow">Timeline</p>
+        <h2>Status updates</h2>
+      </div>
+    </div>
+    <div class="order-timeline" id="buyerOrderTimeline"></div>
+  </section>
+</div>
+
+<section class="surface-card order-detail-card">
+  <div class="section-heading compact">
+    <div>
+      <p class="eyebrow">Items</p>
+      <h2>Order items</h2>
+    </div>
+  </div>
+  <div class="order-items-list" id="buyerOrderItemsList"></div>
+</section>

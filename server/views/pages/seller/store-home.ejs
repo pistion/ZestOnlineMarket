@@ -1,0 +1,177 @@
+<% const viewer = typeof currentUser !== "undefined" ? currentUser : null; %>
+
+<%- include('../../partials/seller/marketplace-nav', { viewer: viewer }) %>
+
+<main class="market-shell">
+  <%- include('../../partials/seller/marketplace-hero') %>
+
+  <section class="market-section">
+    <div class="container">
+      <div class="market-section__head">
+        <div>
+          <span class="market-kicker">Featured stalls</span>
+          <h2>Where buyers are starting right now</h2>
+          <p class="market-copy market-copy--muted">
+            Spotlight stalls help shoppers find polished storefronts faster without leaving the main marketplace.
+          </p>
+        </div>
+        <a class="market-inline-link" href="/feed">See updates in the global feed</a>
+      </div>
+
+      <div class="row g-4" id="marketplaceFeatured"></div>
+    </div>
+  </section>
+
+  <section class="market-section market-section--soft">
+    <div class="container">
+      <div class="market-section__head">
+        <div>
+          <span class="market-kicker">All stalls</span>
+          <h2>Visit stores individually or follow them right here.</h2>
+          <p class="market-copy market-copy--muted">
+            Every card leads to a public storefront. Follow a store from the marketplace to keep its updates in your feed.
+          </p>
+        </div>
+        <div class="market-results" id="marketplaceResults">0 stores</div>
+      </div>
+
+      <div class="row g-4" id="marketplaceGrid"></div>
+
+      <div class="market-empty" id="marketplaceEmpty" hidden>
+        <div class="market-empty__icon">
+          <i class="fa-solid fa-store" aria-hidden="true"></i>
+        </div>
+        <h3 id="marketplaceEmptyTitle">No stores match this filter yet.</h3>
+        <p id="marketplaceEmptyText">Try a broader search, switch the store type, or clear the filter to see the full marketplace again.</p>
+        <button class="market-btn market-btn--primary" id="marketplaceReset" type="button">Reset filters</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="market-footer">
+  <div class="container market-footer__grid">
+    <div>
+      <h3>Zest Marketplace</h3>
+      <p>
+        A cleaner store-first marketplace for buyers who want to browse, follow, and visit stalls without losing context.
+      </p>
+    </div>
+    <div>
+      <h4>Browse</h4>
+      <a href="/marketplace">Marketplace</a>
+      <a href="/feed">Global Feed</a>
+      <a href="/auth/signin?role=buyer&amp;returnTo=%2Fbuyer%2Fprofile">Buyer sign in</a>
+    </div>
+    <div>
+      <h4>Sell</h4>
+      <a href="/auth/signin?role=seller&amp;returnTo=%2Fseller%2Fstore">Seller sign in</a>
+      <a href="/auth/signin?role=seller&amp;returnTo=%2Fseller%2Fstore">Seller setup</a>
+      <a href="/auth/signin?role=seller&amp;returnTo=%2Fseller%2Ftemplates%2Fproducts">Products workspace</a>
+    </div>
+  </div>
+
+  <div class="container market-footer__bottom">
+    <small>&copy; 2026 Zest Online Market. All rights reserved.</small>
+    <small>Live runtime only. Legacy prototypes are reference-only.</small>
+  </div>
+</footer>
+
+<div class="toast" aria-live="polite"></div>
+
+<div class="market-sheet-backdrop" id="marketplaceInfoBackdrop" hidden></div>
+<aside class="market-sheet" id="marketplaceInfoSheet" aria-hidden="true">
+  <button class="market-sheet__close" id="marketplaceInfoClose" type="button" aria-label="Close store info">
+    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+  </button>
+
+  <div class="market-sheet__cover" id="marketplaceInfoCover">
+    <span class="market-stall__badge" id="marketplaceInfoBadge">Live store</span>
+    <span class="market-sheet__handle" id="marketplaceInfoHandle">@store</span>
+  </div>
+
+  <div class="market-sheet__body">
+    <p class="market-kicker">Store info</p>
+    <h3 id="marketplaceInfoTitle">Store name</h3>
+    <p class="market-sheet__tagline" id="marketplaceInfoTagline">Store tagline</p>
+
+    <div class="market-sheet__metrics">
+      <div class="market-sheet__metric">
+        <span>Followers</span>
+        <strong id="marketplaceInfoFollowers">0</strong>
+      </div>
+      <div class="market-sheet__metric">
+        <span>Listings</span>
+        <strong id="marketplaceInfoListings">0</strong>
+      </div>
+      <div class="market-sheet__metric">
+        <span>Sales</span>
+        <strong id="marketplaceInfoSales">0</strong>
+      </div>
+    </div>
+
+    <div class="market-sheet__chips">
+      <span class="market-chip" id="marketplaceInfoTemplate"><i class="fa-solid fa-shop"></i>products</span>
+      <span class="market-chip" id="marketplaceInfoLocation"><i class="fa-solid fa-location-dot"></i>PNG</span>
+    </div>
+
+    <p class="market-sheet__copy" id="marketplaceInfoCopy">Store details</p>
+
+    <div class="market-sheet__featured" id="marketplaceInfoFeatured" hidden>
+      <span class="market-kicker">Featured listing</span>
+      <strong id="marketplaceInfoFeaturedTitle">Listing</strong>
+      <p id="marketplaceInfoFeaturedDescription">Listing details</p>
+      <span class="market-sheet__featured-price" id="marketplaceInfoFeaturedPrice">K0.00</span>
+    </div>
+
+    <div class="market-sheet__actions">
+      <a class="market-btn market-btn--primary" id="marketplaceInfoVisit" href="/marketplace">Visit store</a>
+      <button class="market-btn market-btn--secondary" id="marketplaceInfoShare" type="button">Share store</button>
+    </div>
+  </div>
+</aside>
+
+<div class="market-report-backdrop" id="marketplaceReportBackdrop" hidden></div>
+<section class="market-report-modal" id="marketplaceReportModal" aria-hidden="true" hidden>
+  <button class="market-report-modal__close" id="marketplaceReportClose" type="button" aria-label="Close report form">
+    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+  </button>
+
+  <div class="market-report-modal__copy">
+    <p class="market-kicker">Report store</p>
+    <h3 id="marketplaceReportStoreName">Store name</h3>
+    <p class="market-report-modal__handle" id="marketplaceReportHandle">@store</p>
+    <p class="market-report-modal__text">
+      Submit a quick moderation report if this stall looks misleading, abusive, or spam-heavy.
+    </p>
+  </div>
+
+  <form class="market-report-form" id="marketplaceReportForm">
+    <label class="market-report-field">
+      <span>Reason</span>
+      <select id="marketplaceReportReason" required>
+        <option value="spam">Spam</option>
+        <option value="abuse">Abusive content</option>
+        <option value="impersonation">Impersonation</option>
+        <option value="misleading">Misleading listing/store info</option>
+        <option value="other">Other</option>
+      </select>
+    </label>
+
+    <label class="market-report-field">
+      <span>What should be reviewed?</span>
+      <textarea
+        id="marketplaceReportDetails"
+        rows="5"
+        maxlength="800"
+        placeholder="Explain what looks wrong so moderation can review it properly..."
+        required
+      ></textarea>
+    </label>
+
+    <div class="market-report-actions">
+      <button class="market-btn market-btn--secondary" id="marketplaceReportCancel" type="button">Cancel</button>
+      <button class="market-btn market-btn--primary" id="marketplaceReportSubmit" type="submit">Submit report</button>
+    </div>
+  </form>
+</section>

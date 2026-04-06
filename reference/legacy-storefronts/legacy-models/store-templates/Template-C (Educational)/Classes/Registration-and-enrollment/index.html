@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ocean Studio • Course Enrollment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Fonts & Bootstrap -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="reef-body">
+
+  <!-- =========================== -->
+  <!-- HERO (Navbar Removed)       -->
+  <!-- =========================== -->
+  <header class="reef-hero reef-hero-enroll position-relative">
+    <div class="reef-hero-overlay"></div>
+
+    <div class="reef-hero-avatar-shell">
+      <img class="reef-hero-avatar-img"
+           src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800"
+           alt="Instructor portrait">
+    </div>
+
+    <div class="reef-hero-content text-center text-white">
+      <h1 class="reef-hero-title">Dr. Maya Chen</h1>
+      <p class="reef-hero-sub">Psychologist • Researcher • Educator • Mentor</p>
+      <p class="reef-hero-meta">10,482 students · 54 courses · Updated 3 days ago</p>
+    </div>
+  </header>
+
+
+  <!-- =========================== -->
+  <!-- MAIN CONTENT                -->
+  <!-- =========================== -->
+  <main class="container-xxl reef-main-shell">
+
+    <!-- HEADER TEXT -->
+    <section class="reef-section-header text-center text-lg-start">
+      <h2 class="reef-section-title mb-1">Emotional Intelligence Mastery</h2>
+      <p class="reef-section-sub">Review the course outline first, then toggle into registration and enrollment.</p>
+    </section>
+
+
+    <!-- GRID WRAPPER -->
+    <section class="reef-enroll-grid row g-4">
+
+      <!-- ========================================= -->
+      <!-- LEFT COLUMN — COURSE OUTLINE + BUTTONS     -->
+      <!-- ========================================= -->
+      <div class="col-lg-6">
+        <article class="reef-card reef-outline-card h-100">
+
+          <header class="reef-card-header">
+            <h3 class="reef-card-title">Course Outline</h3>
+            <p class="reef-card-sub">A structured eight-module journey through emotional literacy, boundaries, and calm leadership.</p>
+          </header>
+
+          <!-- Outline List -->
+          <ol class="reef-outline-list">
+
+            <li>
+              <h4>Module 1 · Mapping Your Emotional Landscape</h4>
+              <p>Understand emotional patterns, cues, and internal signals.</p>
+            </li>
+
+            <li>
+              <h4>Module 2 · Nervous System Basics</h4>
+              <p>How stress and safety states affect your behavior and relationships.</p>
+            </li>
+
+            <li>
+              <h4>Module 3 · Boundaries That Hold</h4>
+              <p>Build assertive, compassionate boundaries that protect you.</p>
+            </li>
+
+            <li>
+              <h4>Module 4 · Working With Difficult Emotions</h4>
+              <p>Tools to navigate anger, overwhelm, and shame without spiraling.</p>
+            </li>
+
+            <li>
+              <h4>Module 5 · Relational Intelligence</h4>
+              <p>Deepen empathy, listening, repair, and connection.</p>
+            </li>
+
+            <li>
+              <h4>Module 6 · Emotional Intelligence at Work</h4>
+              <p>Staying grounded in leadership, teams, and creative collaboration.</p>
+            </li>
+
+            <li>
+              <h4>Module 7 · Sustainable Ambition</h4>
+              <p>Design work rhythms that grow you without burning you out.</p>
+            </li>
+
+            <li>
+              <h4>Module 8 · Integration & Your Roadmap</h4>
+              <p>Create your personal 90-day practice plan to apply everything.</p>
+            </li>
+
+          </ol>
+
+          <footer class="reef-outline-footer">
+            <p><strong>Format:</strong> 8 weeks · Weekly lessons · Live Q&A replays.</p>
+            <p><strong>Access:</strong> Lifetime access to lessons & updates.</p>
+          </footer>
+
+          <!-- TWO TOGGLE BUTTONS -->
+          <div class="reef-toggle-buttons mt-4">
+            <button id="showRegistrationButton" class="btn reef-btn-primary w-100 mb-2" class="btn reef-btn-ghost w-100">
+              Registration Details
+            </button>
+          </div>
+
+        </article>
+      </div>
+
+
+
+      <!-- =================================================== -->
+      <!-- RIGHT COLUMN — HIDDEN REGISTRATION & INVESTMENT      -->
+      <!-- =================================================== -->
+      <div class="col-lg-6">
+
+        <!-- ============================= -->
+        <!-- REGISTRATION CARD (Hidden)    -->
+        <!-- ============================= -->
+        <section id="registrationCard" class="reef-card reef-form-card mb-4 hidden">
+
+          <header class="reef-card-header">
+            <h3 class="reef-card-title">Registration Details</h3>
+            <p class="reef-card-sub">Fill in your student profile to proceed.</p>
+          </header>
+
+          <form id="enrollForm" class="reef-form needs-validation" novalidate>
+
+            <div class="row g-3">
+
+              <!-- Full Name -->
+              <div class="col-md-6">
+                <label class="reef-input-label">Full Name</label>
+                <input type="text" id="fullName" name="fullName"
+                       class="form-control reef-input" required>
+                <div class="invalid-feedback">Please enter your full name.</div>
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-6">
+                <label class="reef-input-label">Email Address</label>
+                <input type="email" id="email" name="email"
+                       class="form-control reef-input" required>
+                <div class="invalid-feedback">Enter a valid email address.</div>
+              </div>
+
+              <!-- Country -->
+              <div class="col-md-6">
+                <label class="reef-input-label">Country / Region</label>
+                <input type="text" id="country" name="country"
+                       class="form-control reef-input" required>
+                <div class="invalid-feedback">Country is required.</div>
+              </div>
+
+              <!-- Timezone -->
+              <div class="col-md-6">
+                <label class="reef-input-label">Time Zone</label>
+                <input type="text" id="timezone" name="timezone"
+                       placeholder="GMT+10 · Port Moresby"
+                       class="form-control reef-input" required>
+                <div class="invalid-feedback">Please enter your time zone.</div>
+              </div>
+
+              <!-- Written Intention -->
+              <div class="col-12">
+                <label class="reef-input-label">What would you like to focus on?</label>
+                <textarea id="goal" name="goal" rows="3"
+                          class="form-control reef-input" required></textarea>
+                <div class="invalid-feedback">This field cannot be empty.</div>
+              </div>
+
+              <!-- Checkbox -->
+              <div class="col-12">
+                <div class="form-check reef-check">
+                  <input class="form-check-input" id="terms" type="checkbox" required>
+                  <label class="form-check-label reef-input-label" for="terms">
+                    I agree to the program guidelines.
+                  </label>
+                  <div class="invalid-feedback">You must accept the guidelines.</div>
+                </div>
+              </div>
+
+              <!-- Submit -->
+              <div class="col-12 mt-2">
+<div class="col-12 mt-2">
+  <button id="showPaymentButton"
+          type="submit"
+          class="btn reef-btn-primary w-100">
+    Enroll & Continue to Payment
+  </button>
+</div>
+</div>
+
+
+
+
+
+            </div>
+
+          </form>
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- INVESTMENT CARD (Hidden)      -->
+        <!-- ============================= -->
+        <section id="investmentCard" class="reef-card reef-price-card hidden">
+
+          <div class="reef-price-main">
+            <p class="reef-price-label">Program Investment</p>
+            <p class="reef-price-amount">K199.00</p>
+            <p class="reef-price-note">
+              One-time payment — includes lifetime access to all lessons and updates.
+            </p>
+          </div>
+
+          <div class="reef-price-actions mt-3">
+            <button class="btn reef-btn-primary w-100">
+              Confirm Enrollment
+            </button>
+            <div class="reef-price-links text-center mt-2">
+              <a href="#" class="reef-link-muted">Back to Store</a>
+              <span class="reef-link-separator">•</span>
+              <a href="#" class="reef-link-muted">View All Courses</a>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+
+    </section>
+  </main>
+
+
+
+  <!-- ========================== -->
+  <!-- FOOTER                     -->
+  <!-- ========================== -->
+  <footer class="reef-footer text-center mt-5 pb-4">
+    <p>Ocean Studio © 2025 · All rights reserved.</p>
+    <p>
+      <a href="#">Privacy</a> ·
+      <a href="#">Terms</a> ·
+      <a href="#">Support</a>
+    </p>
+  </footer>
+
+
+  <!-- ========================== -->
+  <!-- JS IMPORTS                 -->
+  <!-- ========================== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+
+    
+  </script>
+
+</body>
+</html>

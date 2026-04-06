@@ -1,0 +1,11 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= page.title || "Zest Online Market" %></title>
+<meta name="csrf-token" content="<%= csrfToken || '' %>">
+<meta name="request-id" content="<%= requestId || '' %>">
+<% (page.externalStyles || []).forEach((href) => { %>
+<link rel="stylesheet" href="<%= href %>">
+<% }); %>
+<% (page.styles || []).forEach((href) => { %>
+<link rel="stylesheet" href="<%= href %>">
+<% }); %>

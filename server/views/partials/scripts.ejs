@@ -1,0 +1,7 @@
+<script src="/assets/js/shared/http.js" defer></script>
+<% (page.externalScripts || []).forEach((src) => { %>
+<script src="<%= src %>" defer></script>
+<% }); %>
+<% (page.scripts || []).forEach((src) => { %>
+<script src="<%= src %>" defer></script>
+<% }); %>

@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photography Store • Zest Marketplace</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body data-page="fitness-profile">
+<header class="topbar">
+  <div class="container wrap">
+    <a class="brandmark" href="#" aria-label="Photography Store Home">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Photography Store</span>
+    </a>
+
+    <button class="btn ghost nav-toggle" data-nav-toggle aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i> Menu
+    </button>
+
+    <nav class="nav" data-nav aria-label="Primary">
+      <a href="#" data-page="feed"><i class="fa-solid fa-globe"></i> Global Feed</a>
+      <a href="#" data-page="templates"><i class="fa-solid fa-shop"></i> StoreHub</a>
+      <a href="#" data-page="dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a href="#" data-page="cart"><i class="fa-solid fa-cart-shopping"></i> Cart <span class="nav-count" data-cart-badge aria-label="Cart item count">0</span></a>
+      <a href="#" data-page="auth"><i class="fa-solid fa-gear"></i> Settings</a>
+    </nav>
+  </div>
+</header>
+
+<!-- =========================================================== -->
+<!-- HERO + BRANDING                                             -->
+<!-- =========================================================== -->
+<section class="profile-hero section" aria-label="Store hero">
+  <div class="container">
+    <div class="cover" role="img" aria-label="Cover image"></div>
+
+    <div class="profile-bar" role="group" aria-label="Profile">
+      <div class="avatar" role="img" aria-label="Studio avatar"></div>
+
+      <div class="profile-meta">
+        <div class="pro-follow-organiser">
+          <div class="profile-title">PrimeLens Photography</div>
+          <button class="btn secondary" data-toast="Followed (demo).">Follow</button>
+        </div>
+
+        <div class="muted">Portraits • Events • Commercial • Creative Edits</div>
+
+        <div class="stats-row" aria-label="Store stats">
+          <div class="stat-chip">📸 240+ Portfolio Shots</div>
+          <div class="stat-chip">🎬 38 Video Projects</div>
+          <div class="stat-chip">⭐ 4.9 Rating</div>
+          <div class="stat-chip">📅 Bookings Open</div>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button class="btn green" data-toast="Booking is frontend-only in this demo.">Hire Me Now</button>
+        <button class="btn ghost icon" data-toast="Share link copied (demo)." aria-label="Share">
+          <i class="fa-solid fa-share-nodes"></i>
+        </button>
+
+        <div class="social-row" aria-label="Social links">
+          <a href="#" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" title="TikTok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#" title="WhatsApp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" title="Pinterest" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+          <a href="#" title="Threads" aria-label="Threads"><i class="fa-brands fa-threads"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="profile-nav" aria-label="On-page">
+      <a href="#about">About</a>
+      <a href="#programs">Packages</a>
+      <a href="#sessions">Add-On Services</a>
+      <a href="#results">Portfolio</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</section>
+
+<!-- =========================================================== -->
+<!-- ABOUT                                                       -->
+<!-- =========================================================== -->
+<section id="about" class="section">
+  <div class="container grid grid-2">
+    <article class="card">
+      <div class="kicker">About the Photographer</div>
+      <h3 class="h3">Creative storytelling through lens & light</h3>
+      <p class="muted">
+        Built for photographers who sell packages, edits, event shoots, and custom video projects on Zest.
+        This demo is front-end only (no backend), but the UI patterns are ready for real data.
+      </p>
+      <ul class="muted list">
+        <li>High-resolution photography in multiple styles</li>
+        <li>On-location & studio shooting</li>
+        <li>Professional retouching & color grading</li>
+        <li>Short-form cinematic video creation</li>
+        <li>Digital downloads & online delivery</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <div class="kicker">Capabilities</div>
+      <h3 class="h3">What you can offer here</h3>
+      <div class="grid chips">
+        <div class="badge">Portrait Shoots</div>
+        <div class="badge">Event Coverage</div>
+        <div class="badge">Product Photography</div>
+        <div class="badge">Creative Edits</div>
+        <div class="badge good">Video Reels</div>
+        <div class="badge warn">Commercial Licensing</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- =========================================================== -->
+<!-- PACKAGES (cards generated by script.js)                      -->
+<!-- =========================================================== -->
+<section id="programs" class="section">
+  <div class="container">
+    <div class="row space-between">
+      <div>
+        <div class="kicker">Photography</div>
+        <h2 class="h2">Popular Photo Packages</h2>
+        <p class="muted">Tap a card to preview. Like & comment like a real post.</p>
+      </div>
+      <button class="btn" data-toast="Creator tools are frontend-only in this demo.">Create New Package</button>
+    </div>
+
+    <div class="grid grid-3 section-tight" id="courseCardGrid" aria-label="Product cards"></div>
+  </div>
+</section>
+
+<!-- =========================================================== -->
+<!-- ADD-ON SERVICES                                              -->
+<!-- =========================================================== -->
+<section id="sessions" class="section">
+  <div class="container">
+    <div class="kicker">Add-On Services</div>
+    <h2 class="h2">Extras & Creative Upgrades</h2>
+    <p class="muted">Add these to your booking for an upgraded result.</p>
+
+    <div class="grid grid-3 section-tight">
+      <article class="tier">
+        <div class="tier-name">Retouching Pack</div>
+        <div class="tier-price">K70</div>
+        <div class="muted">5 professionally retouched photos</div>
+        <button class="btn block" data-add-cart='{"id":"addon_retouch","title":"Retouching Pack","price":"K70"}'>Add to cart</button>
+      </article>
+
+      <article class="tier featured">
+        <div class="tier-name">Highlight Video Reel</div>
+        <div class="tier-price">K180</div>
+        <div class="muted">30–60 sec cinematic edit</div>
+        <button class="btn block" data-add-cart='{"id":"addon_reel","title":"Highlight Video Reel","price":"K180"}'>Add to cart</button>
+      </article>
+
+      <article class="tier">
+        <div class="tier-name">Raw File Bundle</div>
+        <div class="tier-price">K90</div>
+        <div class="muted">All unedited photos delivered</div>
+        <button class="btn block" data-add-cart='{"id":"addon_raw","title":"Raw File Bundle","price":"K90"}'>Add to cart</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================== -->
+<!-- PORTFOLIO                                                    -->
+<!-- =========================================================== -->
+<section id="results" class="section">
+  <div class="container">
+    <div class="kicker">Portfolio</div>
+    <h2 class="h2">Featured Work</h2>
+    <p class="muted">A mix of client work, creative edits, and behind-the-scenes content.</p>
+
+    <div class="grid grid-4 section-tight media-grid">
+      <article class="media">
+        <div class="thumb">Portrait</div>
+        <div class="body">
+          <h3 class="h3">Studio Portrait</h3>
+          <div class="muted">Soft light • Classic edit</div>
+        </div>
+        <button class="btn block" data-play data-play-title="Studio Portrait">Preview</button>
+      </article>
+
+      <article class="media">
+        <div class="thumb">Event</div>
+        <div class="body">
+          <h3 class="h3">Engagement Event</h3>
+          <div class="muted">Candid storytelling</div>
+        </div>
+        <button class="btn block" data-play data-play-title="Engagement Event">Preview</button>
+      </article>
+
+      <article class="media">
+        <div class="thumb">Video</div>
+        <div class="body">
+          <h3 class="h3">Promo Reel</h3>
+          <div class="muted">Short cinematic cut</div>
+        </div>
+        <button class="btn block" data-play data-play-title="Promo Reel">Preview</button>
+      </article>
+
+      <article class="media">
+        <div class="thumb">Landscape</div>
+        <div class="body">
+          <h3 class="h3">Creative Edit</h3>
+          <div class="muted">Color-graded composite</div>
+        </div>
+        <button class="btn block" data-play data-play-title="Creative Edit">Preview</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================== -->
+<!-- REVIEWS                                                      -->
+<!-- =========================================================== -->
+<section id="reviews" class="section">
+  <div class="container">
+    <div class="kicker">Reviews</div>
+    <h2 class="h2">Client Feedback</h2>
+
+    <div class="grid grid-3 section-tight">
+      <article class="testi">
+        <div class="who"><div class="dot-mini">M</div><span>Maria T.</span></div>
+        <div class="muted">“Clean edits and very professional portraits.”</div>
+        <div class="stars" aria-label="Rating 4.5 out of 5">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+        </div>
+      </article>
+
+      <article class="testi">
+        <div class="who"><div class="dot-mini">J</div><span>Jason L.</span></div>
+        <div class="muted">“Event coverage was smooth, photos delivered fast.”</div>
+        <div class="stars" aria-label="Rating 4.5 out of 5">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+        </div>
+      </article>
+
+      <article class="testi">
+        <div class="who"><div class="dot-mini">A</div><span>Anna R.</span></div>
+        <div class="muted">“Loved the creative video reel. Worth it.”</div>
+        <div class="stars" aria-label="Rating 4.5 out of 5">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================== -->
+<!-- FAQ                                                          -->
+<!-- =========================================================== -->
+<section id="faq" class="section">
+  <div class="container faq">
+    <div class="kicker">FAQ</div>
+    <h2 class="h2">Photoshoot & Delivery</h2>
+
+    <div class="grid section-tight">
+      <div class="item">
+        <div class="q" role="button" tabindex="0" aria-expanded="false">How long does photo delivery take? <span>+</span></div>
+        <div class="a">Edited photos are delivered within 3–5 days. Video edits may take 5–7 days.</div>
+      </div>
+
+      <div class="item">
+        <div class="q" role="button" tabindex="0" aria-expanded="false">Will I receive raw files? <span>+</span></div>
+        <div class="a">Raw files can be purchased as an add-on.</div>
+      </div>
+
+      <div class="item">
+        <div class="q" role="button" tabindex="0" aria-expanded="false">Can I reschedule my shoot? <span>+</span></div>
+        <div class="a">Yes — rescheduling is allowed within 24 hours notice.</div>
+      </div>
+
+      <div class="item">
+        <div class="q" role="button" tabindex="0" aria-expanded="false">Do I own full rights to the photos? <span>+</span></div>
+        <div class="a">Personal use rights are included. Commercial licensing is available as an add-on.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================== -->
+<!-- FOOTER                                                       -->
+<!-- =========================================================== -->
+<footer class="footer">
+  <div class="container cols">
+    <div>
+      <div class="brandmark" style="margin-bottom:10px">
+        <span class="dot" aria-hidden="true"></span><span>Zest Online Marketplace</span>
+      </div>
+      <p class="muted">A marketplace for creators, photographers, and digital professionals in PNG and beyond.</p>
+      <div class="row" style="margin-top:10px">
+        <span class="badge">Light Blue</span>
+        <span class="badge">Dark Blue</span>
+        <span class="badge good">Green Accent</span>
+      </div>
+    </div>
+    <div>
+      <h4>Marketplace</h4>
+      <div class="form-row links">
+        <a href="#">Global Feed</a>
+        <a href="#">Products</a>
+        <a href="#">Templates</a>
+        <a href="#">Purchase Flow</a>
+      </div>
+    </div>
+    <div>
+      <h4>Account</h4>
+      <div class="form-row links">
+        <a href="#">Sign In / Up</a>
+        <a href="#">Buyer Profile</a>
+        <a href="#">Seller Profile</a>
+        <a href="#">Seller Dashboard</a>
+      </div>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <div class="form-row links">
+        <a href="#">Terms & Policies</a>
+        <a href="#">Payout Policy</a>
+        <a href="#" data-toast="Security module is frontend-only right now.">Security</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container section-tight muted footer-bottom">
+    <small>© 2025 Zest. All rights reserved.</small>
+    <small>Store profile template.</small>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+
+<div class="modal" data-modal role="dialog" aria-modal="true" aria-label="Preview dialog">
+  <div class="panel container" data-modal-body></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

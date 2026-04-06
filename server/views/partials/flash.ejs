@@ -1,0 +1,7 @@
+<% if (flash && flash.message) { %>
+<section class="codex-flash" aria-live="polite">
+  <div class="codex-flash__item codex-flash__item--<%= flash.type || 'success' %>" role="status">
+    <%= flash.message %>
+  </div>
+</section>
+<% } %>

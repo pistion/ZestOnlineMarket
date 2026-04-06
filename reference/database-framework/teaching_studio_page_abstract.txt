@@ -1,0 +1,42 @@
+TEACHING / COURSE STUDIO PAGE — ABSTRACT CONCEPT NOTE
+
+Page Role:
+Public Education Studio & Program Marketplace
+
+Abstract Overview:
+This page represents a teaching-focused studio designed for educators, coaches, psychologists, and thought leaders to offer structured learning programs. It functions as a public-facing educational studio that combines instructor identity, long-form teaching philosophy, and a catalog of courses, workshops, and digital learning products.
+
+Conceptually, the page acts as a calm, trust-oriented learning environment rather than a traditional high-pressure marketplace. Visitors use it to explore programs, understand the educator’s approach, and enroll in learning journeys aligned with personal growth, emotional intelligence, and skill development. The instructor uses the page to curate programs, manage offerings, and communicate teaching values.
+
+Primary Conceptual Entity:
+Teaching Studio
+
+The Teaching Studio is the central concept of this page. It represents a branded educational space owned by an instructor or teaching collective. The studio encapsulates identity, philosophy, credibility, and educational offerings. All courses, workshops, and digital materials exist within the context of this studio.
+
+Implied Core Capabilities:
+- Present instructor identity, credentials, and teaching philosophy
+- Showcase structured learning programs and journeys
+- Support multiple program types (courses, workshops, digital resources)
+- Display program metadata (duration, category, intensity, availability)
+- Enable discovery through sorting, filtering, and multiple view modes
+- Provide previews and detailed program overviews
+- Highlight social proof through student reviews and ratings
+- Communicate pacing, availability, and cohort limits
+
+Program Representation (Conceptual):
+Programs are treated as guided learning journeys rather than simple content products. Each program includes a defined duration, format (live, self-paced, digital), thematic category, and capacity constraints. Programs are designed to be compared based on depth, pace, and relevance rather than just price.
+
+Learning Experience Concept:
+The page emphasizes nervous-system-safe pacing, depth, and intentional learning. This implies that educational content is experiential and structured over time, not consumed instantly.
+
+Discovery & Navigation:
+Programs can be browsed in multiple layouts (grid, list, compact) and sorted by popularity, recency, rating, price, or duration. This positions programs as discoverable educational offerings rather than static listings.
+
+Instructor Credibility & Trust:
+Instructor background, studio philosophy, and student reflections are core to conversion. Trust is built through narrative, research grounding, and peer feedback rather than aggressive sales tactics.
+
+Conceptual Boundaries:
+This page focuses on presentation, discovery, and enrollment intent. It does not handle learning delivery systems, progress tracking, certification, payment processing, or user authentication. Those systems exist separately.
+
+Design Intent:
+This page exists to provide a serene, professional educational storefront that invites learners into deep, structured programs while clearly communicating values, scope, and outcomes.

@@ -1,0 +1,44 @@
+<section class="orders-hero">
+  <div>
+    <p class="eyebrow">Buyer orders</p>
+    <h1>Your purchases</h1>
+    <p class="orders-copy">Track paid, shipped, delivered, and refunded orders in one buyer-friendly view.</p>
+  </div>
+  <div class="orders-hero__actions">
+    <a class="btn btn-secondary btn-inline" href="/buyer/profile">Back to profile</a>
+    <a class="btn btn-primary btn-inline" href="/marketplace">Browse marketplace</a>
+  </div>
+</section>
+
+<section class="orders-metrics" id="buyerOrdersMetrics" aria-label="Order metrics">
+  <article class="orders-metric-card">
+    <span class="orders-metric-card__label">Total orders</span>
+    <strong class="orders-metric-card__value" id="buyerOrdersTotalMetric">0</strong>
+  </article>
+  <article class="orders-metric-card">
+    <span class="orders-metric-card__label">Active</span>
+    <strong class="orders-metric-card__value" id="buyerOrdersActiveMetric">0</strong>
+  </article>
+  <article class="orders-metric-card">
+    <span class="orders-metric-card__label">Refunded</span>
+    <strong class="orders-metric-card__value" id="buyerOrdersRefundedMetric">0</strong>
+  </article>
+  <article class="orders-metric-card orders-metric-card--action">
+    <span class="orders-metric-card__label">Cart</span>
+    <strong class="orders-metric-card__value" id="buyerOrdersCartMetric">0</strong>
+    <a class="orders-metric-card__link" href="/buyer/checkout">Open cart</a>
+  </article>
+</section>
+
+<section class="orders-section">
+  <div class="section-heading compact">
+    <div>
+      <p class="eyebrow">Order history</p>
+      <h2>Recent orders</h2>
+    </div>
+  </div>
+  <div class="ui-state ui-state--empty orders-status-panel" id="buyerOrdersStatusPanel">
+    <p class="ui-state__copy" id="buyerOrdersStatusText">Loading your orders.</p>
+  </div>
+  <div class="buyer-orders-list" id="buyerOrdersList" aria-live="polite"></div>
+</section>

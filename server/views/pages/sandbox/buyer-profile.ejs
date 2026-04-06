@@ -1,0 +1,199 @@
+<header class="sandbox-shell">
+  <div class="header-container">
+    <a href="/sandbox/buyer-profile" class="logo">Zest Buyer Sandbox</a>
+    <nav class="nav">
+      <a href="/sandbox/buyer-profile"><i class="fas fa-flask"></i> Overview</a>
+      <a href="/sandbox/buyer-profile#buyerFeedSection"><i class="fas fa-rss"></i> Feed</a>
+      <a href="/sandbox/buyer-profile#buyerWishlistSection"><i class="fas fa-heart"></i> Wishlist</a>
+      <a href="/sandbox/buyer-profile#buyerFollowingSection"><i class="fas fa-store"></i> Following</a>
+      <a href="/api/sandbox/buyer-profile" target="_blank" rel="noopener"><i class="fas fa-code"></i> API JSON</a>
+    </nav>
+  </div>
+</header>
+
+<section class="sandbox-banner" aria-label="Sandbox information">
+  <div class="sandbox-banner__content">
+    <span class="sandbox-banner__eyebrow">Frontend Sandbox</span>
+    <h1 class="sandbox-banner__title">Buyer Profile isolated from the live buyer account flow</h1>
+    <p class="sandbox-banner__text">
+      This route uses the same buyer profile frontend behavior, but it reads from a mock sandbox endpoint so we can test layout changes without touching production buyer data.
+    </p>
+  </div>
+  <div class="sandbox-banner__actions">
+    <button class="share-btn" id="sandboxReloadButton" type="button">
+      <i class="fa-solid fa-rotate-right"></i> Reload Sandbox
+    </button>
+    <a class="share-btn share-btn--ghost" href="/api/sandbox/buyer-profile" target="_blank" rel="noopener">
+      <i class="fa-solid fa-code"></i> Open JSON
+    </a>
+  </div>
+  <div class="sandbox-banner__meta">
+    <span class="pill"><i class="fa-solid fa-plug"></i> Endpoint</span>
+    <code class="sandbox-banner__endpoint" id="sandboxEndpointValue">/api/sandbox/buyer-profile</code>
+  </div>
+</section>
+
+<section class="profile-hero">
+  <div class="cover-image">
+    <div class="avatar" id="buyerHeroAvatar" aria-label="Profile avatar">B</div>
+
+    <div class="hero-overlay">
+      <div class="hero-pills" aria-label="Buyer profile details">
+        <span class="pill" id="buyerHeroBuyerPill"><i class="fa-solid fa-user"></i> Sandbox buyer account</span>
+        <span class="pill" id="buyerHeroStatusPill"><i class="fa-solid fa-flask"></i> Sandbox data loaded</span>
+        <a class="pill" id="buyerHeroEmail" href="mailto:sandbox@zest.market"><i class="fa-solid fa-envelope"></i> sandbox@zest.market</a>
+        <a class="pill" href="/api/sandbox/buyer-profile" target="_blank" rel="noopener"><i class="fa-solid fa-code"></i> View sandbox JSON</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-info">
+    <div class="profile-head">
+      <div class="profile-title">
+        <h1 class="profile-name" id="buyerHeroName">Buyer Profile Sandbox</h1>
+        <p class="profile-handle" id="buyerHeroHandle">@sandbox</p>
+      </div>
+
+      <div class="profile-social" aria-label="Quick links">
+        <a class="icon-btn" href="/sandbox/buyer-profile#buyerFeedSection" aria-label="Feed"><i class="fa-solid fa-rss"></i></a>
+        <a class="icon-btn" href="/sandbox/buyer-profile#buyerWishlistSection" aria-label="Wishlist"><i class="fa-solid fa-heart"></i></a>
+        <a class="icon-btn" href="/sandbox/buyer-profile#buyerFollowingSection" aria-label="Following"><i class="fa-solid fa-store"></i></a>
+        <a class="share-btn" id="buyerShareProfile" href="/sandbox/buyer-profile"><i class="fa-solid fa-share-nodes"></i> Share</a>
+      </div>
+    </div>
+
+    <p class="profile-bio" id="buyerHeroBio">
+      Sandbox version of the buyer dashboard for isolated frontend testing.
+    </p>
+
+    <div class="profile-stats">
+      <div class="stat">
+        <div class="stat-number" id="buyerPurchasesStat">0</div>
+        <div class="stat-label">Purchases</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="buyerWishlistStat">0</div>
+        <div class="stat-label">Wishlist</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="buyerFollowingStat">0</div>
+        <div class="stat-label">Following</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="buyerSavedStoresStat">0</div>
+        <div class="stat-label">Saved Stores</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="profile-dock" aria-label="Buyer dashboard quick links">
+  <a class="profile-dock__item" href="#buyerFeedSection">
+    <span class="profile-dock__label">Feed</span>
+    <strong class="profile-dock__value" id="buyerDockFeedCount">0</strong>
+    <small class="profile-dock__meta">sandbox updates</small>
+  </a>
+  <a class="profile-dock__item" href="#buyerWishlistSection">
+    <span class="profile-dock__label">Wishlist</span>
+    <strong class="profile-dock__value" id="buyerDockWishlistCount">0</strong>
+    <small class="profile-dock__meta">saved listings</small>
+  </a>
+  <a class="profile-dock__item" href="#buyerFollowingSection">
+    <span class="profile-dock__label">Following</span>
+    <strong class="profile-dock__value" id="buyerDockFollowingCount">0</strong>
+    <small class="profile-dock__meta">sandbox stalls</small>
+  </a>
+  <a class="profile-dock__item" href="#buyerRecommendationsList">
+    <span class="profile-dock__label">Recommendations</span>
+    <strong class="profile-dock__value" id="buyerDockRecommendationCount">0</strong>
+    <small class="profile-dock__meta">test suggestions</small>
+  </a>
+</section>
+
+<main class="main-content">
+  <section class="section section--pulse">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-wave-square"></i> Buyer Pulse</h2>
+      <a href="/api/sandbox/buyer-profile" class="section-link" target="_blank" rel="noopener">Inspect Payload</a>
+    </div>
+    <div class="section-content">
+      <div class="pulse-summary" id="buyerInsightSummary"></div>
+      <div class="signal-badges" id="buyerSignalBadges"></div>
+      <div class="insight-grid" id="buyerInsightsGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="buyerFeedSection">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-rss"></i> Followed Store Feed</h2>
+      <a href="/sandbox/buyer-profile#buyerFeedSection" class="section-link">Stay in Sandbox</a>
+    </div>
+    <div class="section-content">
+      <div class="wishlist-grid" id="buyerFeedList"></div>
+    </div>
+  </section>
+
+  <section class="section" id="buyerWishlistSection">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-heart"></i> Saved Wishlist</h2>
+      <a href="/sandbox/buyer-profile#buyerWishlistSection" class="section-link">Review Layout</a>
+    </div>
+    <div class="section-content">
+      <div class="wishlist-grid" id="buyerWishlistList"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-receipt"></i> Recent Purchases</h2>
+      <a href="/sandbox/buyer-profile" class="section-link">Reset Scenario</a>
+    </div>
+    <div class="section-content">
+      <div class="purchase-grid" id="buyerPurchasesList"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-clock"></i> Recent Activity</h2>
+      <a href="/sandbox/buyer-profile" class="section-link">View Timeline</a>
+    </div>
+    <div class="section-content" id="buyerActivityList"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-comments"></i> Store Interactions</h2>
+      <a href="/sandbox/buyer-profile" class="section-link">Check Cards</a>
+    </div>
+    <div class="section-content" id="buyerInteractionsList"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-people-group"></i> Store Network</h2>
+      <a href="/sandbox/buyer-profile" class="section-link">Review Density</a>
+    </div>
+    <div class="section-content" id="buyerStoreNetworkList"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-lightbulb"></i> Recommendations</h2>
+      <a href="/sandbox/buyer-profile#buyerRecommendationsList" class="section-link">Compare Cards</a>
+    </div>
+    <div class="section-content">
+      <div class="recommendation-grid" id="buyerRecommendationsList"></div>
+    </div>
+  </section>
+
+  <section class="section" id="buyerFollowingSection">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-store"></i> Followed Stores</h2>
+      <a href="/api/sandbox/buyer-profile" class="section-link" target="_blank" rel="noopener">View Source</a>
+    </div>
+    <div class="section-content">
+      <div class="subscriptions-grid" id="buyerFollowingList"></div>
+    </div>
+  </section>
+</main>

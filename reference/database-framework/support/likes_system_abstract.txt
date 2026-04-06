@@ -1,0 +1,9 @@
+LIKES SYSTEM — ABSTRACT CONCEPT NOTE
+
+Concept Overview:
+The Likes system represents a lightweight engagement signal used to express positive acknowledgment toward a piece of content. A like is a low-friction interaction that allows a user to react without contributing additional text or context. It is designed to scale across all content types (stores, products, programs, portfolio items, posts) and provide fast, quantitative feedback.
+
+Conceptually, a like is an atomic interaction: it records that a specific user expressed approval for a specific target at a specific point in time. The system prioritizes performance, simplicity, and reversibility (like/unlike). Likes are primarily used for popularity metrics, ranking, social proof, and personalization, rather than detailed discussion.
+
+Design Intent:
+The Likes system exists to capture immediate emotional response and aggregate sentiment. It is intentionally minimal, extensible, and independent of presentation or UI skin, allowing it to be reused across any future surface or interaction layer.

@@ -1,0 +1,65 @@
+/* Zest Minimal Error Page Style */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+  background: #F5F7FA;
+  color: #111827;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  max-width: 420px;
+}
+
+.accent {
+  width: 4px;
+  height: 40px;
+  background: #4F46E5;
+  margin: 0 auto 16px;
+  border-radius: 2px;
+}
+
+h1 {
+  font-size: 32px;
+  margin: 0 0 8px;
+}
+
+p {
+  color: #6B7280;
+  margin: 0 0 20px;
+  font-size: 16px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+button {
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: #4F46E5;
+  color: white;
+}
+
+.btn-secondary {
+  background: white;
+  border: 1px solid #D1D5DB;
+  color: #374151;
+}

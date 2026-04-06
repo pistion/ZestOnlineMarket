@@ -1,0 +1,27 @@
+Users
+ ├── Profile Info
+ │     ├── full_name
+ │     ├── email
+ │     ├── phone
+ │     ├── avatar_image_id
+ │     └── created_at
+ │
+ ├── Authentication
+ │     ├── password_hash
+ │     ├── status (active, suspended)
+ │     └── last_login
+ │
+ └── UserSubscriptions
+        ├── plan_id
+        ├── start_date
+        ├── end_date
+        ├── auto_renew
+        ├── status (active, cancelled, expired)
+        │
+        └── SubscriptionPayments
+               ├── payment_id
+               ├── amount
+               ├── provider (Stripe, Paypal, Bank)
+               ├── provider_txn_id
+               ├── payment_date
+               └── status (success, failed, refunded)

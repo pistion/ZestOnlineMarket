@@ -1,0 +1,123 @@
+<%- include('../../partials/buyer/profile-nav') %>
+<%- include('../../partials/buyer/profile-hero') %>
+
+<section class="profile-dock" aria-label="Buyer dashboard quick links">
+  <a class="profile-dock__item" href="#buyerFeedSection">
+    <span class="profile-dock__label">Feed</span>
+    <strong class="profile-dock__value" id="buyerDockFeedCount">0</strong>
+    <small class="profile-dock__meta">followed updates</small>
+  </a>
+  <a class="profile-dock__item" href="#buyerWishlistSection">
+    <span class="profile-dock__label">Wishlist</span>
+    <strong class="profile-dock__value" id="buyerDockWishlistCount">0</strong>
+    <small class="profile-dock__meta">saved listings</small>
+  </a>
+  <a class="profile-dock__item" href="#buyerFollowingSection">
+    <span class="profile-dock__label">Following</span>
+    <strong class="profile-dock__value" id="buyerDockFollowingCount">0</strong>
+    <small class="profile-dock__meta">stores tracked</small>
+  </a>
+  <a class="profile-dock__item" href="#buyerRecommendationsList">
+    <span class="profile-dock__label">Recommendations</span>
+    <strong class="profile-dock__value" id="buyerDockRecommendationCount">0</strong>
+    <small class="profile-dock__meta">suggestions ready</small>
+  </a>
+</section>
+
+<main class="main-content">
+  <section class="section section--pulse">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-wave-square"></i> Buyer Pulse</h2>
+      <a href="/marketplace" class="section-link">Tune Marketplace</a>
+    </div>
+    <div class="section-content">
+      <div class="pulse-summary" id="buyerInsightSummary"></div>
+      <div class="signal-badges" id="buyerSignalBadges"></div>
+      <div class="insight-grid" id="buyerInsightsGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="buyerFeedSection">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-rss"></i> Followed Store Feed</h2>
+      <a href="/buyer/feed" class="section-link">Open Buyer Feed</a>
+    </div>
+    <div class="section-content">
+      <div class="wishlist-grid" id="buyerFeedList" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="section" id="buyerWishlistSection">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-heart"></i> Saved Wishlist</h2>
+      <a href="/buyer/settings" class="section-link">Manage Saves</a>
+    </div>
+    <div class="section-content">
+      <div class="wishlist-grid" id="buyerWishlistList" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-clock-rotate-left"></i> Recently Viewed</h2>
+      <a href="/marketplace" class="section-link">Browse More Listings</a>
+    </div>
+    <div class="section-content">
+      <div class="wishlist-grid" id="buyerRecentlyViewedList" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-receipt"></i> Recent Purchases</h2>
+      <a href="/buyer/profile" class="section-link">Refresh Purchases</a>
+    </div>
+    <div class="section-content">
+      <div class="purchase-grid" id="buyerPurchasesList" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-clock"></i> Recent Activity</h2>
+      <a href="/marketplace" class="section-link">Browse More Stores</a>
+    </div>
+    <div class="section-content" id="buyerActivityList"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-comments"></i> Store Interactions</h2>
+      <a href="/buyer/feed" class="section-link">View Full Feed</a>
+    </div>
+    <div class="section-content" id="buyerInteractionsList"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-people-group"></i> Store Network</h2>
+      <a href="/marketplace" class="section-link">Open Marketplace</a>
+    </div>
+    <div class="section-content" id="buyerStoreNetworkList"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-lightbulb"></i> Recommendations</h2>
+      <a href="/marketplace" class="section-link">See More Suggestions</a>
+    </div>
+    <div class="section-content">
+      <div class="recommendation-grid" id="buyerRecommendationsList"></div>
+    </div>
+  </section>
+
+  <section class="section" id="buyerFollowingSection">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-store"></i> Followed Stores</h2>
+      <a href="/marketplace" class="section-link">Browse Marketplace</a>
+    </div>
+    <div class="section-content">
+      <div class="subscriptions-grid" id="buyerFollowingList"></div>
+    </div>
+  </section>
+</main>

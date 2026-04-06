@@ -1,0 +1,158 @@
+<%
+  const viewer = typeof currentUser !== "undefined" ? currentUser : null;
+  const feedMode = page.feedMode === "buyer" ? "buyer" : "global";
+  const isBuyerFeed = feedMode === "buyer";
+  const currentFeedPath = isBuyerFeed ? "/buyer/feed" : "/feed";
+  const alternateFeedPath = isBuyerFeed ? "/feed" : "/buyer/feed";
+  const alternateFeedLabel = isBuyerFeed ? "Global Feed" : "Buyer Feed";
+  const utilityHref = !viewer
+    ? `/auth/signin?role=buyer&returnTo=${encodeURIComponent("/buyer/feed")}`
+    : viewer.role === "seller"
+      ? "/seller/dashboard"
+      : "/buyer/profile";
+  const utilityLabel = !viewer
+    ? "Buyer Sign In"
+    : viewer.role === "seller"
+      ? "Seller Tools"
+      : "Profile";
+  const kicker = isBuyerFeed ? "Personalized Buyer Feed" : "Global Marketplace Feed";
+  const heading = isBuyerFeed
+    ? "Keep up with the stores you follow."
+    : "Browse live updates across the marketplace.";
+  const copy = isBuyerFeed
+    ? "This feed brings the stores you follow into one place, so you can catch new listings and updates without opening every storefront one by one."
+    : "The global feed shows broader marketplace activity so buyers can discover fresh listings, announcements, and drops beyond their followed stores.";
+  const howItWorksTitle = isBuyerFeed
+    ? "Follow stores, then let the feed do the scanning."
+    : "Use the global feed to discover what the marketplace is doing right now.";
+  const howItWorksItems = isBuyerFeed
+    ? [
+        "Find new stalls in the marketplace.",
+        "Follow the stores you want to keep watching.",
+        "Come back here for fresh updates in one stream.",
+      ]
+    : [
+        "Browse broad marketplace updates without signing in.",
+        "Spot new stalls, product posts, and store announcements.",
+        "Sign in as a buyer when you want a personalized feed too.",
+      ];
+%>
+<header class="feed-header">
+  <div class="feed-header__inner">
+    <a class="feed-brand" href="<%= currentFeedPath %>">
+      <span class="feed-brand__dot" aria-hidden="true"></span>
+      <span><%= isBuyerFeed ? "Zest Buyer Feed" : "Zest Global Feed" %></span>
+    </a>
+
+    <nav class="feed-nav" aria-label="Primary navigation">
+      <a class="feed-nav__link<%= isBuyerFeed ? ' is-active' : '' %>" href="/buyer/feed"<%= isBuyerFeed ? ' aria-current="page"' : '' %>>Buyer Feed</a>
+      <a class="feed-nav__link<%= !isBuyerFeed ? ' is-active' : '' %>" href="/feed"<%= !isBuyerFeed ? ' aria-current="page"' : '' %>>Global Feed</a>
+      <a class="feed-nav__link" href="/marketplace">Marketplace</a>
+      <% if (viewer && viewer.role === "buyer") { %>
+        <a class="feed-nav__link" href="/buyer/purchases">Orders</a>
+      <% } %>
+      <a class="feed-nav__link" href="<%= utilityHref %>"><%= utilityLabel %></a>
+    </nav>
+  </div>
+</header>
+
+<main class="feed-layout">
+  <section class="feed-hero">
+    <div class="feed-hero__copy">
+      <p class="feed-kicker"><%= kicker %></p>
+      <h1><%= heading %></h1>
+      <p class="feed-copy"><%= copy %></p>
+    </div>
+
+    <div class="feed-stats">
+      <article class="feed-stat">
+        <span>Following</span>
+        <strong id="followCount">0</strong>
+      </article>
+      <article class="feed-stat">
+        <span>Updates loaded</span>
+        <strong id="updateCount">0</strong>
+      </article>
+      <article class="feed-stat">
+        <span>Stores active</span>
+        <strong id="storeCount">0</strong>
+      </article>
+    </div>
+  </section>
+
+  <section class="feed-shell">
+    <div class="feed-toolbar">
+      <div class="feed-toolbar__buttons" role="group" aria-label="Feed scope">
+        <button id="scopeFollowing" class="feed-chip" type="button">Following</button>
+        <button id="scopeAll" class="feed-chip" type="button">All updates</button>
+      </div>
+
+      <label class="feed-search" aria-label="Search updates">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="feedSearch" type="text" placeholder="Search stores, listings, or keywords...">
+      </label>
+    </div>
+
+    <div class="feed-columns">
+      <section class="feed-main">
+        <div class="feed-list" id="posts" role="feed" aria-live="polite" aria-busy="true"></div>
+
+        <div class="feed-empty" id="feedEmpty" hidden>
+          <div class="feed-empty__icon">
+            <i class="fa-solid fa-wifi"></i>
+          </div>
+          <h2 id="feedEmptyTitle">No feed updates yet</h2>
+          <p id="feedEmptyText">Follow stores in the marketplace to build your personalized update stream.</p>
+          <a id="feedEmptyAction" class="feed-empty__action" href="/marketplace">Explore marketplace</a>
+        </div>
+
+        <div class="sentinel" id="sentinel" aria-hidden="true"></div>
+      </section>
+
+      <aside class="feed-aside">
+        <article class="feed-card">
+          <p class="feed-card__kicker">How it works</p>
+          <h2><%= howItWorksTitle %></h2>
+          <ul class="feed-card__list">
+            <% howItWorksItems.forEach((item) => { %>
+              <li><%= item %></li>
+            <% }) %>
+          </ul>
+        </article>
+
+        <article class="feed-card">
+          <p class="feed-card__kicker">Store Spotlight</p>
+          <div class="feed-spotlight" id="spotlightList"></div>
+        </article>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<div class="feed-lightbox" id="feedLightbox" aria-hidden="true">
+  <div class="feed-lightbox__backdrop"></div>
+  <div class="feed-lightbox__inner">
+    <button class="feed-lightbox__nav" id="feedLightboxPrev" type="button" aria-label="Previous image">&#10094;</button>
+    <img id="feedLightboxImage" class="feed-lightbox__image" src="" alt="">
+    <button class="feed-lightbox__nav" id="feedLightboxNext" type="button" aria-label="Next image">&#10095;</button>
+    <div class="feed-lightbox__dots" id="feedLightboxDots"></div>
+    <button class="feed-lightbox__close" id="feedLightboxClose" type="button" aria-label="Close image viewer">&times;</button>
+  </div>
+</div>
+
+<div class="feed-toast" id="feedToast" role="status" aria-live="polite"></div>
+
+<footer class="feed-footer">
+  <div class="feed-footer__inner">
+    <p>&copy; <span id="feedFooterYear"></span> <%= isBuyerFeed ? "Zest Buyer Feed" : "Zest Global Feed" %>. Store updates made easier to follow.</p>
+    <div class="feed-footer__links">
+      <a href="<%= currentFeedPath %>"><%= isBuyerFeed ? "Buyer Feed" : "Global Feed" %></a>
+      <a href="<%= alternateFeedPath %>"><%= alternateFeedLabel %></a>
+      <a href="/marketplace">Marketplace</a>
+      <% if (viewer && viewer.role === "buyer") { %>
+        <a href="/buyer/purchases">Orders</a>
+      <% } %>
+      <a href="/auth/signin">Sign In</a>
+    </div>
+  </div>
+</footer>

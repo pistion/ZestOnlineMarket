@@ -1,0 +1,12 @@
+Feed
+ ├── feed_item_id
+ ├── type (product_published, announcement, promo)
+ ├── product_id (optional)
+ ├── store_id
+ ├── created_at
+ │
+ └── FeedReactions
+        ├── reaction_id
+        ├── customer_id
+        ├── type
+        └── created_at

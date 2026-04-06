@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Choose Your Store • Glondia Marketplace</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="template-chooser" id="chooser">
+  <div class="chooser-content">
+
+    <!-- PREVIEW MODE -->
+    <div class="step" id="preview-mode">
+      <span class="template-badge" id="badge">Template A</span>
+
+      <h1 class="chooser-title" id="title">Physical Products Store</h1>
+      <p class="chooser-subtitle" id="subtitle">
+        Sell anything you can ship — bilums, phones, coffee, clothes
+      </p>
+
+      <div class="features" id="features"></div>
+    </div>
+
+    <!-- SELECTION MODE -->
+    <div class="step" id="selection-mode" style="display:none;">
+      <h1 class="chooser-title">Choose Your Store Template</h1>
+      <p class="chooser-subtitle">Pick the one that fits your business best</p>
+      <div class="selection-grid" id="selection-grid"></div>
+    </div>
+
+    <!-- SUB-SELECTION MODE (Skills) -->
+    <div class="step" id="sub-selection-mode" style="display:none;">
+      <h1 class="chooser-title">Choose a Sub-Template</h1>
+      <p class="chooser-subtitle">Customize your Skills & Services store</p>
+      <div class="selection-grid" id="sub-grid"></div>
+    </div>
+
+    
+    <!-- SUB-SELECTION MODE (Classes & Consultations) -->
+    <div class="step" id="sub-selection-mode-c" style="display:none;">
+      <h1 class="chooser-title">Choose a Sub-Template</h1>
+      <p class="chooser-subtitle">Customize your Classes & Courses store</p>
+      <div class="selection-grid" id="sub-grid-c"></div>
+    </div>
+    
+
+    <!-- NAVIGATION -->
+    <div class="nav-controls">
+      <div class="dots" id="dots"></div>
+
+      <div class="buttons">
+        <button class="btn-nav btn-prev" id="prev">Previous</button>
+        <button class="btn-nav btn-next" id="next">Next</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

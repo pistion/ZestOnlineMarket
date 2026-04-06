@@ -1,0 +1,483 @@
+<div class="wizard-page" id="wizardRoot">
+  <header class="wizard-header">
+    <div class="wizard-title-block">
+      <h1 class="wizard-title">Open Market - Store Wizard</h1>
+      <p class="wizard-subtitle">
+        Set up your identity, visuals, social presence, and first featured product.
+      </p>
+    </div>
+    <div class="wizard-badge">Wizard</div>
+  </header>
+
+  <section class="wizard-template-summary" aria-label="Storefront template summary">
+    <div class="wizard-template-summary__copy">
+      <p class="wizard-template-summary__eyebrow">Storefront template</p>
+      <h2 class="wizard-template-summary__title" id="wizardTemplateName">Products Store</h2>
+      <p class="wizard-template-summary__text" id="wizardTemplateDescription">
+        Built for inventory-led selling with product galleries, catalog-first browsing, and featured drops.
+      </p>
+    </div>
+    <div class="wizard-template-summary__actions">
+      <span class="wizard-template-pill" id="wizardTemplateFamily">Physical products</span>
+      <a class="btn ghost btn-inline" id="wizardChangeTemplateLink" href="/seller/store/template">Change template</a>
+      <a class="btn ghost btn-inline" id="wizardPreviewTemplateLink" href="/seller/templates/products">Preview template</a>
+    </div>
+  </section>
+
+  <main class="wizard-layout">
+    <section class="wizard-main">
+      <div class="step-tabs" role="tablist" aria-label="Seller setup steps">
+        <button class="step-tab active" data-step="1" type="button">1. Identity</button>
+        <button class="step-tab" data-step="2" type="button">2. Branding</button>
+        <button class="step-tab" data-step="3" type="button">3. About and social</button>
+        <button class="step-tab" data-step="4" type="button">4. Featured listing</button>
+      </div>
+
+      <form class="steps-container" id="wizardForm" autocomplete="off" onsubmit="return false;">
+        <div class="step-card step active" data-step="1">
+          <h2 class="step-title">Store identity</h2>
+          <p class="step-text">
+            Choose a store name, handle, and short tagline that buyers can remember.
+          </p>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="storeName">Store name</label>
+              <input
+                id="storeName"
+                type="text"
+                class="input"
+                placeholder="e.g., Zed City Market Hub"
+              />
+            </div>
+            <div class="field">
+              <label for="handle">Handle</label>
+              <input
+                id="handle"
+                type="text"
+                class="input"
+                placeholder="@zedcityhub"
+              />
+              <p class="hint">This is how people mention and search for your storefront.</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="tagline">Tagline</label>
+            <input
+              id="tagline"
+              type="text"
+              class="input"
+              placeholder="e.g., Fresh deals for your city."
+            />
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn ghost" data-action="reset">Reset</button>
+            <div class="spacer"></div>
+            <button type="button" class="btn primary" data-action="next">Next</button>
+          </div>
+        </div>
+
+        <div class="step-card step" data-step="2">
+          <h2 class="step-title">Branding</h2>
+          <p class="step-text">
+            Upload a logo and cover so your storefront looks established and recognizable.
+          </p>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="logoFile">Logo or profile photo</label>
+              <input
+                id="logoFile"
+                type="file"
+                accept="image/*"
+                class="input file-input"
+              />
+              <p class="hint">This image appears in the main store avatar.</p>
+            </div>
+            <div class="field">
+              <label for="coverFile">Cover photo</label>
+              <input
+                id="coverFile"
+                type="file"
+                accept="image/*"
+                class="input file-input"
+              />
+              <p class="hint">This fills the wide header area behind your storefront identity.</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="accentColor">Accent color</label>
+            <input
+              id="accentColor"
+              type="color"
+              class="color-input"
+              value="#2563eb"
+            />
+            <p class="hint">Use this for highlights, tags, and key calls to action.</p>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn ghost" data-action="prev">Previous</button>
+            <button type="button" class="btn ghost" data-action="reset">Reset</button>
+            <div class="spacer"></div>
+            <button type="button" class="btn primary" data-action="next">Next</button>
+          </div>
+        </div>
+
+        <div class="step-card step" data-step="3">
+          <h2 class="step-title">About and social</h2>
+          <p class="step-text">
+            Tell buyers who you are and where they can continue following your work.
+          </p>
+
+          <div class="field">
+            <label for="about">About your store</label>
+            <textarea
+              id="about"
+              rows="4"
+              class="input textarea"
+              placeholder="Share a short story about who you are, what you sell, and how you serve your community."
+            ></textarea>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="instagram">Instagram</label>
+              <input
+                id="instagram"
+                type="text"
+                class="input"
+                placeholder="@yourhandle"
+              />
+            </div>
+            <div class="field">
+              <label for="facebook">Facebook</label>
+              <input
+                id="facebook"
+                type="text"
+                class="input"
+                placeholder="Page or profile name"
+              />
+            </div>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="tiktok">TikTok</label>
+              <input
+                id="tiktok"
+                type="text"
+                class="input"
+                placeholder="@yourtiktok"
+              />
+            </div>
+            <div class="field">
+              <label for="xhandle">X / Twitter</label>
+              <input
+                id="xhandle"
+                type="text"
+                class="input"
+                placeholder="@yourhandle"
+              />
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn ghost" data-action="prev">Previous</button>
+            <button type="button" class="btn ghost" data-action="reset">Reset</button>
+            <div class="spacer"></div>
+            <button type="button" class="btn primary" data-action="next">Next</button>
+          </div>
+        </div>
+
+        <div class="step-card step" data-step="4">
+          <h2 class="step-title">Featured listing</h2>
+          <p class="step-text">
+            Create the first listing buyers will see when your storefront goes live.
+          </p>
+
+          <div class="field">
+            <label for="productName">Listing name</label>
+            <input
+              id="productName"
+              type="text"
+              class="input"
+              placeholder="e.g., Mixed Citrus Box"
+            />
+          </div>
+
+          <div class="field">
+            <label for="productDescription">Description</label>
+            <textarea
+              id="productDescription"
+              rows="4"
+              class="input textarea"
+              placeholder="Describe what you are selling, what is included, and anything buyers should know."
+            ></textarea>
+          </div>
+
+          <div class="grid three">
+            <div class="field">
+              <label for="productPrice">Price (K)</label>
+              <input
+                id="productPrice"
+                type="number"
+                min="0"
+                step="0.01"
+                class="input"
+                placeholder="0.00"
+              />
+            </div>
+            <div class="field">
+              <label for="transportFee">Transport fee (K)</label>
+              <input
+                id="transportFee"
+                type="number"
+                min="0"
+                step="0.01"
+                class="input"
+                placeholder="0.00"
+              />
+            </div>
+            <div class="field">
+              <label for="deliveryInfo">Delivery details</label>
+              <input
+                id="deliveryInfo"
+                type="text"
+                class="input"
+                placeholder="e.g., Same day in city, 1 to 3 days nationwide."
+              />
+            </div>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="businessLocation">Business location</label>
+              <input
+                id="businessLocation"
+                type="text"
+                class="input"
+                placeholder="e.g., Moresby North East"
+              />
+            </div>
+            <div class="field">
+              <label for="productImages">Listing images (up to 4)</label>
+              <input
+                id="productImages"
+                type="file"
+                accept="image/*"
+                multiple
+                class="input file-input"
+              />
+              <p class="hint">
+                Upload up to four images. Buyers can tap to expand them in the preview.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn ghost" data-action="prev">Previous</button>
+            <button type="button" class="btn ghost" data-action="reset">Reset</button>
+            <div class="spacer"></div>
+            <button type="button" class="btn primary" data-action="visit-store">Visit the store</button>
+          </div>
+          <p class="wizard-status" id="wizardStatus" hidden></p>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel preview-panel">
+      <aside class="wizard-panel wizard-preview">
+        <div class="preview-card" id="previewCard">
+          <div class="store-cover" id="pvCover">
+            <div class="cover-overlay"></div>
+          </div>
+
+          <div class="store-header" id="pvHeader">
+            <div class="avatar-wrapper">
+              <div class="avatar" id="pvAvatar"></div>
+            </div>
+            <div class="store-meta">
+              <div class="store-name" id="pvName">Your Store Name</div>
+              <div class="store-handle" id="pvHandle">@handle</div>
+              <div class="store-tagline" id="pvTagline">
+                Your short tagline goes here.
+              </div>
+            </div>
+          </div>
+
+          <div class="product-images-wrapper" id="pvProductImages" style="display: none;">
+            <div class="product-image-grid" id="pvProductImageGrid"></div>
+          </div>
+
+          <div class="store-body">
+            <section class="store-section" id="pvAboutSection">
+              <h3>About</h3>
+              <p id="pvAbout">
+                Share a short story about who you are, what you sell, and how you serve your community.
+              </p>
+            </section>
+
+            <section class="store-section" id="pvSocialSection">
+              <h3>Social</h3>
+              <div class="social-row">
+                <button class="social-icon" id="pvInstagram" type="button" title="Instagram">
+                  <i class="fa-brands fa-instagram"></i>
+                </button>
+                <button class="social-icon" id="pvFacebook" type="button" title="Facebook">
+                  <i class="fa-brands fa-facebook"></i>
+                </button>
+                <button class="social-icon" id="pvTiktok" type="button" title="TikTok">
+                  <i class="fa-brands fa-tiktok"></i>
+                </button>
+                <button class="social-icon" id="pvTwitter" type="button" title="Twitter / X">
+                  <i class="fa-brands fa-x-twitter"></i>
+                </button>
+              </div>
+              <p class="social-text" id="pvSocialText">
+                Add your handles to make it easy for buyers to follow you.
+              </p>
+            </section>
+
+            <section class="store-section" id="pvProductSection">
+              <h3>Featured product</h3>
+              <div class="product-card">
+                <div class="product-main">
+                  <div class="product-name" id="pvProductName">Your featured product</div>
+                  <div class="product-desc" id="pvProductDescription">
+                    Add a short description so buyers know what they are getting.
+                  </div>
+                </div>
+                <div class="product-price" id="pvProductPrice">K 0.00</div>
+              </div>
+              <div class="product-meta">
+                <div class="meta-item">
+                  <span class="meta-label">Delivery:</span>
+                  <span class="meta-value" id="pvDeliveryLocation">Not set</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Business location:</span>
+                  <span class="meta-value" id="pvBusinessLocation">Not set</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Transport:</span>
+                  <span class="meta-value" id="pvTransportPrice">K 0.00</span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+
+<div id="finalPreview" class="final-preview hidden">
+  <div class="final-inner">
+    <header class="final-header">
+      <h2 class="final-title">Preview your store</h2>
+      <p class="final-subtitle">
+        This is how your storefront and featured listing will appear to visitors.
+      </p>
+    </header>
+
+    <div class="final-layout">
+      <section class="final-column">
+        <div class="preview-card final-card">
+          <div class="store-cover" id="finalCover">
+            <div class="cover-overlay"></div>
+          </div>
+          <div class="store-header" id="finalHeader">
+            <div class="avatar-wrapper">
+              <div class="avatar" id="finalAvatar"></div>
+            </div>
+            <div class="store-meta">
+              <div class="store-name" id="finalName">Your Store Name</div>
+              <div class="store-handle" id="finalHandle">@handle</div>
+              <div class="store-tagline" id="finalTagline">
+                Your short tagline goes here.
+              </div>
+            </div>
+          </div>
+
+          <div class="store-body">
+            <section class="store-section">
+              <h3>About</h3>
+              <p id="finalAbout">
+                Share a short story about who you are, what you sell, and how you serve your community.
+              </p>
+            </section>
+
+            <section class="store-section">
+              <h3>Social</h3>
+              <div class="social-row" id="finalSocialRow"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-column">
+        <div class="preview-card final-card">
+          <section class="store-section">
+            <h3>Featured product</h3>
+            <div class="product-card">
+              <div class="product-main">
+                <div class="product-name" id="finalProductName">Your featured product</div>
+                <div class="product-desc" id="finalProductDescription">
+                  Add a short description so buyers know what they are getting.
+                </div>
+              </div>
+              <div class="product-price" id="finalProductPrice">K 0.00</div>
+            </div>
+            <div class="product-meta">
+              <div class="meta-item">
+                <span class="meta-label">Delivery:</span>
+                <span class="meta-value" id="finalDeliveryLocation">Not set</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Business location:</span>
+                <span class="meta-value" id="finalBusinessLocation">Not set</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Transport:</span>
+                <span class="meta-value" id="finalTransportPrice">K 0.00</span>
+              </div>
+            </div>
+
+            <div class="product-image-grid final-image-grid" id="finalProductImages"></div>
+          </section>
+        </div>
+      </section>
+    </div>
+
+    <div class="final-actions">
+      <button type="button" class="btn ghost" id="finalBack">Back to editing</button>
+      <div class="spacer"></div>
+      <button type="button" class="btn primary" id="finalVisit">
+        Visit the store
+      </button>
+    </div>
+    <p class="wizard-status" id="finalStatus" hidden></p>
+  </div>
+</div>
+
+<div id="productModal" class="product-modal hidden">
+  <span class="product-close">&times;</span>
+  <button id="productZoomToggle" class="product-zoom-toggle">Zoom</button>
+  <div class="product-modal-content">
+    <div class="product-slider-wrapper">
+      <div id="productSlider" class="product-slider"></div>
+    </div>
+
+    <div class="product-nav-arrows">
+      <button id="productPrev" type="button">&lt;</button>
+      <button id="productNext" type="button">&gt;</button>
+    </div>
+
+    <div class="product-modal-indicators"></div>
+    <div id="productCaption" class="product-caption"></div>
+  </div>
+</div>

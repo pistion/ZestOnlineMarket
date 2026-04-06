@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- =========================================================================
+       FAUNA HTML (Animal Kingdom Namespace)
+       File sections are labeled so you can find things quickly.
+       ====================================================================== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artists Studio • Glondia Marketplace</title>
+
+  <!-- Styles (single merged file) -->
+  <link rel="stylesheet" href="fauna.css" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body data-page="art-profile">
+
+  <!-- =======================================================================
+       HEADER / TOP NAV
+       ======================================================================= -->
+  <header class="fauna-topbar">
+    <div class="fauna-container fauna-wrap">
+      <a class="fauna-brandmark" href="#">
+        <span class="fauna-dot"></span>
+        <span>Artists Store</span>
+      </a>
+
+      <button class="fauna-btn fauna-ghost fauna-nav-toggle" data-nav-toggle aria-label="Toggle navigation">
+        ☰ Menu
+      </button>
+
+      <nav class="fauna-nav" data-nav>
+        <a href="#" data-page="global-feed"><i class="fa-solid fa-globe"></i> Global Feed</a>
+        <a href="#" data-page="templates"><i class="fa-solid fa-store"></i> StoreHub</a>
+        <a href="#" data-page="dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a href="#" data-page="auth"><i class="fa-solid fa-gear"></i> Settings</a>
+        <a href="#" data-page="cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =======================================================================
+       HERO / PROFILE BRANDING (Updated Intro Layout)
+       ======================================================================= -->
+  <section class="fauna-profile-hero fauna-section" id="intro">
+    <div class="fauna-container">
+
+      <!-- Cover -->
+      <div class="fauna-intro-cover" role="img" aria-label="Store cover image"></div>
+
+      <!-- Identity + Actions -->
+      <div class="fauna-intro-card">
+        <div class="fauna-intro-top">
+          <div class="fauna-intro-left">
+            <div class="fauna-intro-avatar" role="img" aria-label="Profile picture"></div>
+
+            <div class="fauna-intro-meta">
+              <div class="fauna-intro-name">
+                Alex Johnson <span class="fauna-intro-verified" aria-label="Verified"><i class="fa-solid fa-circle-check"></i></span>
+              </div>
+              <div class="fauna-muted" style="font-weight:800">@aj_creative</div>
+
+              <div class="fauna-intro-bio fauna-muted">
+                UI/UX Designer & Digital Creator • Providing high-quality design assets for creatives and businesses.
+                Focused on modern, clean, and user-friendly design.
+              </div>
+
+              <div class="fauna-intro-stats">
+                <div class="fauna-intro-stat"><strong>121.4K</strong><span class="fauna-muted">Followers</span></div>
+                <div class="fauna-intro-sep" aria-hidden="true"></div>
+                <div class="fauna-intro-stat"><strong>48</strong><span class="fauna-muted">Products</span></div>
+                <div class="fauna-intro-sep" aria-hidden="true"></div>
+                <div class="fauna-intro-stat"><strong>4.9</strong><span class="fauna-muted">Rating</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fauna-intro-actions">
+            <div class="fauna-row" style="justify-content:flex-end;gap:10px">
+              <button class="fauna-btn fauna-secondary" type="button">
+                <i class="fa-regular fa-heart"></i> Follow
+              </button>
+              <button class="fauna-btn" type="button" data-toast="Contact is demo-only in this template.">
+                Contact
+              </button>
+            </div>
+
+            <a class="fauna-intro-email" href="mailto:alexjohnson@email.com" aria-label="Email store owner">
+              <i class="fa-regular fa-envelope"></i>
+              <span>alexjohnson@email.com</span>
+            </a>
+
+            <div class="fauna-intro-social" aria-label="Social links">
+              <a href="#" aria-label="Website"><i class="fa-solid fa-link"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+              <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs / Section Navigation -->
+        <nav class="fauna-intro-tabs" aria-label="Store sections">
+          <a class="fauna-active" href="#results">All</a>
+          <a href="#programs">Products</a>
+          <a href="#sessions">Services</a>
+          <a href="#programs">Bundles</a>
+          <a href="#about">About</a>
+          <a href="#faunaContact">Contact</a>
+        </nav>
+      </div>
+
+    </div>
+  </section>
+
+<!-- =======================================================================
+       ABOUT
+       ======================================================================= -->
+  <section id="about" class="fauna-section">
+    <div class="fauna-container fauna-grid fauna-grid-2">
+
+      <article class="fauna-card">
+        <div class="fauna-kicker">About this Store</div>
+        <h3 class="fauna-h3">A home for painters, carvers & illustrators</h3>
+        <p class="fauna-muted">
+          This template turns your Glondia profile into a modern art storefront — built for painters, sculptors,
+          wood carvers, illustrators and mixed-media artists who want to sell originals, carvings and prints online.
+        </p>
+        <ul class="fauna-muted">
+          <li>Showcase curated collections of paintings, carvings and drawings</li>
+          <li>Sell originals, numbered editions and fine-art prints</li>
+          <li>Offer custom commissions right from your profile</li>
+          <li>Highlight artists from PNG and across the Pacific</li>
+          <li>Use the dynamic gallery to surface your best pieces</li>
+        </ul>
+      </article>
+
+      <article class="fauna-card">
+        <div class="fauna-kicker">For Art Sellers</div>
+        <h3 class="fauna-h3">What you can offer here</h3>
+        <div class="fauna-grid">
+          <div class="fauna-badge fauna-good">Original Paintings</div>
+          <div class="fauna-badge">Limited Prints</div>
+          <div class="fauna-badge">Wood & Stone Carvings</div>
+          <div class="fauna-badge">Ink & Pencil Drawings</div>
+          <div class="fauna-badge fauna-warn">Custom Commissions</div>
+          <div class="fauna-badge">Digital Illustration Files</div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       GALLERY / RESULTS (Dynamic)
+       ======================================================================= -->
+  <section id="results" class="fauna-section">
+    <div class="fauna-container">
+      <div class="fauna-kicker">Gallery</div>
+      <h2 class="fauna-h2">Discover Artwork</h2>
+      <p class="fauna-muted">Browse paintings, carvings and drawings from independent artists.</p>
+
+      <!-- Toolbar -->
+      <div class="fauna-gallery-toolbar">
+        <div class="fauna-chip-row" data-gallery-filters>
+          <button class="fauna-chip fauna-active" data-gallery-filter="all" type="button">All</button>
+          <button class="fauna-chip" data-gallery-filter="painting" type="button">Paintings</button>
+          <button class="fauna-chip" data-gallery-filter="carving" type="button">Carvings</button>
+          <button class="fauna-chip" data-gallery-filter="drawing" type="button">Drawings</button>
+        </div>
+
+        <div class="fauna-row" style="flex:1;justify-content:flex-end;gap:8px;">
+          <input type="search" class="fauna-input" placeholder="Search title, artist, style..." data-gallery-search />
+          <select class="fauna-select" data-gallery-sort style="max-width:210px">
+            <option value="featured">Featured</option>
+            <option value="new">Newest</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fauna-grid fauna-grid-4 fauna-section-tight" data-gallery-grid></div>
+
+      <p class="fauna-muted fauna-center" data-gallery-empty style="display:none;margin-top:18px">
+        No artworks match right now. Try a different filter or search term.
+      </p>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       ORIGINALS & PRINTS (Product-style Card Injection Mount)
+       ======================================================================= -->
+  <section id="programs" class="fauna-section">
+    <div class="fauna-container">
+
+      <div class="fauna-row fauna-space-between">
+        <div>
+          <div class="fauna-kicker">Featured Collections</div>
+          <h2 class="fauna-h2">Originals & Limited Prints</h2>
+          <p class="fauna-muted">A quick sample of how you can present art products in this layout.</p>
+        </div>
+        <button class="fauna-btn" data-toast="Creating products is demo-only right now." type="button">
+          Add New Artwork
+        </button>
+      </div>
+
+      <!-- NOTE:
+           The product card is NOT hardcoded here.
+           It is injected by fauna.js into this mount element. -->
+      <main class="fauna-container" style="padding:26px 18px;max-width:520px">
+        <div id="faunaSingleCardMount" aria-label="Single product card"></div>
+      </main>
+
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       FRAMING & EXTRAS (Add-ons)
+       ======================================================================= -->
+  <section id="sessions" class="fauna-section">
+    <div class="fauna-container">
+      <div class="fauna-kicker">Framing & Extras</div>
+      <h2 class="fauna-h2">Upsell services for each piece</h2>
+      <p class="fauna-muted">Attach extras like framing, certificates and faster shipping to your artworks.</p>
+
+      <div class="fauna-grid fauna-grid-3 fauna-section-tight">
+
+        <article class="fauna-card">
+          <div style="font-weight:900;font-size:18px">Gallery Frame</div>
+          <div style="font-weight:900;font-size:22px;color:var(--fauna-brand-2)">K180</div>
+          <div class="fauna-muted">Minimal wood frame, ready to hang.</div>
+          <button class="fauna-btn fauna-block" data-toast="Added Gallery Frame (demo)." type="button">Add to Cart</button>
+          <button class="fauna-btn fauna-ghost" data-toast="Share link copied (demo)." type="button">View Details</button>
+        </article>
+
+        <article class="fauna-card" style="border-color:#b8d5ff;box-shadow:0 10px 30px rgba(59,130,246,.18);background:linear-gradient(180deg,#ffffff,#f4f8ff);">
+          <div style="font-weight:900;font-size:18px">Certificate & Story cart</div>
+          <div style="font-weight:900;font-size:22px;color:var(--fauna-brand-2)">K95</div>
+          <div class="fauna-muted">Signed certificate of authenticity + backstory card.</div>
+          <button class="fauna-btn fauna-green fauna-block" data-toast="Added certificate (demo)." type="button">Add to Cart</button>
+          <button class="fauna-btn fauna-ghost" data-toast="Share link copied (demo)." type="button">View Details</button>
+        </article>
+
+        <article class="fauna-card">
+          <div style="font-weight:900;font-size:18px">Express Shipping</div>
+          <div style="font-weight:900;font-size:22px;color:var(--fauna-brand-2)">K130</div>
+          <div class="fauna-muted">Priority packing and express courier delivery.</div>
+          <button class="fauna-btn fauna-block" data-toast="Added express shipping (demo)." type="button">Add to Cart</button>
+          <button class="fauna-btn fauna-ghost" data-toast="Share link copied (demo)." type="button">View Details</button>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       REVIEWS
+       ======================================================================= -->
+  <section id="reviews" class="fauna-section">
+    <div class="fauna-container">
+      <div class="fauna-kicker">Reviews</div>
+      <h2 class="fauna-h2">Collect your social proof</h2>
+
+      <div class="fauna-grid fauna-grid-3 fauna-section-tight">
+        <article class="fauna-card">
+          <div class="fauna-row" style="gap:8px;align-items:center;font-weight:800">
+            <span class="fauna-badge" style="width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:#e7f0ff;border-color:#e7f0ff">M</span>
+            Maria T.
+          </div>
+          <div class="fauna-muted">“The carving arrived perfectly packed, with a beautiful story card. Will order again.”</div>
+        </article>
+        <article class="fauna-card">
+          <div class="fauna-row" style="gap:8px;align-items:center;font-weight:800">
+            <span class="fauna-badge" style="width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:#e7f0ff;border-color:#e7f0ff">J</span>
+            Jason L.
+          </div>
+          <div class="fauna-muted">“Loved the painting in person — colours are richer than the photos.”</div>
+        </article>
+        <article class="fauna-card">
+          <div class="fauna-row" style="gap:8px;align-items:center;font-weight:800">
+            <span class="fauna-badge" style="width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:#e7f0ff;border-color:#e7f0ff">A</span>
+            Anna R.
+          </div>
+          <div class="fauna-muted">“Print quality is amazing. Framing add-on saved me time.”</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       FAQ
+       ======================================================================= -->
+  <section id="faq" class="fauna-section">
+    <div class="fauna-container" data-faq>
+      <div class="fauna-kicker">FAQ</div>
+      <h2 class="fauna-h2">Buying & Shipping Art</h2>
+
+      <div class="fauna-grid fauna-section-tight">
+        <div class="fauna-faq-item">
+          <div class="fauna-faq-q" style="display:flex;justify-content:space-between;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--fauna-line);border-radius:12px;background:#fff;font-weight:800;">
+            Are these original artworks or prints? <span>+</span>
+          </div>
+          <div class="fauna-faq-a" style="display:none;padding:10px 14px;color:var(--fauna-muted);">
+            You can sell both on this template. Each product card should clearly state if it is an original, limited edition print or open print.
+          </div>
+        </div>
+
+        <div class="fauna-faq-item">
+          <div class="fauna-faq-q" style="display:flex;justify-content:space-between;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--fauna-line);border-radius:12px;background:#fff;font-weight:800;">
+            Do you ship outside PNG? <span>+</span>
+          </div>
+          <div class="fauna-faq-a" style="display:none;padding:10px 14px;color:var(--fauna-muted);">
+            Yes, this layout is designed for PNG-based artists who want to ship regionally and internationally. Your real store settings will control which countries you support.
+          </div>
+        </div>
+
+        <div class="fauna-faq-item">
+          <div class="fauna-faq-q" style="display:flex;justify-content:space-between;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--fauna-line);border-radius:12px;background:#fff;font-weight:800;">
+            How are artworks packed? <span>+</span>
+          </div>
+          <div class="fauna-faq-a" style="display:none;padding:10px 14px;color:var(--fauna-muted);">
+            We recommend rigid packaging, corner protectors and waterproof wrapping. Use the description area on each artwork to explain your packing process.
+          </div>
+        </div>
+
+        <div class="fauna-faq-item">
+          <div class="fauna-faq-q" style="display:flex;justify-content:space-between;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--fauna-line);border-radius:12px;background:#fff;font-weight:800;">
+            Can I request a custom piece? <span>+</span>
+          </div>
+          <div class="fauna-faq-a" style="display:none;padding:10px 14px;color:var(--fauna-muted);">
+            Yes. The “Request Commission” button at the top can be wired to your real commission form or chat flow in production.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Small CSS-only toggle behavior for FAQ (kept 1:1 with original) -->
+  <style>
+    [data-faq] .fauna-faq-item.fauna-open .fauna-faq-a{display:block !important;}
+  </style>
+
+  <!-- =======================================================================
+       FOOTER
+       ======================================================================= -->
+  <footer id="faunaContact" class="fauna-footer">
+    <div class="fauna-container fauna-cols">
+      <div>
+        <div class="fauna-brandmark" style="margin-bottom:10px">
+          <span class="fauna-dot"></span><span>Glondia Marketplace</span>
+        </div>
+        <p class="fauna-muted">A marketplace for artists, carvers and digital creators in PNG and beyond.</p>
+        <div class="fauna-row" style="margin-top:10px">
+          <span class="fauna-badge">Light Blue</span>
+          <span class="fauna-badge">Dark Blue</span>
+          <span class="fauna-badge fauna-good">Green Accent</span>
+        </div>
+      </div>
+
+      <div>
+        <h4>Marketplace</h4>
+        <div class="fauna-form-row">
+          <a href="#">Global Feed</a>
+          <a href="#">Products</a>
+          <a href="#">Templates</a>
+          <a href="#">Purchase Flow</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Account</h4>
+        <div class="fauna-form-row">
+          <a href="#">Sign In / Up</a>
+          <a href="#">Buyer Profile</a>
+          <a href="#">Seller Profile</a>
+          <a href="#">Seller Dashboard</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <div class="fauna-form-row">
+          <a href="#">Terms & Policies</a>
+          <a href="#">Payout Policy</a>
+          <a href="#" data-toast="Security module is frontend-only right now.">Security</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fauna-container fauna-section-tight fauna-muted" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+      <small>© 2025 Glondia. All rights reserved.</small>
+      <small>Artists store profile template.</small>
+    </div>
+  </footer>
+
+  <!-- =======================================================================
+       GLOBAL UI: Toast + Modal (single instances)
+       ======================================================================= -->
+  <div class="fauna-toast" role="status" aria-live="polite"></div>
+
+  <div class="fauna-modal" data-modal aria-label="Modal" role="dialog" aria-modal="true">
+    <div class="fauna-modal-panel fauna-container" data-modal-body></div>
+  </div>
+
+  <!-- Merged JS -->
+  <script src="fauna.js"></script>
+</body>
+</html>

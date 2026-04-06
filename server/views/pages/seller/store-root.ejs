@@ -1,0 +1,72 @@
+<div class="template-chooser" id="chooser">
+  <div class="chooser-content">
+    <header class="chooser-shell">
+      <div class="chooser-shell__copy">
+        <span class="chooser-shell__badge" id="templateFlowBadge">Seller onboarding</span>
+        <h1 class="chooser-shell__title" id="templateFlowTitle">Choose your storefront template</h1>
+        <p class="chooser-shell__text" id="templateFlowCopy">
+          Start with the template that best matches how you sell, then continue into store setup.
+        </p>
+      </div>
+      <div class="chooser-shell__actions">
+        <a class="shell-link" id="templateFlowDashboardLink" href="/seller/dashboard" hidden>Dashboard</a>
+        <a class="shell-link" id="templateFlowSettingsLink" href="/seller/store/settings" hidden>Store settings</a>
+        <a class="shell-link shell-link--primary" id="templateFlowPreviewLink" href="/seller/templates/products" hidden>
+          Preview current template
+        </a>
+      </div>
+    </header>
+
+    <section class="template-status-card" id="templateStatusCard" hidden>
+      <div class="template-status-card__copy">
+        <p class="template-status-card__eyebrow" id="templateStatusEyebrow">Current selection</p>
+        <h2 class="template-status-card__title" id="templateStatusTitle">Products Store</h2>
+        <p class="template-status-card__text" id="templateStatusText">
+          Built for inventory-led selling with product galleries and catalog-first browsing.
+        </p>
+      </div>
+      <div class="template-status-card__meta">
+        <span class="template-status-pill" id="templateStatusFamily">Physical products</span>
+        <span class="template-status-pill" id="templateStatusMode">Onboarding flow</span>
+      </div>
+    </section>
+
+    <div class="step" id="preview-mode">
+      <span class="template-badge" id="badge">Products</span>
+
+      <h2 class="chooser-title" id="title">Physical Products Store</h2>
+      <p class="chooser-subtitle" id="subtitle">
+        Sell anything you can ship - bilums, phones, coffee, clothes.
+      </p>
+
+      <div class="features" id="features"></div>
+    </div>
+
+    <div class="step" id="selection-mode" style="display:none;">
+      <h2 class="chooser-title">Choose your store template</h2>
+      <p class="chooser-subtitle">Pick the storefront style that best matches your business.</p>
+      <div class="selection-grid" id="selection-grid"></div>
+    </div>
+
+    <div class="step" id="sub-selection-mode" style="display:none;">
+      <h2 class="chooser-title">Choose a creative services template</h2>
+      <p class="chooser-subtitle">Select the version that fits your services and presentation style.</p>
+      <div class="selection-grid" id="sub-grid"></div>
+    </div>
+
+    <div class="step" id="sub-selection-mode-c" style="display:none;">
+      <h2 class="chooser-title">Choose a learning template</h2>
+      <p class="chooser-subtitle">Select the storefront structure that fits your classes or consultations.</p>
+      <div class="selection-grid" id="sub-grid-c"></div>
+    </div>
+
+    <div class="nav-controls">
+      <div class="dots" id="dots"></div>
+
+      <div class="buttons">
+        <button class="btn-nav btn-prev" id="prev" type="button">Previous</button>
+        <button class="btn-nav btn-next" id="next" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,224 @@
+<%- include('../../partials/buyer/profile-nav') %>
+
+<main class="buyer-settings-shell">
+  <section class="buyer-settings-hero">
+    <div>
+      <p class="buyer-settings-hero__eyebrow">Buyer account</p>
+      <h1>Settings and saved details</h1>
+      <p>
+        Keep your buyer profile, saved preferences, addresses, and recently viewed listings in one place.
+      </p>
+    </div>
+    <div class="buyer-settings-hero__actions">
+      <a class="buyer-settings-link" href="/buyer/profile">Back to profile</a>
+      <a class="buyer-settings-link" href="/buyer/purchases">Orders</a>
+    </div>
+  </section>
+
+  <section class="buyer-settings-status" id="buyerSettingsStatus" hidden aria-live="polite"></section>
+
+  <section class="buyer-settings-layout">
+    <aside class="buyer-settings-panel" aria-label="Buyer settings navigation">
+      <section class="buyer-settings-panel__summary">
+        <div class="buyer-settings-panel__cover" id="buyerSettingsPanelCover">
+          <div class="buyer-settings-panel__avatar" id="buyerSettingsPanelAvatar" aria-label="Buyer profile photo">B</div>
+        </div>
+        <div class="buyer-settings-panel__identity">
+          <p class="buyer-settings-kicker">Profile preview</p>
+          <h2 id="buyerSettingsPanelName">Buyer account</h2>
+          <p id="buyerSettingsPanelEmail">you@example.com</p>
+          <span class="buyer-settings-panel__note">Profile visuals and account details update here before they go live on your buyer profile.</span>
+        </div>
+      </section>
+
+      <nav class="buyer-settings-nav">
+        <a class="buyer-settings-nav__item buyer-settings-nav__item--active" href="#buyerSettingsAccountCard">
+          <strong>Profile details</strong>
+          <span>Name, bio, avatar, and cover</span>
+        </a>
+        <a class="buyer-settings-nav__item" href="#buyerSettingsAddressCard">
+          <strong>Address book</strong>
+          <span>Shipping and billing details</span>
+        </a>
+        <a class="buyer-settings-nav__item" href="#buyerSettingsRecentCard">
+          <strong>Recently viewed</strong>
+          <span>Latest browsing signals</span>
+        </a>
+      </nav>
+
+      <div class="buyer-settings-panel__links">
+        <a class="buyer-settings-link" href="/buyer/profile">Back to profile</a>
+        <a class="buyer-settings-link" href="/buyer/purchases">Orders</a>
+        <a class="buyer-settings-link" href="/marketplace">Marketplace</a>
+      </div>
+    </aside>
+
+    <div class="buyer-settings-content">
+      <section class="buyer-settings-grid">
+        <section class="buyer-settings-card" id="buyerSettingsAccountCard">
+          <div class="buyer-settings-card__head">
+            <div>
+              <p class="buyer-settings-kicker">Profile</p>
+              <h2>Buyer details</h2>
+            </div>
+          </div>
+
+          <form id="buyerSettingsForm" class="buyer-settings-form">
+            <section class="buyer-settings-media buyer-settings-field--full" aria-label="Buyer profile visuals">
+              <article class="buyer-settings-media-card buyer-settings-media-card--cover">
+                <div class="buyer-settings-media-card__head">
+                  <div>
+                    <h3>Cover photo</h3>
+                    <p>Shown behind your buyer profile header.</p>
+                  </div>
+                </div>
+                <div class="buyer-settings-media-preview buyer-settings-media-preview--cover" id="buyerSettingsCoverPreview">
+                  <span class="buyer-settings-media-preview__placeholder">Add a cover photo</span>
+                </div>
+                <label class="buyer-settings-field buyer-settings-field--compact">
+                  <span>Cover path or image URL</span>
+                  <input id="buyerSettingsCoverUrl" name="coverUrl" type="text" placeholder="/uploads/... or https://..." />
+                </label>
+                <div class="buyer-settings-media-actions">
+                  <label class="buyer-settings-btn" for="buyerSettingsCoverFile">Upload cover</label>
+                  <input id="buyerSettingsCoverFile" type="file" accept="image/png,image/jpeg,image/jpg,image/webp,image/gif" hidden />
+                  <button class="buyer-settings-btn" id="buyerSettingsCoverClearBtn" type="button">Remove cover</button>
+                </div>
+              </article>
+
+              <article class="buyer-settings-media-card buyer-settings-media-card--avatar">
+                <div class="buyer-settings-media-card__head">
+                  <div>
+                    <h3>Profile picture</h3>
+                    <p>Used on your buyer profile and activity areas.</p>
+                  </div>
+                </div>
+                <div class="buyer-settings-avatar-preview" id="buyerSettingsAvatarPreview" aria-label="Buyer avatar preview">B</div>
+                <label class="buyer-settings-field buyer-settings-field--compact">
+                  <span>Profile photo path or image URL</span>
+                  <input id="buyerSettingsAvatarUrl" name="avatarUrl" type="text" placeholder="/uploads/... or https://..." />
+                </label>
+                <div class="buyer-settings-media-actions">
+                  <label class="buyer-settings-btn" for="buyerSettingsAvatarFile">Upload photo</label>
+                  <input id="buyerSettingsAvatarFile" type="file" accept="image/png,image/jpeg,image/jpg,image/webp,image/gif" hidden />
+                  <button class="buyer-settings-btn" id="buyerSettingsAvatarClearBtn" type="button">Remove photo</button>
+                </div>
+              </article>
+            </section>
+
+            <label class="buyer-settings-field">
+              <span>Full name</span>
+              <input id="buyerSettingsFullName" name="fullName" type="text" placeholder="Your full name" />
+            </label>
+
+            <label class="buyer-settings-field">
+              <span>Email</span>
+              <input id="buyerSettingsEmail" name="email" type="email" placeholder="you@example.com" readonly />
+            </label>
+
+            <label class="buyer-settings-field">
+              <span>Phone</span>
+              <input id="buyerSettingsPhone" name="phone" type="text" placeholder="Phone number" />
+            </label>
+
+            <label class="buyer-settings-field buyer-settings-field--full">
+              <span>Bio</span>
+              <textarea id="buyerSettingsBio" name="bio" rows="4" placeholder="Tell the marketplace a little about your buyer interests."></textarea>
+            </label>
+
+            <label class="buyer-settings-field buyer-settings-field--full">
+              <span>Favorite categories</span>
+              <input id="buyerSettingsCategories" name="favoriteCategories" type="text" placeholder="products, art, music" />
+              <small>Use commas to separate categories.</small>
+            </label>
+
+            <label class="buyer-settings-field buyer-settings-field--full">
+              <span>Favorite storefront styles</span>
+              <input id="buyerSettingsTemplates" name="favoriteTemplates" type="text" placeholder="products, art, music" />
+              <small>Use commas to separate storefront styles.</small>
+            </label>
+
+            <div class="buyer-settings-form__actions">
+              <button class="buyer-settings-btn buyer-settings-btn--primary" id="buyerSettingsSaveBtn" type="submit">
+                Save settings
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="buyer-settings-card" id="buyerSettingsAddressCard">
+          <div class="buyer-settings-card__head">
+            <div>
+              <p class="buyer-settings-kicker">Addresses</p>
+              <h2>Address book</h2>
+            </div>
+          </div>
+
+          <div class="buyer-settings-addresses" id="buyerAddressList"></div>
+
+          <form id="buyerAddressForm" class="buyer-settings-form buyer-settings-form--compact">
+            <input id="buyerAddressId" type="hidden" value="" />
+
+            <label class="buyer-settings-field">
+              <span>Address type</span>
+              <select id="buyerAddressType" name="addressType">
+                <option value="shipping">Shipping</option>
+                <option value="billing">Billing</option>
+              </select>
+            </label>
+
+            <label class="buyer-settings-field buyer-settings-field--full">
+              <span>Address line 1</span>
+              <input id="buyerAddressLine1" name="addressLine1" type="text" placeholder="Street, suburb, landmark" />
+            </label>
+
+            <label class="buyer-settings-field buyer-settings-field--full">
+              <span>Address line 2</span>
+              <input id="buyerAddressLine2" name="addressLine2" type="text" placeholder="Apartment, level, unit (optional)" />
+            </label>
+
+            <label class="buyer-settings-field">
+              <span>City</span>
+              <input id="buyerAddressCity" name="city" type="text" placeholder="Port Moresby" />
+            </label>
+
+            <label class="buyer-settings-field">
+              <span>Region</span>
+              <input id="buyerAddressRegion" name="region" type="text" placeholder="NCD" />
+            </label>
+
+            <label class="buyer-settings-field">
+              <span>Postal code</span>
+              <input id="buyerAddressPostalCode" name="postalCode" type="text" placeholder="121" />
+            </label>
+
+            <label class="buyer-settings-field">
+              <span>Country code</span>
+              <input id="buyerAddressCountryCode" name="countryCode" type="text" placeholder="PG" maxlength="3" />
+            </label>
+
+            <div class="buyer-settings-form__actions">
+              <button class="buyer-settings-btn buyer-settings-btn--primary" id="buyerAddressSaveBtn" type="submit">
+                Save address
+              </button>
+              <button class="buyer-settings-btn" id="buyerAddressCancelBtn" type="button">
+                Clear
+              </button>
+            </div>
+          </form>
+        </section>
+      </section>
+
+      <section class="buyer-settings-card" id="buyerSettingsRecentCard">
+        <div class="buyer-settings-card__head">
+          <div>
+            <p class="buyer-settings-kicker">Signals</p>
+            <h2>Recently viewed</h2>
+          </div>
+          <a class="buyer-settings-link" href="/marketplace">Browse marketplace</a>
+        </div>
+        <div class="buyer-settings-history" id="buyerSettingsRecentList"></div>
+      </section>
+    </div>
+  </section>
+</main>

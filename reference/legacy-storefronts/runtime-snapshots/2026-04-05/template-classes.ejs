@@ -1,0 +1,277 @@
+<!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg reef-navbar shadow-sm">
+    <div class="container-xxl d-flex align-items-center justify-content-between">
+      <a class="navbar-brand reef-brand" href="#">Ocean Studio</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#reefMainNav" aria-controls="reefMainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="reefMainNav">
+        <ul class="navbar-nav reef-nav-links me-3">
+          <li class="nav-item"><a class="nav-link" href="#">Studio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Programs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Journal</a></li>
+        </ul>
+
+        <div class="d-flex flex-wrap align-items-center gap-2 me-3">
+          <a href="/auth/signin?role=seller" class="zest-account-btn">Switch Account</a>
+          <form action="/auth/logout" method="post" class="m-0">
+            <input type="hidden" name="redirectTo" value="/auth/signin?signedOut=1&role=seller" />
+            <button type="submit" class="zest-account-btn zest-account-btn--primary">Sign Out</button>
+          </form>
+        </div>
+
+        <a href="#coralCourseReef" class="btn btn-sm reef-cta-btn">Browse courses</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="reef-hero reef-hero-alt position-relative">
+    <div class="reef-hero-gradient"></div>
+    <div class="container-xxl h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12 col-lg-6 order-2 order-lg-1">
+          <div class="reef-hero-copy">
+            <p class="reef-hero-kicker">Ocean Studio · Teaching</p>
+            <h1 class="reef-hero-title">Deep work for sensitive high achievers.</h1>
+            <p class="reef-hero-sub">
+              Nervous-system-safe programs on emotional intelligence, identity, and sustainable ambition.
+              Learn in a way that honours your pace instead of punishing it.
+            </p>
+            <div class="reef-hero-chips">
+              <span class="reef-chip">Live cohorts</span>
+              <span class="reef-chip">Self-paced journeys</span>
+              <span class="reef-chip">Research-informed</span>
+
+            </div>
+            <div class="reef-hero-ctas mt-3">
+              <a href="#coralCourseReef" class="btn reef-hero-btn-main">See all programs</a>
+              <button type="button" class="btn reef-hero-btn-ghost" onclick="window.scrollTo({ top: document.querySelector('.reef-about-shell').offsetTop - 80, behavior: 'smooth' });">
+                About this studio
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-5 offset-lg-1 order-1 order-lg-2 mb-4 mb-lg-0">
+          <aside class="reef-hero-profile-card">
+            <div class="reef-hero-avatar-shell reef-hero-avatar-shell-alt">
+              <img
+                class="reef-hero-avatar-img"
+                src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800"
+                alt="Instructor portrait"
+              >
+            </div>
+            <div class="reef-hero-profile-body">
+              <h2 class="reef-profile-name">Dr. Maya Chen</h2>
+              <p class="reef-profile-title">Psychologist · Researcher · Educator</p>
+              <div class="reef-profile-stats row g-2">
+                <div class="col-4">
+                  <div class="reef-profile-stat">
+                    <span class="reef-profile-stat-label">Students</span>
+                    <span class="reef-profile-stat-value">10,482</span>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="reef-profile-stat">
+                    <span class="reef-profile-stat-label">Programs</span>
+                    <span class="reef-profile-stat-value">9</span>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="reef-profile-stat">
+                    <span class="reef-profile-stat-label">Rating</span>
+                    <span class="reef-profile-stat-value">4.9★</span>
+                  </div>
+                </div>
+              </div>
+              <p class="reef-profile-meta">Updated 3 days ago · New cohorts open monthly.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT SHELL -->
+  <main class="container-xxl reef-main-shell">
+
+    <!-- ABOUT / BACKGROUND SECTION -->
+    <section class="reef-about-shell">
+      <div class="row g-4">
+        <div class="col-12 col-lg-5">
+          <article class="reef-about-card">
+            <h2 class="reef-about-title">About this studio</h2>
+            <p class="reef-about-text">
+              Ocean Studio is built for people who feel everything deeply but still want to do brave,
+              ambitious work. Each program is designed to move at a nervous-system-safe pace, weaving
+              together story, research, and embodied practice.
+            </p>
+
+            
+
+            <p class="reef-about-text mb-0">
+              Think of this as a quiet, well-lit corner of the internet where you can exhale, learn,
+              and rebuild from the inside out—without needing to perform for anyone.
+            </p>
+          </article>
+        </div>
+        
+        <div class="col-12 col-lg-4">
+          <article class="reef-about-card reef-background-card">
+            <h2 class="reef-about-title">Meet Dr. Chen</h2>
+            <p class="reef-about-text">
+              Dr. Chen is a psychologist and researcher specialising in emotional resilience, identity
+              development, and gentle productivity. Her work bridges clinical psychology, somatic tools,
+              and long-form teaching.
+            </p>
+            <p class="reef-about-text mb-0">
+              Over the last decade she has guided thousands of students and clients through programs on
+              boundaries, nervous system literacy, and sustainable ambition.
+            </p>
+          </article>
+        </div>
+        <div class="col-12 col-lg-3">
+          <article class="reef-about-card reef-pillars-card">
+            <h2 class="reef-about-title">Pillars of this work</h2>
+            <ul class="reef-pillars-list">
+              <li>Depth over overwhelm</li>
+              <li>Science and story</li>
+              <li>Gentle accountability</li>
+              <li>Trauma-aware pacing</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- COURSES HEADER + CONTROLS -->
+    <section class="reef-section-header d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3">
+      <div>
+        <h2 class="reef-section-title">Programs & courses</h2>
+        <p class="reef-section-sub">
+          Curated journeys into emotional intelligence, identity, and nervous system literacy.
+          <span class="reef-section-micro">312 students joined this month.</span>
+        </p>
+      </div>
+
+      <div class="reef-controls d-flex flex-column align-items-md-end gap-2">
+        <div class="reef-select-wrap">
+          <label for="dolphinSort" class="reef-select-label">Sort by</label>
+          <select id="dolphinSort" class="form-select form-select-sm reef-select">
+            <option value="popular">Most popular</option>
+            <option value="newest">Newest</option>
+            <option value="priceLow">Price: Low → High</option>
+            <option value="priceHigh">Price: High → Low</option>
+            <option value="rating">Highest rated</option>
+            <option value="durationShort">Shortest duration</option>
+          </select>
+        </div>
+
+        <div class="reef-view-toggle-wrap">
+          <span class="reef-select-label d-block mb-1">View</span>
+          <div class="btn-group btn-group-sm" role="group" aria-label="View mode">
+            <button type="button" class="btn reef-view-toggle active" data-view="grid">Grid</button>
+            <button type="button" class="btn reef-view-toggle" data-view="list">List</button>
+            <button type="button" class="btn reef-view-toggle" data-view="compact">Compact</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading Indicator -->
+    <div id="planktonLoader" class="reef-loading d-none">
+      <div class="spinner-border spinner-border-sm" role="status"></div>
+      <span>Refreshing tide…</span>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyReef" class="reef-empty d-none">
+      <h5>No courses match your current view.</h5>
+      <p>Adjust your sorting or come back soon for new offerings.</p>
+    </div>
+
+    <!-- Course Grid/List -->
+    <section id="coralCourseReef" class="row g-4 reef-view-grid">
+      <!-- cards injected by JS -->
+    </section>
+
+    <!-- Pagination Controls -->
+    <div id="tidePagination" class="reef-pagination d-flex justify-content-center align-items-center gap-2">
+      <!-- controls injected by JS -->
+    </div>
+
+    <!-- STUDENT REVIEWS -->
+    <section class="reef-reviews-shell">
+      <div class="reef-section-header mb-3 flex-column align-items-start">
+        <div>
+          <h3 class="reef-subtitle">Student reflections</h3>
+          <p class="reef-section-sub">Snapshots of how this work has landed in real lives.</p>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="reef-review-card">
+            <p class="reef-review-quote">“I finally have language for what my nervous system has been trying to tell me for years.”</p>
+            <div class="reef-review-meta">
+              <span class="reef-review-name">Amira K.</span>
+              <span class="reef-review-tag">Emotional Intelligence Mastery</span>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="reef-review-card">
+            <p class="reef-review-quote">“The structure kept me accountable without ever feeling shamed or rushed.”</p>
+            <div class="reef-review-meta">
+              <span class="reef-review-name">Lucian P.</span>
+              <span class="reef-review-tag">Slow Productivity</span>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="reef-review-card">
+            <p class="reef-review-quote">“I came for tools. I left with an entirely different relationship to myself.”</p>
+            <div class="reef-review-meta">
+              <span class="reef-review-name">Brianna S.</span>
+              <span class="reef-review-tag">Boundaries &amp; Relationships</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="reef-footer reef-footer-alt">
+    <div class="container-xxl">
+      <div class="reef-footer-inner">
+        <div class="reef-footer-main">
+          <span class="reef-footer-brand">Ocean Studio</span>
+          <p class="reef-footer-text">
+            Quiet, research-informed programs for people who care about depth, nuance, and nervous-system-safe growth.
+          </p>
+        </div>
+        <div class="reef-footer-meta">
+          <a href="#" class="reef-footer-link">Privacy</a>
+          <a href="#" class="reef-footer-link">Terms</a>
+          <span class="reef-footer-copy">© 2025 Ocean Studio. All rights reserved.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- QUICK VIEW MODAL -->
+  <div id="krakenModal" class="kraken-modal d-none" aria-hidden="true">
+    <div class="kraken-backdrop"></div>
+    <div class="kraken-dialog" role="dialog" aria-modal="true">
+      <button id="krakenClose" class="kraken-close" aria-label="Close quick view">&times;</button>
+      <div id="krakenContent" class="kraken-body">
+        <!-- content populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  
+
+  <!-- App Script -->

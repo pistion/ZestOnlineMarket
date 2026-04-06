@@ -1,0 +1,630 @@
+<%
+  const isPublicStore = page.bodyAttrs && page.bodyAttrs["public-store"] === "1";
+%>
+
+<div class="modal" id="createModal" aria-hidden="true">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="modal-close" type="button" aria-label="Close editor">&times;</button>
+    <div class="modal-head">
+      <p class="modal-kicker">Products Store</p>
+      <h2 class="wizard-title" id="modalTitle">Create a new listing</h2>
+      <p class="modal-copy" id="modalCopy">Add another product to your store without reopening setup.</p>
+    </div>
+
+    <div class="wizard-steps" aria-label="Listing steps">
+      <div class="wizard-step" data-step="1">1</div>
+      <div class="wizard-step" data-step="2">2</div>
+      <div class="wizard-step" data-step="3">3</div>
+      <div class="wizard-step" data-step="4">4</div>
+    </div>
+
+    <form id="createProductForm">
+      <div class="wizard-screen" data-screen="1">
+        <label class="field">
+          <span>Listing title</span>
+          <input type="text" id="productName" maxlength="80" required>
+        </label>
+
+        <label class="field">
+          <span>Product description</span>
+          <textarea id="productDescription" rows="4" maxlength="500" required></textarea>
+        </label>
+
+        <div class="wizard-nav wizard-nav--end">
+          <button type="button" class="btn-next">Next</button>
+        </div>
+      </div>
+
+      <div class="wizard-screen" data-screen="2">
+        <div class="grid two">
+          <label class="field">
+            <span>Price</span>
+            <div class="field-prefix">
+              <span class="prefix">K</span>
+              <input type="number" id="productPrice" min="0" step="0.01" required>
+            </div>
+          </label>
+
+          <label class="field">
+            <span>Available stock</span>
+            <input type="number" id="productStock" min="0" step="1" value="0" required>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Transport fee</span>
+          <div class="field-prefix">
+            <span class="prefix">K</span>
+            <input type="number" id="transportFee" min="0" step="0.01">
+          </div>
+        </label>
+
+        <div class="wizard-nav">
+          <button type="button" class="btn-back">Back</button>
+          <button type="button" class="btn-next">Next</button>
+        </div>
+      </div>
+
+      <div class="wizard-screen" data-screen="3">
+        <div class="grid two">
+          <label class="field">
+            <span>Listing status</span>
+            <select id="productStatus">
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+              <option value="archived">Archived</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Visibility</span>
+            <select id="productVisibility">
+              <option value="public">Public</option>
+              <option value="unlisted">Unlisted</option>
+              <option value="private">Private</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Delivery details</span>
+          <textarea id="deliveryInfo" rows="3" maxlength="220"></textarea>
+        </label>
+
+        <label class="field">
+          <span>Business location</span>
+          <input type="text" id="businessLocation" maxlength="120">
+        </label>
+
+        <div class="field field--stack">
+          <div class="field-row">
+            <span>Variants and option stock</span>
+            <button type="button" class="btn-back btn-back--soft" id="addVariantBtn">Add variant</button>
+          </div>
+          <p class="field-help">
+            Use variants for sizes, colors, or option-based stock. When variants are present, their combined stock becomes the live stock total.
+          </p>
+          <div id="variantList" class="variant-list"></div>
+          <p id="variantEmpty" class="field-help field-help--muted">No variants yet. Keep this empty for a single-option listing.</p>
+        </div>
+
+        <div class="wizard-nav">
+          <button type="button" class="btn-back">Back</button>
+          <button type="button" class="btn-next">Next</button>
+        </div>
+      </div>
+
+      <div class="wizard-screen" data-screen="4">
+        <label class="field">
+          <span>Listing photos</span>
+          <input type="file" id="productImages" accept="image/*" multiple>
+        </label>
+
+        <div id="productImagePreviewGrid" class="wizard-image-grid"></div>
+        <div class="wizard-inline-actions">
+          <button type="button" class="btn-back btn-back--soft" id="clearProductImages">Clear gallery</button>
+          <p class="wizard-inline-copy">Upload new photos to replace the current gallery, or clear the gallery entirely.</p>
+        </div>
+        <p id="imgWarning" class="img-warning" hidden></p>
+
+        <div class="editor-summary">
+          <div>
+            <span class="summary-label">Title</span>
+            <strong id="summaryName">New listing</strong>
+          </div>
+          <div>
+            <span class="summary-label">Price</span>
+            <strong id="summaryPrice">K0.00</strong>
+          </div>
+          <div>
+            <span class="summary-label">Stock</span>
+            <strong id="summaryStock">0 in stock</strong>
+          </div>
+          <div>
+            <span class="summary-label">Status</span>
+            <strong id="summaryStatus">Published</strong>
+          </div>
+        </div>
+
+        <div class="wizard-nav">
+          <button type="button" class="btn-back">Back</button>
+          <button type="submit" class="btn-primary">Save listing</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="settings-overlay" id="settingsOverlay"></div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-branding">
+      <a class="brand" id="storeBrand" href="/marketplace">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span id="storeBrandLabel">Products Store</span>
+      </a>
+      <p class="brand-caption">Product-led storefront workspace</p>
+    </div>
+
+    <div class="topbar-actions">
+      <nav class="nav" id="products-store-nav" data-nav aria-label="Store navigation">
+        <div class="nav-group nav-group--main">
+          <a href="/feed" title="Global Feed">
+            <i class="fa-solid fa-earth-americas"></i>
+            <span>Global Feed</span>
+          </a>
+
+          <a href="/marketplace" title="Marketplace">
+            <i class="fa-solid fa-compass"></i>
+            <span>Marketplace</span>
+          </a>
+
+          <a href="/seller/store/settings" title="Store Settings" data-seller-only="true">
+            <i class="fa-solid fa-store"></i>
+            <span>Store Settings</span>
+          </a>
+
+          <a href="/seller/dashboard" title="Dashboard" data-seller-only="true">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Dashboard</span>
+          </a>
+        </div>
+      </nav>
+
+      <button
+        class="chip nav-toggle"
+        type="button"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="products-store-nav"
+        aria-label="Toggle navigation"
+        style="display: none;"
+      >
+        <i class="fa-solid fa-bars"></i>
+        <span>Menu</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal"
+  id="deleteConfirmModal"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="deleteConfirmTitle"
+  aria-describedby="deleteConfirmCopy"
+>
+  <div class="modal-backdrop"></div>
+  <div class="modal-content modal-content--compact">
+    <button class="modal-close" type="button" aria-label="Close delete confirmation">&times;</button>
+    <div class="modal-head modal-head--compact">
+      <p class="modal-kicker">Confirm delete</p>
+      <h2 class="wizard-title" id="deleteConfirmTitle">Delete item</h2>
+      <p class="modal-copy" id="deleteConfirmCopy">This action cannot be undone.</p>
+    </div>
+
+    <p id="deleteConfirmWarning" class="img-warning" hidden></p>
+
+    <div class="wizard-nav wizard-nav--end wizard-nav--compact">
+      <button type="button" class="btn-back" id="cancelDeleteAction">Cancel</button>
+      <button type="button" class="btn-danger" id="confirmDeleteAction">
+        <i class="fa-solid fa-trash-can"></i>
+        <span>Delete</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <section class="profile-shell">
+    <div class="profile-banner banner" id="storeBanner"></div>
+
+    <div class="profile-card">
+      <div class="profile-identity">
+        <div class="profile-avatar avatar" id="storeAvatar">S</div>
+
+        <div class="profile-main">
+          <div class="profile-main__top">
+            <div class="name-block">
+              <div class="eyebrow" id="storeEyebrow">Template A - Products Store</div>
+              <h1 class="name" id="storeName">Featured Products Store</h1>
+              <div class="handle" id="storeHandle">@store</div>
+            </div>
+
+            <div class="profile-actions">
+              <button class="follow-btn" id="followBtn" type="button">Follow</button>
+
+              <div class="share-block">
+                <button class="share-main" id="shareStoreBtn" type="button">
+                  <i class="fa-solid fa-share-nodes"></i>
+                  <span>Share</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <p class="about" id="storeAbout">
+            A polished storefront for products, curated offers, and everyday items your buyers can trust.
+          </p>
+
+          <div class="contact-pills" id="storePills">
+            <span class="pill"><i class="fa-solid fa-store"></i> Storefront ready</span>
+            <span class="pill"><i class="fa-solid fa-box"></i> Product-led experience</span>
+            <span class="pill"><i class="fa-solid fa-location-dot"></i> Location updates</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="store-overview">
+    <article class="welcome-card">
+      <div class="section-kicker">Welcome</div>
+      <div class="welcome-head">
+        <div>
+          <h1 class="welcome-title" id="summaryTitle">Browse products and offers</h1>
+          <p class="welcome-copy" id="summaryText">
+            Explore the featured listing, review delivery details, and move cleanly from store page to product page.
+          </p>
+        </div>
+
+        <div class="chips" id="summaryChips">
+          <span class="status-chip">Products Store</span>
+          <span class="status-chip">Featured Listing</span>
+          <span class="status-chip status-chip--good">Live Preview</span>
+        </div>
+      </div>
+    </article>
+
+    <div class="store-feature-cards" id="featureCards">
+      <article class="feature-card">
+        <div class="feature-icon">
+          <i class="fa-solid fa-truck-fast"></i>
+        </div>
+        <div class="feature-content">
+          <h3 id="featureOneTitle">Delivery and transport</h3>
+          <p id="featureOneText">Shipping and delivery details appear here when a product is available.</p>
+          <span class="feature-tag" id="featureOneTag">Store detail</span>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">
+          <i class="fa-solid fa-boxes-stacked"></i>
+        </div>
+        <div class="feature-content">
+          <h3 id="featureTwoTitle">Featured offer</h3>
+          <p id="featureTwoText">Your main product summary and price are surfaced here for quick scanning.</p>
+          <span class="feature-tag" id="featureTwoTag">Main listing</span>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">
+          <i class="fa-solid fa-shield-heart"></i>
+        </div>
+        <div class="feature-content">
+          <h3 id="featureThreeTitle">Store confidence</h3>
+          <p id="featureThreeText">Use this area to reinforce trust, responsiveness, and storefront clarity.</p>
+          <span class="feature-tag" id="featureThreeTag">Buyer friendly</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section updates-section" id="updatesSection" aria-labelledby="updatesSectionTitle">
+    <div class="updates-layout">
+      <div class="section-head updates-head">
+        <div class="updates-head__copy">
+          <div class="section-kicker">Store updates</div>
+          <h2 class="section-title" id="updatesSectionTitle">Latest updates from this stall</h2>
+          <p class="section-sub" id="updatesSubhead">
+            Follow along for announcements, promo drops, and quick live-release updates from the seller.
+          </p>
+        </div>
+
+        <% if (!isPublicStore) { %>
+          <div class="updates-actions">
+            <button
+              id="toggleUpdateComposer"
+              class="products-add-btn"
+              type="button"
+              aria-expanded="false"
+              aria-controls="updatesComposer"
+            >
+              <i class="fa-solid fa-bullhorn"></i>
+              <span>Post update</span>
+            </button>
+          </div>
+        <% } %>
+      </div>
+
+      <% if (!isPublicStore) { %>
+        <div class="updates-composer" id="updatesComposer" hidden>
+          <div class="updates-composer__head">
+            <div>
+              <p class="modal-kicker">Store update</p>
+              <h3>Publish a social-style update</h3>
+              <p class="updates-composer__copy">Share a caption, attach photos, and optionally link a live listing so the post feels social without losing the buying path.</p>
+            </div>
+            <button id="cancelUpdateComposer" class="btn-back" type="button">Close</button>
+          </div>
+
+          <form id="updateComposerForm" class="updates-form">
+            <div class="updates-form__row">
+              <label class="field">
+                <span>Update type</span>
+                <select id="updateType" required>
+                  <option value="announcement">Text update</option>
+                  <option value="promo">Promo post</option>
+                  <option value="live_drop">Live drop</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Headline (optional)</span>
+                <input type="text" id="updateTitle" maxlength="120" placeholder="Short headline for the post">
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Caption</span>
+              <textarea id="updateDescription" rows="5" maxlength="600" placeholder="Tell buyers what is happening, what is new, or what they should know..." required></textarea>
+            </label>
+
+            <label class="field">
+              <span>Link a live listing (optional)</span>
+              <select id="updateLinkedProduct">
+                <option value="">No linked listing</option>
+              </select>
+            </label>
+
+            <label class="field field--file">
+              <span>Post photos</span>
+              <input type="file" id="updateImages" accept="image/*" multiple>
+            </label>
+
+            <div class="updates-image-grid" id="updateImagePreviewGrid"></div>
+            <p class="updates-helper">You can post text only, add supporting photos, or connect one live listing for a direct follow-through.</p>
+
+            <p id="updateWarning" class="img-warning" hidden></p>
+
+            <div class="wizard-nav wizard-nav--end">
+              <button type="submit" class="btn-primary" id="submitUpdatePost">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Publish update</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      <% } %>
+
+      <div class="updates-list" id="updatesList" role="feed" aria-live="polite"></div>
+
+      <div class="empty-state updates-empty" id="updatesEmpty" hidden>
+        <div class="empty-state__icon">
+          <i class="fa-solid fa-bullhorn"></i>
+        </div>
+        <h3 id="updatesEmptyTitle">No updates yet</h3>
+        <p id="updatesEmptyText">This store has not posted any extra updates yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section products-section" id="productsSection" data-view="grid">
+    <div class="section-head products-head">
+      <div class="products-heading">
+        <div class="section-kicker">Store catalog</div>
+        <h2 class="section-title">Products</h2>
+        <div class="section-sub" id="productsSubhead">Browse the store's current featured listings.</div>
+      </div>
+
+      <div class="products-controls">
+        <div class="products-controls__meta">
+          <div class="view-toggle-group" aria-label="Change product layout">
+            <button id="gridViewBtn" class="view-toggle is-active" type="button" aria-label="Grid view">
+              <i class="fa-solid fa-table-cells"></i>
+            </button>
+            <button id="listViewBtn" class="view-toggle" type="button" aria-label="List view">
+              <i class="fa-solid fa-list-ul"></i>
+            </button>
+          </div>
+
+          <label class="control-field control-field--search" aria-label="Search products">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="searchInput" type="text" class="products-search" placeholder="Search products...">
+          </label>
+        </div>
+
+        <div class="products-controls__filters">
+          <% if (!isPublicStore) { %>
+            <select id="productStatusFilter" class="products-filter" aria-label="Filter by listing status">
+              <option value="all">All statuses</option>
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+              <option value="archived">Archived</option>
+            </select>
+          <% } %>
+
+          <select id="deliveryFilter" class="products-filter" aria-label="Filter by delivery">
+            <option value="all">All delivery types</option>
+            <option value="delivery">Has delivery info</option>
+            <option value="pickup">Pickup or local collection</option>
+          </select>
+
+          <select id="sortFilter" class="products-filter" aria-label="Sort products">
+            <option value="newest">Newest first</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+            <option value="name">Name</option>
+          </select>
+
+          <button id="createSectionBtn" class="products-add-btn" type="button" data-seller-only="true">
+            <i class="fa-solid fa-plus"></i>
+            <span>New listing</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-head">
+      <div class="group-title">Current listings</div>
+      <div class="group-note" id="recentCount">No items</div>
+    </div>
+    <div class="products-grid" id="recentGrid"></div>
+
+    <div class="archive-section" id="archiveSection" hidden>
+      <div class="group-head">
+        <div class="group-title">Older listings</div>
+        <div class="group-note" id="prevCount">No older items</div>
+      </div>
+      <div class="products-grid" id="prevGrid"></div>
+    </div>
+
+    <div class="empty-state" id="emptyState" hidden>
+      <div class="empty-state__icon">
+        <i class="fa-solid fa-box-open"></i>
+      </div>
+      <h3 id="emptyTitle">No products yet</h3>
+      <p id="emptyText">This store has not published a featured listing yet.</p>
+      <a id="emptyAction" class="empty-state__action" href="/seller/store">Set up store</a>
+    </div>
+  </section>
+
+  <section class="reviews-card">
+    <div class="section-kicker">Customer previews</div>
+    <div class="reviews-head">
+      <div>
+        <h2 class="section-title">What buyers notice first</h2>
+        <p class="section-sub">A clean listing, clear delivery notes, and a trustworthy storefront make the biggest difference.</p>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      <article class="review-card">
+        <strong>Clear listing details</strong>
+        <p>Short, confident product copy helps buyers decide faster.</p>
+      </article>
+      <article class="review-card">
+        <strong>Responsive selling</strong>
+        <p>Simple store actions and clean navigation reduce friction.</p>
+      </article>
+      <article class="review-card">
+        <strong>Trust-building layout</strong>
+        <p>The profile header and feature cards give the store more credibility.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="simple-footer">
+  <div class="simple-footer-inner">
+    <p>&copy; <span id="yearFooter"></span> Zest Marketplace. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/marketplace">Marketplace</a>
+      <a href="/errors/400">Store policy</a>
+      <a href="/errors/401">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<button class="fab" id="createFab" type="button" title="Create listing">
+  <i class="fa-solid fa-plus"></i>
+</button>
+
+<aside id="settingsPanel" aria-hidden="true">
+  <div class="settings-header">
+    <div>
+      <p class="settings-kicker">Store panel</p>
+      <h2>Products Store</h2>
+    </div>
+    <button id="closeSettings" class="settings-close" type="button" aria-label="Close settings">&times;</button>
+  </div>
+
+  <div class="settings-tabs">
+    <button class="tab active" data-tab="profile" type="button">Profile</button>
+    <button class="tab" data-tab="theme" type="button">Theme</button>
+    <button class="tab" data-tab="layout" type="button">Layout</button>
+    <button class="tab" data-tab="notes" type="button">Notes</button>
+  </div>
+
+  <div class="settings-scroll-area">
+    <section class="tab-screen active" id="tab-profile">
+      <div class="panel-card">
+        <h3>Store identity</h3>
+        <dl class="panel-list">
+          <div><dt>Name</dt><dd id="panelStoreName">Products Store</dd></div>
+          <div><dt>Handle</dt><dd id="panelStoreHandle">@store</dd></div>
+          <div><dt>Tagline</dt><dd id="panelStoreTagline">No tagline yet</dd></div>
+          <div><dt>About</dt><dd id="panelStoreAbout">Store details will appear here.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="tab-screen" id="tab-theme">
+      <div class="panel-card">
+        <h3>Theme direction</h3>
+        <p class="panel-copy">This template keeps the original blue and white products-store theme with cleaner spacing and stronger hierarchy.</p>
+        <div class="theme-preview" id="themePreview"></div>
+      </div>
+    </section>
+
+    <section class="tab-screen" id="tab-layout">
+      <div class="panel-card">
+        <h3>Store layout</h3>
+        <p class="panel-copy">Template A is optimized for product-led storefronts with a strong profile header and a single clean listings area.</p>
+        <div class="quick-actions">
+          <a class="panel-link" href="/seller/store/template">Change template</a>
+          <a class="panel-link" href="/seller/dashboard">Open dashboard</a>
+          <a class="panel-link" href="/seller/store/settings">Edit store setup</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-screen" id="tab-notes">
+      <div class="panel-card">
+        <h3>Store notes</h3>
+        <ul class="panel-notes" id="panelNotes">
+          <li>Keep the listing image clear and high contrast.</li>
+          <li>Use delivery details to reduce buyer questions.</li>
+          <li>Short descriptions convert better than crowded text blocks.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</aside>
+
+<div id="imageViewer" class="image-viewer">
+  <div class="iv-backdrop"></div>
+  <div class="iv-inner">
+    <button class="iv-prev" id="iv-prev" type="button" aria-label="Previous image">&#10094;</button>
+    <img id="iv-image" class="iv-image" src="" alt="">
+    <button class="iv-next" id="iv-next" type="button" aria-label="Next image">&#10095;</button>
+    <div class="iv-dots" id="iv-dots"></div>
+    <button class="iv-close" id="iv-close" type="button" aria-label="Close image viewer">&times;</button>
+  </div>
+</div>

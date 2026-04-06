@@ -1,0 +1,462 @@
+<button id="toggleSidebar" class="toggle-btn" aria-label="Toggle dashboard menu" type="button">
+    <i class="fas fa-bars"></i>
+</button>
+
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <h2><i class="fas fa-chart-pie"></i> Seller Dashboard</h2>
+        <button class="close-sidebar" aria-label="Close sidebar" type="button">&times;</button>
+    </div>
+
+    <div class="profile-section">
+        <div class="avatar avatar-badge" aria-hidden="true">HM</div>
+        <h3 id="sellerDashboardStoreName">Harmony Market</h3>
+        <p id="sellerDashboardStoreStatus">Seller operations center</p>
+        <div class="profile-meta-list">
+            <span id="sellerDashboardStoreMetric"><i class="fas fa-store"></i> 1 active stall</span>
+            <span id="sellerDashboardVisibilityMetric"><i class="fas fa-location-dot"></i> Store draft</span>
+        </div>
+        <div class="profile-session-actions" aria-label="Account actions">
+            <button class="profile-session-btn" id="sellerSwitchAccountBtn" type="button">
+                <i class="fas fa-right-left"></i> Switch Account
+            </button>
+            <button class="profile-session-btn profile-session-btn--primary" id="sellerSignOutBtn" type="button">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </button>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Dashboard sections">
+        <div class="sidebar-section">
+            <h3><i class="fas fa-chart-line"></i> Performance</h3>
+            <ul>
+                <li><button class="nav-btn active" data-section="analytics" type="button"><i class="fas fa-chart-line"></i> Overview</button></li>
+                <li><button class="nav-btn" data-section="sales" type="button"><i class="fas fa-sack-dollar"></i> Sales trends</button></li>
+                <li><button class="nav-btn" data-section="inventory" type="button"><i class="fas fa-boxes-stacked"></i> Inventory</button></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <h3><i class="fas fa-wallet"></i> Commerce</h3>
+            <ul>
+                <li><button class="nav-btn" data-route="/seller/orders" type="button"><i class="fas fa-bag-shopping"></i> Orders</button></li>
+                <li><button class="nav-btn" data-section="reports" type="button"><i class="fas fa-file-invoice-dollar"></i> Reports</button></li>
+                <li><button class="nav-btn" data-section="inventory-summary" type="button"><i class="fas fa-clipboard-list"></i> Inventory summary</button></li>
+                <li><button class="nav-btn" data-section="transactions" type="button"><i class="fas fa-arrows-rotate"></i> Transactions</button></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <h3><i class="fas fa-users"></i> Support</h3>
+            <ul>
+                <li><button class="nav-btn" data-section="support" type="button"><i class="fas fa-headset"></i> Active issues</button></li>
+                <li><button class="nav-btn" data-section="tickets" type="button"><i class="fas fa-ticket"></i> Ticket history</button></li>
+                <li><button class="nav-btn" data-section="customers" type="button"><i class="fas fa-user-group"></i> Customer signals</button></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <h3><i class="fas fa-sliders"></i> Operations</h3>
+            <ul>
+                <li><button class="nav-btn" data-section="settings" data-route="/seller/store/settings" type="button"><i class="fas fa-store"></i> Store settings</button></li>
+                <li><button class="nav-btn" data-route="/seller/store/template" type="button"><i class="fas fa-layer-group"></i> Store template</button></li>
+                <li><button class="nav-btn" data-section="staff" type="button"><i class="fas fa-user-tie"></i> Staff access</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="signature">
+        <p>Clean seller operations for Zest Marketplace</p>
+    </div>
+</aside>
+
+<main class="main">
+    <header class="main-header">
+        <div>
+            <p class="eyebrow">Seller workspace</p>
+            <h1 id="page-title">Overview</h1>
+            <p class="header-copy">Keep an eye on sales, inventory, support load, and store readiness from one place.</p>
+        </div>
+        <div class="header-actions">
+            <div class="header-chip" id="sellerDashboardTemplateChip"><i class="fas fa-layer-group"></i> Products Store</div>
+            <div class="header-chip" id="sellerDashboardVisibilityChip"><i class="fas fa-circle"></i> Draft storefront</div>
+            <div class="header-chip" id="sellerDashboardSetupChip"><i class="fas fa-bolt"></i> Setup in progress</div>
+        </div>
+    </header>
+
+    <section id="analytics" class="dashboard-section active">
+        <article class="workspace-banner">
+            <div class="workspace-banner__copy">
+                <p class="eyebrow">Store lifecycle</p>
+                <h2 id="sellerWorkspaceBannerTitle">Finish your storefront setup</h2>
+                <p class="workspace-banner__text" id="sellerWorkspaceBannerCopy">
+                    Complete your store details, review the template, and publish when the storefront is ready.
+                </p>
+                <div class="workspace-banner__pills">
+                    <span class="workspace-pill" id="sellerWorkspaceTemplatePill">Physical products</span>
+                    <span class="workspace-pill" id="sellerWorkspaceVisibilityPill">Draft storefront</span>
+                    <span class="workspace-pill" id="sellerWorkspaceStepPill">Step 1 of 4</span>
+                </div>
+            </div>
+            <div class="workspace-banner__actions">
+                <a class="header-action-link header-action-link--primary" id="sellerDashboardPrimaryAction" href="/seller/store/settings">Continue setup</a>
+                <a class="header-action-link" id="sellerDashboardTemplateAction" href="/seller/store/template">Change template</a>
+                <a class="header-action-link" id="sellerDashboardPublicStoreLink" href="/stores/example" hidden>Open public store</a>
+            </div>
+        </article>
+
+        <div class="cards-grid">
+            <article class="card highlight">
+                <div class="card-icon"><i class="fas fa-sack-dollar"></i></div>
+                <h3>Revenue this month</h3>
+                <p class="metric" id="sellerRevenueMetric">K0.00 <span class="trend positive" id="sellerRevenueTrend">Preview</span></p>
+                <p class="card-copy" id="sellerRevenueCopy">Revenue now updates from real paid, shipped, delivered, and refunded orders.</p>
+            </article>
+            <article class="card highlight">
+                <div class="card-icon"><i class="fas fa-bag-shopping"></i></div>
+                <h3>Orders processed</h3>
+                <p class="metric" id="sellerOrdersMetric">0 <span class="trend positive" id="sellerOrdersTrend">Waiting</span></p>
+                <p class="card-copy" id="sellerOrdersCopy">Track new paid orders here, then open Store Orders to manage shipment and delivery.</p>
+            </article>
+            <article class="card highlight">
+                <div class="card-icon"><i class="fas fa-headset"></i></div>
+                <h3>Store updates</h3>
+                <p class="metric" id="sellerUpdatesMetric">0 <span class="trend positive" id="sellerUpdatesTrend">Quiet</span></p>
+                <p class="card-copy" id="sellerUpdatesCopy">Publish seller updates to keep followers aware of drops, promos, and announcements.</p>
+            </article>
+            <article class="card highlight">
+                <div class="card-icon"><i class="fas fa-box-open"></i></div>
+                <h3>Live listings</h3>
+                <p class="metric" id="sellerProductsMetric">0 <span class="trend negative" id="sellerProductsTrend">Draft only</span></p>
+                <p class="card-copy" id="sellerProductsCopy">Finish setup and publish listings to make this storefront visible across marketplace discovery.</p>
+            </article>
+        </div>
+
+        <div class="split-grid">
+            <div class="chart-container">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Readiness snapshot</p>
+                        <h2>Store health overview</h2>
+                    </div>
+                    <p class="section-copy" id="sellerHealthCopy">Track your live readiness, publishing state, and storefront momentum from one place.</p>
+                </div>
+                <canvas id="salesChart"></canvas>
+            </div>
+
+            <div class="note-card">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Action queue</p>
+                        <h2>Next best actions</h2>
+                    </div>
+                </div>
+                <ul class="alerts-list" id="sellerActionQueue">
+                    <li><i class="fas fa-store"></i> Complete your store setup so the storefront can be published.</li>
+                    <li><i class="fas fa-layer-group"></i> Confirm the template that best fits the way you sell.</li>
+                    <li><i class="fas fa-bullhorn"></i> Add listings and store updates so buyers have something to discover.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="sales" class="dashboard-section">
+        <div class="surface-card">
+            <div class="section-intro">
+                <div>
+                    <p class="eyebrow">Sales performance</p>
+                    <h2>Sales trends</h2>
+                </div>
+                <p class="section-copy">Keep a clean monthly view of revenue, order volume, and momentum.</p>
+            </div>
+            <div class="chart-container compact">
+                <canvas id="trendsChart"></canvas>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr><th>Month</th><th>Sales</th><th>Orders</th><th>Growth</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Jan 2024</td><td>K20,000</td><td>100</td><td>+5%</td></tr>
+                    <tr><td>Feb 2024</td><td>K22,500</td><td>110</td><td>+12%</td></tr>
+                    <tr><td>Mar 2024</td><td>K21,300</td><td>108</td><td>-5%</td></tr>
+                    <tr><td>Apr 2024</td><td>K24,800</td><td>119</td><td>+16%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="inventory" class="dashboard-section">
+        <div class="surface-card">
+            <div class="section-intro">
+                <div>
+                    <p class="eyebrow">Inventory health</p>
+                    <h2>Inventory management</h2>
+                </div>
+                <p class="section-copy">Use this view to spot low stock, healthy stock, and the items worth promoting next.</p>
+            </div>
+            <div class="inventory-grid">
+                <article class="inventory-item">
+                    <h4>Mixed Citrus Box</h4>
+                    <p>Stock: 5 <span class="low-stock">Low</span></p>
+                </article>
+                <article class="inventory-item">
+                    <h4>Market Pantry Pack</h4>
+                    <p>Stock: 18 <span class="stock-ok">Healthy</span></p>
+                </article>
+                <article class="inventory-item">
+                    <h4>Weekend Produce Basket</h4>
+                    <p>Stock: 9 <span class="stock-watch">Watch</span></p>
+                </article>
+                <article class="inventory-item">
+                    <h4>Fresh Greens Crate</h4>
+                    <p>Stock: 21 <span class="stock-ok">Healthy</span></p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="reports" class="dashboard-section">
+        <div class="stack-grid">
+            <article class="surface-card">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Finance snapshots</p>
+                        <h2>Reports</h2>
+                    </div>
+                </div>
+                <div class="report-preview">
+                    <div class="report-item">
+                        <span>Monthly sales report</span>
+                        <strong>Ready</strong>
+                    </div>
+                    <div class="report-item">
+                        <span>Payout summary</span>
+                        <strong>Pending review</strong>
+                    </div>
+                    <div class="report-item">
+                        <span>Refund reconciliation</span>
+                        <strong>Updated today</strong>
+                    </div>
+                </div>
+            </article>
+            <article class="surface-card">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Focus areas</p>
+                        <h2>What to review next</h2>
+                    </div>
+                </div>
+                <ul class="info-list">
+                    <li>Confirm payout timing for the strongest-performing listings.</li>
+                    <li>Match refund trends with repeat support requests.</li>
+                    <li>Check whether shipping fees need a seasonal update.</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <section id="inventory-summary" class="dashboard-section">
+        <div class="surface-card">
+            <div class="section-intro">
+                <div>
+                    <p class="eyebrow">Stock snapshot</p>
+                    <h2>Inventory summary</h2>
+                </div>
+            </div>
+            <div class="cards-grid summary-grid">
+                <article class="card">
+                    <h3>Healthy listings</h3>
+                    <p class="metric">34</p>
+                    <p class="card-copy">Listings with stock above reorder threshold.</p>
+                </article>
+                <article class="card">
+                    <h3>Low stock</h3>
+                    <p class="metric">12</p>
+                    <p class="card-copy">Listings that need replenishment or a temporary pause.</p>
+                </article>
+                <article class="card">
+                    <h3>Out of stock</h3>
+                    <p class="metric">2</p>
+                    <p class="card-copy">Items hidden from discovery until restocked.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="transactions" class="dashboard-section">
+        <div class="surface-card">
+            <div class="section-intro">
+                <div>
+                    <p class="eyebrow">Payments and payouts</p>
+                    <h2>Recent transactions</h2>
+                </div>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr><th>Date</th><th>Description</th><th>Amount</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>2026-03-01</td><td>Sale #123</td><td>K150</td><td><span class="status completed">Completed</span></td></tr>
+                    <tr><td>2026-03-02</td><td>Payout transfer</td><td>K2,340</td><td><span class="status processing">Processing</span></td></tr>
+                    <tr><td>2026-03-03</td><td>Refund #992</td><td>K45</td><td><span class="status review">Review</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="support" class="dashboard-section">
+        <div class="stack-grid">
+            <article class="surface-card">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Support load</p>
+                        <h2>Active issues</h2>
+                    </div>
+                </div>
+                <div class="support-grid">
+                    <article class="support-card">
+                        <strong>Delivery delay follow-up</strong>
+                        <p>4 buyers are waiting on a same-day delivery update.</p>
+                    </article>
+                    <article class="support-card">
+                        <strong>Refund clarification</strong>
+                        <p>2 orders need a clearer refund status message.</p>
+                    </article>
+                    <article class="support-card">
+                        <strong>Product substitution request</strong>
+                        <p>One produce box needs approval for a stock swap.</p>
+                    </article>
+                </div>
+            </article>
+            <article class="surface-card">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Service quality</p>
+                        <h2>Response goals</h2>
+                    </div>
+                </div>
+                <ul class="info-list">
+                    <li>First response target: under 2 hours.</li>
+                    <li>Refund resolution target: same business day.</li>
+                    <li>Escalations should move to priority review when the order value is above K250.</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <section id="tickets" class="dashboard-section">
+        <div class="surface-card">
+            <div class="section-intro">
+                <div>
+                    <p class="eyebrow">Resolved and open cases</p>
+                    <h2>Ticket history</h2>
+                </div>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr><th>Ticket</th><th>Topic</th><th>Owner</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>#1842</td><td>Late delivery</td><td>Support queue</td><td><span class="status completed">Closed</span></td></tr>
+                    <tr><td>#1848</td><td>Refund request</td><td>Harmony</td><td><span class="status processing">In progress</span></td></tr>
+                    <tr><td>#1851</td><td>Wrong item received</td><td>Store lead</td><td><span class="status review">Needs review</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="customers" class="dashboard-section">
+        <div class="stack-grid">
+            <article class="surface-card">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Customer signals</p>
+                        <h2>Customer list</h2>
+                    </div>
+                </div>
+                <div class="customer-list">
+                    <div class="customer-row">
+                        <strong>Maria L.</strong>
+                        <span>Repeat buyer - 12 orders</span>
+                    </div>
+                    <div class="customer-row">
+                        <strong>Jason T.</strong>
+                        <span>High-value pantry orders</span>
+                    </div>
+                    <div class="customer-row">
+                        <strong>Anna K.</strong>
+                        <span>Recently left positive product feedback</span>
+                    </div>
+                </div>
+            </article>
+            <article class="surface-card">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Retention</p>
+                        <h2>Buyer opportunities</h2>
+                    </div>
+                </div>
+                <ul class="info-list">
+                    <li>Offer citrus bundle reminders to repeat weekend buyers.</li>
+                    <li>Highlight ready-for-pickup listings to local buyers first.</li>
+                    <li>Follow up on customers who purchased twice but never followed the stall.</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <section id="settings" class="dashboard-section">
+        <div class="surface-card">
+            <div class="section-intro">
+                <div>
+                    <p class="eyebrow">Store readiness</p>
+                    <h2>Edit store info</h2>
+                </div>
+            </div>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <span>Store identity</span>
+                    <strong>Ready</strong>
+                </div>
+                <div class="setting-item">
+                    <span>Shipping profile</span>
+                    <strong>Review</strong>
+                </div>
+                <div class="setting-item">
+                    <span>Payout details</span>
+                    <strong>Verified</strong>
+                </div>
+                <div class="setting-item">
+                    <span>Support email</span>
+                    <strong>Configured</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="staff" class="dashboard-section">
+        <div class="surface-card">
+            <div class="section-intro">
+                <div>
+                    <p class="eyebrow">Access control</p>
+                    <h2>Manage staff</h2>
+                </div>
+            </div>
+            <div class="team-list">
+                <div class="team-card">
+                    <strong>Harmony</strong>
+                    <span>Owner access</span>
+                </div>
+                <div class="team-card">
+                    <strong>Store assistant</strong>
+                    <span>Inventory and support</span>
+                </div>
+                <div class="team-card">
+                    <strong>Finance reviewer</strong>
+                    <span>Reports and payout checks</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

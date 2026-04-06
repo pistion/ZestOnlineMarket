@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seller Profile — Modern View</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Create Post / Product Modal -->
+  <div class="modal" id="createModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <button class="modal-close" type="button">&times;</button>
+      <h2 class="wizard-title">Create Product</h2>
+
+      <!-- Wizard Progress -->
+      <div class="wizard-steps">
+        <div class="wizard-step" data-step="1">1</div>
+        <div class="wizard-step" data-step="2">2</div>
+        <div class="wizard-step" data-step="3">3</div>
+        <div class="wizard-step" data-step="4">4</div>
+      </div>
+
+      <form id="createProductForm">
+
+        <!-- ================= STEP 1 ================= -->
+        <div class="wizard-screen" data-screen="1">
+          <label class="field">
+            <span>What product are you featuring as your main item?</span>
+            <input type="text" id="productName" required>
+          </label>
+
+          <label class="field">
+            <span>How would you describe this product?</span>
+            <textarea id="productDescription" rows="3" required></textarea>
+          </label>
+
+          <div class="wizard-nav">
+            <button type="button" class="btn-next">Next →</button>
+          </div>
+        </div>
+
+        <!-- ================= STEP 2 ================= -->
+        <div class="wizard-screen" data-screen="2">
+          <label class="field">
+            <span>Price?</span>
+            <div class="field-prefix">
+              <span class="prefix">K</span>
+              <input type="number" id="productPrice" min="0" step="0.01" required>
+            </div>
+          </label>
+
+          <label class="field">
+            <span>Transport fee?</span>
+            <div class="field-prefix">
+              <span class="prefix">K</span>
+              <input type="number" id="transportFee" min="0" step="0.01">
+            </div>
+          </label>
+
+          
+
+          <label class="field">
+            <span>GST</span>
+            <div class="field-prefix">
+              <span class="prefix">K</span>
+              <input type="number" id="gst" min="0" step="0.01">
+            </div>
+          </label>
+
+          
+          <label class="field">
+            <span>Discount</span>
+            <div class="field-prefix">
+              <span class="prefix">K</span>
+              <input type="number" id="discount" min="0" step="0.01">
+            </div>
+          </label>
+
+          
+
+          <div class="wizard-nav">
+            <button type="button" class="btn-back">← Back</button>
+            <button type="button" class="btn-next">Next →</button>
+          </div>
+        </div>
+
+        <!-- ================= STEP 3 ================= -->
+        <div class="wizard-screen" data-screen="3">
+          <label class="field">
+            <span>Delivery details</span>
+            <textarea id="deliveryInfo" rows="2"></textarea>
+          </label>
+
+          <label class="field">
+            <span>Business location</span>
+            <input type="text" id="businessLocation">
+          </label>
+
+          <div class="wizard-nav">
+            <button type="button" class="btn-back">← Back</button>
+            <button type="button" class="btn-next">Next →</button>
+          </div>
+        </div>
+
+        <!-- ================= STEP 4 ================= -->
+        <div class="wizard-screen" data-screen="4">
+          <label class="field">
+            <span>Upload 1–4 product preview images</span>
+            <input type="file" id="productImages" accept="image/*" multiple>
+          </label>
+          <div id="productImagePreviewGrid" class="wizard-image-grid"></div>
+          <p id="imgWarning" class="img-warning" style="display:none;"></p>
+
+        <div class="wizard-screen" data-screen="4">
+
+  <!-- ===== IMAGES / PHOTOGRAPHY ===== -->
+  <label class="field">
+    <span>Upload Product Photos</span>
+    <input 
+      type="file" 
+      id="photoFiles" 
+      accept="
+        image/*,
+        .bmp,
+        .svg,
+        .tiff,
+        .raw,
+        .jpeg,
+        .jpg,
+        .png,
+        .webp
+      " 
+      multiple>
+  </label>
+
+  <div id="photoPreviewGrid" class="wizard-file-grid"></div>
+
+
+  <!-- ===== VIDEOS ===== -->
+  <label class="field">
+    <span>Upload Product Videos</span>
+    <input 
+      type="file" 
+      id="videoFiles" 
+      accept="
+        video/*,
+        .mp4,
+        .mov,
+        .avi,
+        .mkv,
+        .webm
+      " 
+      multiple>
+  </label>
+
+  <div id="videoPreviewGrid" class="wizard-file-grid"></div>
+
+
+  <!-- ===== DOCUMENTS / APPLICATIONS ===== -->
+  <label class="field">
+    <span>Upload Documents & Application Files</span>
+    <input 
+      type="file" 
+      id="docFiles" 
+      accept="
+        .pdf,
+        .doc,
+        .docx,
+        .ppt,
+        .pptx,
+        .xls,
+        .xlsx,
+        .txt,
+        .zip,
+        .rar,
+        .7z,
+        .apk,
+        .exe,
+        .dmg,
+        .iso
+      " 
+      multiple>
+  </label>
+
+  <div id="docPreviewGrid" class="wizard-file-grid"></div>
+
+
+  <p id="fileWarning" class="file-warning" style="display:none;"></p>
+
+  <div class="wizard-nav">
+    <button type="button" class="btn-back">← Back</button>
+    <button type="submit" class="btn-primary">Post Product</button>
+  </div>
+</div>
+
+          
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Online Store</div>
+      <nav class="nav">
+
+        <a class="chip" href="#" title="Feed">
+          <i class="fa-solid fa-rss"></i> Feed
+        </a>
+
+        <a class="chip" href="#" title="Notifications">
+          <i class="fa-solid fa-bell"></i> Notifications
+        </a>
+
+<a class="chip" href="#" title="Dashboard">
+  <i class="fa-solid fa-chart-line"></i> Dashboard
+</a>
+
+        <!-- Settings now opens the slide-out panel -->
+        <button class="chip chip-settings" id="settingsBtn" type="button" title="Settings">
+          <i class="fa-solid fa-gear"></i> Settings
+        </button>
+
+        <button class="create-btn" id="createTop" title="Create New Sale">+</button>
+
+      </nav>
+    </div>
+  </div>
+
+  <main class="container">
+
+        <section class="profile">
+      <div class="banner"></div>
+      <div class="meta">
+        <div class="avatar"></div>
+        <div class="meta-info">
+          <div class="row">
+            <div class="contact-pills">
+              <span class="pill"><i class="fa-solid fa-user"></i> Owner: Cleo Rivera</span>
+              <span class="pill"><i class="fa-solid fa-envelope"></i> Email: hello@cleoscitrus.shop</span>
+              <span class="pill"><i class="fa-brands fa-whatsapp"></i> WhatsApp: +1 555 0147</span>
+              <button class="follow-btn" id="followBtn" type="button">Follow</button>
+            </div>
+            <div class="share-block">
+              <div class="share-icons">
+                <button class="social-icon" type="button" aria-label="Share on Instagram">
+                  <i class="fa-brands fa-instagram"></i>
+                </button>
+                <button class="social-icon" type="button" aria-label="Share on Facebook">
+                  <i class="fa-brands fa-facebook"></i>
+                </button>
+                <button class="social-icon" type="button" aria-label="Share on TikTok">
+                  <i class="fa-brands fa-tiktok"></i>
+                </button>
+                <button class="social-icon" type="button" aria-label="Share on LinkedIn">
+                  <i class="fa-brands fa-linkedin"></i>
+                </button>
+                <button class="social-icon" type="button" aria-label="Share on YouTube">
+                  <i class="fa-brands fa-youtube"></i>
+                </button>
+              </div>
+        
+         <button class="share-main" type="button">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Share</span>
+          </button>
+          
+        </div>
+          </div>
+          <div class="name-block">
+            <div class="name">Cleo’s Citrus — Personal Store</div>
+            <div class="handle">@cleoscitrus</div>
+          </div>
+          <p class="about">
+            Hand-pressed juices &amp; curated kitchen goods. Small-batch, big flavor. Ships worldwide.
+          </p>
+        </div>
+      </div>
+    </section>
+<section class="store-feature-cards">
+  <div class="feature-card">
+    <div class="feature-icon">
+      <i class="fa-solid fa-ship"></i>
+    </div>
+    <div class="feature-content">
+      <h3>Delivery & Transport</h3>
+      <p>
+        We deliver fresh citrus products by boat and road transport,
+        ensuring quality from farm to destination.
+      </p>
+      <span class="feature-tag">Reliable Shipping</span>
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <div class="feature-icon">
+      <i class="fa-solid fa-boxes-stacked"></i>
+    </div>
+    <div class="feature-content">
+      <h3>Products Offered</h3>
+      <p>
+        Fresh citrus fruits, juices, and curated kitchen products,
+        available for local and international buyers.
+      </p>
+      <span class="feature-tag">Quality Products</span>
+    </div>
+  </div>
+</section>
+
+
+  <section class="welcom-card">
+        <div class="card1" >
+          <div class="kicker">Welcome</div>
+          <h1 class="h3" id="aboutTitle">Browse products & offers</h1>
+          <p class="muted" id="aboutText">
+            This universal template supports products, classes, services, and coaching — all in one page.
+          </p>
+          <div class="chips">
+            <span class="badge">Verified Seller</span>
+            <span class="badge">Fast Response</span>
+            <span class="badge good">Top Rated</span>
+          </div>
+        </div>
+  </section>
+
+
+
+
+        <section class="section products-section" id="productsSection">
+      <div class="section-head products-head">
+        <div>
+          <h2 class="section-title">Products</h2>
+          <div class="section-sub">Browse items in this store</div>
+        </div>
+        <div class="products-controls">
+          <button id="gridViewBtn" class="view-toggle"><i class="fa-solid fa-table-cells"></i></button>
+          <button id="listViewBtn" class="view-toggle"><i class="fa-solid fa-list-ul"></i></button>
+
+          <input id="searchInput" type="text" class="products-search" placeholder="Search products..." />
+          <select id="categoryFilter" class="products-filter">
+            <option value="all">All categories</option>
+            <option value="clothing">Clothing</option>
+            <option value="Electronics">Electronics</option>
+            <option value="application">Application</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="group-head">
+        <div class="group-title">Recently Added</div>
+        <div class="group-note" id="recentCount">—</div>
+      </div>
+      <div class="grid products-grid" id="recentGrid"></div>
+
+      <div class="group-head">
+        <div class="group-title">Previously Added</div>
+        <div class="group-note" id="prevCount">—</div>
+      </div>
+      <div class="grid products-grid" id="prevGrid"></div>
+
+
+
+
+
+
+  <section class="CustomerPreviews-card">
+        <div class="card1" >
+          <h1 class="h3" id="aboutTitle">Customer Reviews</h1>
+          <p class="muted" id="aboutText">
+          Check Out What Our Satisfied Customers Are Saying About Their Experience!
+          </p>
+          <div class="chips">
+            <span class="badge">Verified Seller</span>
+            <span class="badge">Fast Response</span>
+            <span class="badge good">Top Rated</span>
+          </div>
+        </div>
+  </section>
+
+    </section>
+  </main>
+
+  <footer class="simple-footer">
+    <div class="simple-footer-inner">
+      <p>© <span id="yearFooter"></span> Zest Marketplace. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Store Policy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="fab" id="createFab" title="Create New Sale">+</button>
+
+  <!-- SETTINGS PANEL (from layout-toggle, adapted) -->
+  <aside id="settingsPanel">
+    <div class="settings-header">
+      <h2>Settings</h2>
+      <button id="closeSettings" class="settings-close" type="button">&times;</button>
+    </div>
+
+    <!-- TABS -->
+    <div class="settings-tabs">
+      <button class="tab active" data-tab="profile" type="button">Profile</button>
+      <button class="tab" data-tab="theme" type="button">Theme</button>
+      <button class="tab" data-tab="layout" type="button">Layout</button>
+      <button class="tab" data-tab="testimonials" type="button">Testimonials</button>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="settings-scroll-area">
+
+      <!-- PROFILE TAB -->
+      <section class="tab-screen active" id="tab-profile">
+        <h3>Store Identity</h3>
+        <label>Store Name<input type="text" /></label>
+        <label>Owner Name<input type="text" /></label>
+        <label>Business Category<input type="text" /></label>
+        <label>Email<input type="text" /></label>
+        <label>WhatsApp<input type="text" /></label>
+        <label>Bio<textarea rows="3"></textarea></label>
+
+        <h3>Profile Picture</h3>
+        <div class="preview-avatar"></div>
+        <input type="file" />
+
+        <h3>Cover Photo</h3>
+        <div class="preview-banner"></div>
+        <input type="file" />
+      </section>
+
+      <!-- THEME TAB -->
+      <section class="tab-screen" id="tab-theme">
+        <h3>Theme Presets</h3>
+        <div class="theme-row">
+          <button class="theme-preset blue" type="button"></button>
+          <button class="theme-preset green" type="button"></button>
+          <button class="theme-preset purple" type="button"></button>
+          <button class="theme-preset orange" type="button"></button>
+          <button class="theme-preset black" type="button"></button>
+        </div>
+
+        <h3>Custom Gradient</h3>
+        <label>Color A<input type="color" /></label>
+        <label>Color B<input type="color" /></label>
+        <label>Angle<input type="range" min="0" max="360" /></label>
+
+        <div class="gradient-preview"></div>
+      </section>
+
+      <!-- LAYOUT TAB -->
+<section class="tab-screen" id="tab-layout">
+  <h3>Choose Store Type</h3>
+
+  <div class="layout-controls-row">
+    <div class="settings-layout-buttons">
+      <button class="layout-btn" data-layout="A" type="button">Products Store</button>
+      <button class="layout-btn" data-layout="B" type="button">Classes / Courses Store</button>
+      <button class="layout-btn" data-layout="C" type="button">Skills / Services Store</button>
+      <button class="layout-btn" data-layout="D" type="button">Coaching / Fitness Store</button>
+    </div>
+  </div>
+
+  <!-- Small preview panel (this reacts to layout A/B/C/D) -->
+  <div class="layout-root layout-A layout-root-panel" id="layoutPreview">
+    <div class="layout-grid">
+      <section class="block header-block"></section>
+      <section class="block profile-block"></section>
+      <section class="block sidebar-block"></section>
+      <section class="block feed-block"></section>
+      <section class="block testimonials-block"></section>
+      <section class="block footer-block"></section>
+    </div>
+  </div>
+
+  <!-- NEW: Store-specific content sections -->
+  <div class="store-section" data-store-section="products">
+    <p>🛒 Products store layout active.</p>
+  </div>
+
+  <div class="store-section" data-store-section="classes">
+    <p>📘 Classes / Courses store layout active.</p>
+  </div>
+
+  <div class="store-section" data-store-section="services">
+    <p>🔧 Skills / Services store layout active.</p>
+  </div>
+
+  <div class="store-section" data-store-section="coaching">
+    <p>💪 Coaching / Fitness store layout active.</p>
+  </div>
+
+  <p class="muted section-tight">
+    Changing store type updates layout, fields, CTAs, and labels.
+  </p>
+</section>
+
+
+
+      <!-- TESTIMONIALS TAB -->
+      <section class="tab-screen" id="tab-testimonials">
+        <h3>Testimonials</h3>
+
+        <div class="testimonial-card">
+          <div class="test-avatar"></div>
+          <div class="test-text">Customer review will appear here.</div>
+        </div>
+
+        <h3>Add Review (buyers only)</h3>
+        <label>Customer Image<input type="file" /></label>
+        <label>Name<input type="text" /></label>
+        <label>Rating<input type="number" min="1" max="5" /></label>
+        <label>Message<textarea rows="3"></textarea></label>
+        <button class="post-review" type="button">Post Review</button>
+      </section>
+
+    </div>
+  </aside>
+
+  <!-- GLOBAL IMAGE VIEWER -->
+  <div id="imageViewer" class="image-viewer">
+    <div class="iv-backdrop"></div>
+    <div class="iv-inner">
+      <button class="iv-prev" type="button">&#10094;</button>
+      <img id="iv-image" class="iv-image" src="" alt="">
+      <button class="iv-next" type="button">&#10095;</button>
+      <div class="iv-dots"></div>
+      <button class="iv-close" type="button">&times;</button>
+    </div>
+  </div>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+  <!-- Profile header data loader -->
+  <script src="../Profile_loader/profile_loader.js"></script>
+  <script src="../Profile_loader/product_loader.js"></script>
+
+
+
+<template id="tpl-list">
+<section id="listView" class="section">
+  <div class="section-head">
+    <h2 class="section-title">Featured Products</h2>
+    <div class="section-sub">Organized by recency — most recent first</div>
+  </div>
+
+  <div class="group-head">
+    <div class="group-title">Recently Added</div>
+    <div class="group-note" id="recentCount">—</div>
+  </div>
+  <div class="grid" id="recentGrid"></div>
+
+  <div class="group-head">
+    <div class="group-title">Previously Added</div>
+    <div class="group-note" id="prevCount">—</div>
+  </div>
+  <div class="grid" id="prevGrid"></div>
+</section>
+</template>
+
+
+<template id="tpl-grid">
+  <div class="grid-item card">
+    <img src="{{img}}" class="grid-img">
+    <h4>{{name}}</h4>
+    <span class="price">{{price}}</span>
+  </div>
+</template>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<nav class="market-nav navbar navbar-expand-lg">
+  <div class="container market-nav__inner">
+    <a class="market-brand navbar-brand" href="/">
+      <span class="market-brand__mark">Z</span>
+      <span>
+        <strong>Zest</strong>
+        <small>Marketplace</small>
+      </span>
+    </a>
+
+    <button
+      class="navbar-toggler market-nav__toggle"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#marketNavLinks"
+      aria-controls="marketNavLinks"
+      aria-expanded="false"
+      aria-label="Toggle marketplace navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="marketNavLinks">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/marketplace" aria-current="page">Marketplace</a></li>
+        <li class="nav-item"><a class="nav-link" href="/feed">Global Feed</a></li>
+        
+        <% if (viewer) { %>
+          <% if (viewer.role === "buyer") { %>
+            <li class="nav-item"><a class="nav-link" href="/buyer/feed">Buyer Feed</a></li>
+            <li class="nav-item"><a class="nav-link" href="/buyer/profile">My Profile</a></li>
+            <li class="nav-item">
+              <a class="nav-link text-primary fw-bold" href="/auth/logout?redirectTo=/auth/signin?role=seller">Switch to Seller</a>
+            </li>
+          <% } else if (viewer.role === "seller") { %>
+            <li class="nav-item"><a class="nav-link" href="/seller/dashboard">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="/seller/store">My Store</a></li>
+            <li class="nav-item">
+              <a class="nav-link text-primary fw-bold" href="/auth/logout?redirectTo=/auth/signin?role=buyer">Switch to Buyer</a>
+            </li>
+          <% } %>
+          <li class="nav-item"><a class="nav-link btn btn-outline-danger btn-sm ms-lg-2" href="/auth/logout">Sign Out</a></li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/auth/signin?role=seller">Start selling</a></li>
+          <li class="nav-item"><a class="nav-link market-nav__signin" href="/auth/signin">Sign in</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

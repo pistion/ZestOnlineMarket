@@ -1,0 +1,43 @@
+<% if (page.layoutHeader) { %>
+<%
+  const signedInUser = typeof currentUser !== "undefined" ? currentUser : null;
+  const signedInRole = signedInUser && signedInUser.role === "seller" ? "seller" : "buyer";
+  const accountHomePath = signedInUser
+    ? signedInRole === "seller"
+      ? "/seller/store"
+      : "/buyer/profile"
+    : "";
+  const accountHomeLabel = signedInUser
+    ? signedInRole === "seller"
+      ? "Seller Workspace"
+      : "Buyer Profile"
+    : "";
+  const switchAccountPath = signedInUser ? `/auth/signin?role=${signedInRole}` : "/auth/signin";
+  const signOutRedirect = signedInUser
+    ? `/auth/signin?signedOut=1&role=${signedInRole}`
+    : "/auth/signin?signedOut=1";
+  const buyerAccessPath = `/auth/signin?role=buyer&returnTo=${encodeURIComponent("/buyer/profile")}`;
+  const sellerAccessPath = `/auth/signin?role=seller&returnTo=${encodeURIComponent("/seller/store")}`;
+%>
+<header class="codex-layout-header">
+  <div class="codex-layout-header__inner ui-shell ui-shell--wide">
+    <a class="codex-layout-header__brand" href="/">Zest Market</a>
+    <nav class="codex-layout-header__nav" aria-label="Primary">
+      <a href="/feed">Global Feed</a>
+      <a href="/marketplace">Marketplace</a>
+      <% if (signedInUser) { %>
+      <a href="<%= accountHomePath %>"><%= accountHomeLabel %></a>
+      <a href="<%= switchAccountPath %>">Switch Account</a>
+      <form class="codex-layout-header__logout-form" action="/auth/logout" method="post">
+        <input type="hidden" name="redirectTo" value="<%= signOutRedirect %>" />
+        <button class="codex-layout-header__logout-btn" type="submit">Sign Out</button>
+      </form>
+      <% } else { %>
+      <a href="/auth/signin">Sign In</a>
+      <a href="<%= buyerAccessPath %>">Buyer Access</a>
+      <a href="<%= sellerAccessPath %>">Seller Access</a>
+      <% } %>
+    </nav>
+  </div>
+</header>
+<% } %>

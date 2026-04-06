@@ -1,0 +1,30 @@
+Orders
+ ├── customer_id
+ ├── store_id
+ ├── status (pending, paid, shipped, delivered)
+ ├── total_amount
+ ├── created_at
+ │
+ ├── OrderItems
+ │     ├── product_id / variant_id
+ │     ├── quantity
+ │     └── unit_price_snapshot
+ │
+ ├── OrderPayments
+ │     ├── provider (Stripe, bank)
+ │     ├── transaction_reference
+ │     ├── amount
+ │     ├── currency
+ │     └── status
+ │
+ ├── Refunds
+ │     ├── refund_amount
+ │     ├── reason
+ │     ├── payment_reference
+ │     └── status
+ │
+ └── OrderShipments
+        ├── tracking_number
+        ├── carrier
+        ├── shipped_at
+        └── delivery_estimate

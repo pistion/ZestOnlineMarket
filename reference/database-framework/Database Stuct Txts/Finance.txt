@@ -1,0 +1,35 @@
+Finance
+ ├── SalesTransactions
+ │     ├── order_id
+ │     ├── store_id
+ │     ├── gross_amount
+ │     └── created_at
+ │
+ ├── InventoryItems
+ │     ├── product_id / variant_id
+ │     ├── total_on_hand
+ │     └── location
+ │
+ ├── InventoryLogs
+ │     ├── adjustment_type (sale, restock, refund)
+ │     ├── quantity_change
+ │     └── created_at
+ │
+ ├── RevenueReports
+ │     ├── period (daily, monthly)
+ │     ├── gross_sales
+ │     ├── net_sales
+ │     ├── refunds
+ │     ├── profit_estimate
+ │     └── created_at
+ │
+ └── Debts
+        ├── customer_id
+        ├── principal_amount
+        ├── interest_rate
+        ├── status
+        │
+        └── DebtPayments
+               ├── amount
+               ├── paid_at
+               └── method

@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Music Studio V2 • Glondia Marketplace</title>
+  <!-- Load upgraded music stylesheet (which itself imports style.css) -->
+  <link rel="stylesheet" href="music-store-v2.css" />
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-..." crossorigin="anonymous"referrerpolicy="no-referrer"/>
+
+</head>
+<body data-page="music-profile-v2">
+
+<header class="topbar">
+  <div class="container wrap">
+    <a class="brandmark" href="#">
+      <span class="dot"></span>
+      <span>Music Store</span>
+    </a>
+    <button class="btn ghost nav-toggle" data-nav-toggle aria-label="Toggle navigation">☰ Menu</button>
+    <nav class="nav" data-nav>
+<a href="#" data-page="feed">
+  <i class="fa-solid fa-earth-americas"></i>
+  Global Feed
+</a>
+
+<a href="#" data-page="templates">
+  <i class="fa-solid fa-store"></i>
+  StoreHub
+</a>
+
+<a href="#" data-page="dashboard">
+  <i class="fa-solid fa-chart-line"></i>
+  Dashboard
+</a>
+
+<a href="#" data-page="auth">
+  <i class="fa-solid fa-cart-shopping"></i>
+  Cart
+</a>
+
+<a href="#" data-page="settings">
+  <i class="fa-solid fa-gear"></i>
+  Settings
+</a>
+
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="profile-hero section">
+  <div class="container">
+    <div class="cover cover-music-v2"></div>
+    <div class="profile-bar">
+      <div class="avatar avatar-music-v2"></div>
+      <div class="profile-meta">
+        <div class="profile-title">Skyline Sound Collective</div>
+        <div class="muted">Afrobeats • Pop • R&amp;B • PNG &amp; Pacific Vibes</div>
+        
+        <div class="stats-row">
+          <div class="stat-chip">🎵 120+ Tracks Released</div>
+          <div class="stat-chip">💽 8 Albums &amp; EPs</div>
+          <div class="stat-chip">⭐ 4.9 Average Rating</div>
+          <div class="stat-chip">🌍 Streaming &amp; Downloads Worldwide</div>
+        </div>
+
+      </div>
+      
+      
+<div class="profile-actions-group">
+
+  <div class="profile-actions">
+    <button class="btn secondary">Follow Artist</button>
+    <button class="btn ghost" data-toast="Share link copied (demo)." aria-label="Share">
+      <i class="fa-solid fa-share-nodes"></i>
+    </button>
+  </div>
+
+  <div class="profile-socials" aria-label="Artist social links">
+
+    <a href="#" aria-label="TikTok">
+      <i class="fa-brands fa-tiktok"></i>
+    </a>
+
+    <a href="#" aria-label="LinkedIn">
+      <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <a href="#" aria-label="Facebook">
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+    <a href="#" aria-label="YouTube">
+      <i class="fa-brands fa-youtube"></i>
+    </a>
+
+    <a href="#" aria-label="Instagram">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+<a href="#" aria-label="WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+
+  </div>
+
+</div>
+
+
+
+    </div>
+
+    <nav class="profile-nav">
+      <a href="#about">About</a>
+      <a href="#new-releases">New Releases</a>
+      <a href="#albums">Albums &amp; EPs</a>
+      <a href="#library">Music Library</a>
+      <a href="#licensing">Licensing</a>
+      <a href="#producer-packs">Producer Packs</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="container grid grid-2">
+    <article class="card">
+      <div class="kicker">About this Store</div>
+      <h3 class="h3">A modern home for indie music</h3>
+      <p class="muted">
+        This template turns your Glondia profile into a music-first storefront — built for vocalists,
+        producers, bands and DJs who want to sell tracks, albums, EPs, videos, stems and licenses directly to fans.
+      </p>
+      <ul class="muted">
+        <li>Showcase singles, albums, EPs and music videos in one place</li>
+        <li>Offer instant digital downloads and streaming previews</li>
+        <li>Promote PNG &amp; Pacific-region sounds globally</li>
+        <li>Highlight featured releases, bundles and collaborations</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <div class="kicker">For Music Sellers</div>
+      <h3 class="h3">What you can offer here</h3>
+      <div class="grid">
+        <div class="badge good">Singles</div>
+        <div class="badge">Albums</div>
+        <div class="badge">EPs</div>
+        <div class="badge warn">Music Videos</div>
+        <div class="badge">Licensing Rights</div>
+        <div class="badge good">Stems &amp; Producer Packs</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- NEW RELEASES -->
+<section id="new-releases" class="section">
+
+  <div class="container">
+    <div class="kicker">New Releases</div>
+    <h2 class="h2">Fresh Drops</h2>
+    <p class="muted">The latest singles released by the artist.</p>
+<div class="new-releases-row">
+
+  <!-- Upload / Add New card (always present) -->
+  <div class="music-card upload-card">
+    <div class="thumb upload-thumb">
+      <i class="fa-solid fa-plus"></i>
+      <span>Upload new track</span>
+    </div>
+  </div>
+
+  <!-- Existing dynamic cards -->
+  <div data-new-releases></div>
+
+</div>
+
+  </div>
+
+</section>
+
+<!-- ALBUMS & EPS -->
+<section id="albums" class="section">
+  <div class="container">
+    <div class="kicker">Albums & EPs</div>
+    <h2 class="h2">Full Music Collections</h2>
+
+    <div class="grid grid-3 section-tight">
+
+      <!-- Persistent upload card -->
+      <div class="music-card upload-card">
+        <div class="thumb upload-thumb">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add new album or EP</span>
+        </div>
+      </div>
+
+      <!-- Existing albums injected here -->
+      <div data-albums-grid></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section id="library" class="section">
+  <div class="container">
+    <div class="kicker">Music Library</div>
+    <h2 class="h2">Browse the full collection</h2>
+    <p class="muted">Filter singles, albums, EPs, videos and packs.</p>
+
+    <div class="gallery-toolbar">
+      <div class="chip-row" data-library-filters>
+        <button class="chip active" data-library-filter="all">All</button>
+        <button class="chip" data-library-filter="single">Singles</button>
+        <button class="chip" data-library-filter="album">Albums</button>
+        <button class="chip" data-library-filter="ep">EPs</button>
+        <button class="chip" data-library-filter="video">Music Videos</button>
+        <button class="chip" data-library-filter="pack">Producer Packs</button>
+      </div>
+      <div class="row" style="flex:1;justify-content:flex-end;gap:8px;">
+        <input type="search" class="input" placeholder="Search by title, artist, genre, mood..." data-library-search />
+        <select class="input" data-library-sort style="max-width:230px">
+          <option value="featured">Featured</option>
+          <option value="new">Newest</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="bpm-asc">BPM: Low to High</option>
+          <option value="bpm-desc">BPM: High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-4 section-tight media-grid" data-library-grid></div>
+    <p class="muted center" data-library-empty style="display:none;margin-top:18px">
+      No music matches your search.
+    </p>
+  </div>
+</section>
+
+<!-- LICENSING -->
+<section id="licensing" class="section">
+  <div class="container">
+    <div class="kicker">Licensing</div>
+    <h2 class="h2">Use this music in your projects</h2>
+
+    <div class="grid grid-3 section-tight">
+
+      <!-- Existing licensing cards (UNCHANGED) -->
+      <article class="tier">
+        <div class="tier-name">Standard License</div>
+        <div class="tier-price">K120 / track</div>
+        <div class="muted small">
+          YouTube, social content, non-monetized streams.
+        </div>
+        <button class="btn block">View Details</button>
+      </article>
+
+      <article class="tier featured">
+        <div class="tier-name">Commercial License</div>
+        <div class="tier-price">K380 / track</div>
+        <div class="muted small">
+          Ads, promos, monetized channels, brand campaigns.
+        </div>
+        <button class="btn green block">View Details</button>
+      </article>
+
+      
+      <!-- Persistent upload card -->
+      <article class="tier upload-card">
+        <div class="upload-thumb">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add new license</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- PRODUCER PACKS -->
+<section id="producer-packs" class="section">
+  <div class="container">
+    <div class="kicker">Producer Packs</div>
+    <h2 class="h2">Stems, loops &amp; sample packs</h2>
+    <p class="muted">Sell producer-ready packs for beatmakers and studios.</p>
+
+    <div class="grid grid-3 section-tight" data-packs-grid></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="section">
+  <div class="container">
+    <div class="kicker">Fan Reviews</div>
+    <h2 class="h2">What listeners are saying</h2>
+
+    <div class="grid grid-3 section-tight" data-reviews-grid></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section">
+  <div class="container faq">
+    <div class="kicker">FAQ</div>
+    <h2 class="h2">Music Purchases &amp; Licensing</h2>
+
+    <div class="grid section-tight">
+      <div class="item">
+        <div class="q">Do tracks come in MP3 or WAV? <span>+</span></div>
+        <div class="a">You can offer both formats and optionally FLAC. Set your real delivery formats in the backend.</div>
+      </div>
+
+      <div class="item">
+        <div class="q">Can I license tracks for commercials? <span>+</span></div>
+        <div class="a">Yes. Use the Licensing section above to define clear tiers for different usage types.</div>
+      </div>
+
+      <div class="item">
+        <div class="q">Are stems available for every track? <span>+</span></div>
+        <div class="a">You can choose which tracks include stems and which are stereo-only.</div>
+      </div>
+
+      <div class="item">
+        <div class="q">Can I collaborate with this artist? <span>+</span></div>
+        <div class="a">Use your real contact form or DM flow to accept collab requests from this page.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container cols">
+    <div>
+      <div class="brandmark" style="margin-bottom:10px">
+        <span class="dot"></span><span>Glondia Marketplace</span>
+      </div>
+      <p class="muted">A marketplace for artists, musicians and creators in PNG and beyond.</p>
+      <div class="row" style="margin-top:10px">
+        <span class="badge">Light Blue</span>
+        <span class="badge">Dark Blue</span>
+        <span class="badge good">Green Accent</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast + Modal + Sticky Player -->
+<div class="toast"></div>
+
+<div class="modal" data-modal>
+  <div class="panel container" data-modal-body></div>
+</div>
+
+<div class="sticky-player hidden" data-player>
+  <div class="player-inner">
+    <button class="player-close" data-player-close>&times;</button>
+    <div class="player-main">
+      <div class="player-cover" data-player-cover></div>
+      <div class="player-meta">
+        <div class="player-title" data-player-title>Track title</div>
+        <div class="player-sub" data-player-sub>Artist • Release</div>
+        <div class="player-wave" data-player-wave>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+        </div>
+      </div>
+    </div>
+    <div class="player-controls">
+      <button class="btn secondary player-btn" data-player-play>▶ Play</button>
+      <div class="player-timeline">
+        <div class="player-timeline-bar">
+          <div class="player-timeline-fill" data-player-progress style="width:0%"></div>
+        </div>
+        <div class="player-time">
+          <span data-player-current>0:00</span>
+          <span data-player-duration>0:30</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<audio id="preview-audio" preload="none"></audio>
+<script src="music-store-v2.js"></script>
+</body>
+</html>

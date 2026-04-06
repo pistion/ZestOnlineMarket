@@ -1,0 +1,43 @@
+{
+  "name": "zest-online-market",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Live runtime for Zest Online Market",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "check:js": "node ops/tests/check-js.js",
+    "check:repo": "node ops/tests/repo-guard.js",
+    "check:size": "node ops/tests/size-guard.js",
+    "test:unit": "node ops/tests/unit.js",
+    "test:integration": "node ops/tests/test-integration.js",
+    "test": "node ops/tests/test.js",
+    "smoke": "node ops/smoke/smoke.js",
+    "db:migrate": "node ops/db/migrate.js",
+    "db:rollback": "node ops/db/rollback.js",
+    "db:seed": "node ops/db/seed.js",
+    "db:snapshot": "node ops/db/snapshot.js",
+    "db:etl:identity-store": "node ops/db/etl-identity-store.js",
+    "db:etl:catalog": "node ops/db/etl-catalog.js",
+    "db:verify": "node ops/db/verify.js",
+    "db:buyer": "node ops/db/buyer-db.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "multer": "^2.0.2",
+    "pg": "^8.12.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

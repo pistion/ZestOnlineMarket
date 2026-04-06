@@ -1,0 +1,207 @@
+<div class="wizard-page" id="buyerWizardRoot">
+  <header class="wizard-header">
+    <div class="wizard-title-block">
+      <h1 class="wizard-title">Buyer Profile Wizard</h1>
+      <p class="wizard-subtitle">
+        Set up your buyer identity, profile photo, bio, and discovery preferences before you enter your dashboard.
+      </p>
+    </div>
+    <div class="wizard-badge">Buyer setup</div>
+  </header>
+
+  <main class="wizard-layout">
+    <section class="wizard-main">
+      <div class="step-tabs">
+        <button class="step-tab active" data-step="1" type="button">1. Identity</button>
+        <button class="step-tab" data-step="2" type="button">2. Profile Photo</button>
+        <button class="step-tab" data-step="3" type="button">3. About You</button>
+        <button class="step-tab" data-step="4" type="button">4. Feed Interests</button>
+      </div>
+
+      <form class="steps-container" id="buyerWizardForm" autocomplete="off" onsubmit="return false;">
+        <div class="step-card step active" data-step="1">
+          <h2 class="step-title">Buyer identity</h2>
+          <p class="step-text">
+            Start with the essentials buyers use across the marketplace.
+          </p>
+
+          <div class="field">
+            <label for="buyerEmail">Account email</label>
+            <input id="buyerEmail" class="input" type="email" readonly />
+            <p class="hint">This stays tied to your account login and buyer profile.</p>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="buyerFullName">Full name</label>
+              <input
+                id="buyerFullName"
+                class="input"
+                type="text"
+                placeholder="e.g. Maria Kila"
+              />
+            </div>
+            <div class="field">
+              <label for="buyerPhone">Phone</label>
+              <input
+                id="buyerPhone"
+                class="input"
+                type="text"
+                placeholder="Optional contact number"
+              />
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button class="btn ghost" data-action="reset" type="button">Reset</button>
+            <div class="spacer"></div>
+            <button class="btn primary" data-action="next" type="button">Next</button>
+          </div>
+        </div>
+
+        <div class="step-card step" data-step="2">
+          <h2 class="step-title">Profile photo</h2>
+          <p class="step-text">
+            Add an avatar so your buyer profile feels complete and recognizable.
+          </p>
+
+          <div class="field">
+            <label for="buyerAvatarFile">Profile photo</label>
+            <input id="buyerAvatarFile" class="input file-input" type="file" accept="image/*" />
+            <p class="hint">
+              Upload a photo from your device. You can always change it later.
+            </p>
+          </div>
+
+          <div class="step-actions">
+            <button class="btn ghost" data-action="prev" type="button">Previous</button>
+            <button class="btn ghost" data-action="reset" type="button">Reset</button>
+            <div class="spacer"></div>
+            <button class="btn primary" data-action="next" type="button">Next</button>
+          </div>
+        </div>
+
+        <div class="step-card step" data-step="3">
+          <h2 class="step-title">About you</h2>
+          <p class="step-text">
+            Share a short note about what you like to discover, collect, or follow on Zest.
+          </p>
+
+          <div class="field">
+            <label for="buyerBio">Short bio</label>
+            <textarea
+              id="buyerBio"
+              class="input textarea"
+              rows="5"
+              placeholder="Tell Zest what kinds of products, makers, or experiences you enjoy discovering."
+            ></textarea>
+          </div>
+
+          <div class="step-actions">
+            <button class="btn ghost" data-action="prev" type="button">Previous</button>
+            <button class="btn ghost" data-action="reset" type="button">Reset</button>
+            <div class="spacer"></div>
+            <button class="btn primary" data-action="next" type="button">Next</button>
+          </div>
+        </div>
+
+        <div class="step-card step" data-step="4">
+          <h2 class="step-title">Feed interests</h2>
+          <p class="step-text">
+            Pick the categories and storefront styles you want Zest to prioritize in your buyer feed.
+          </p>
+
+          <div class="field">
+            <label>Favorite categories</label>
+            <div class="chip-grid" id="buyerCategoryGrid">
+              <button class="chip-option" data-chip-group="category" data-value="product" type="button">Everyday products</button>
+              <button class="chip-option" data-chip-group="category" data-value="art" type="button">Art</button>
+              <button class="chip-option" data-chip-group="category" data-value="music" type="button">Music</button>
+              <button class="chip-option" data-chip-group="category" data-value="photography" type="button">Photography</button>
+              <button class="chip-option" data-chip-group="category" data-value="programmer" type="button">Digital services</button>
+              <button class="chip-option" data-chip-group="category" data-value="classes" type="button">Classes</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Favorite storefront styles</label>
+            <div class="chip-grid" id="buyerTemplateGrid">
+              <button class="chip-option" data-chip-group="template" data-value="products" type="button">Products</button>
+              <button class="chip-option" data-chip-group="template" data-value="art" type="button">Art</button>
+              <button class="chip-option" data-chip-group="template" data-value="music" type="button">Music</button>
+              <button class="chip-option" data-chip-group="template" data-value="photography" type="button">Photography</button>
+              <button class="chip-option" data-chip-group="template" data-value="programmer" type="button">Programmer</button>
+              <button class="chip-option" data-chip-group="template" data-value="classes" type="button">Classes</button>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button class="btn ghost" data-action="prev" type="button">Previous</button>
+            <button class="btn ghost" data-action="reset" type="button">Reset</button>
+            <div class="spacer"></div>
+            <button class="btn primary" data-action="save-profile" type="button">Open buyer profile</button>
+          </div>
+          <p class="wizard-status" id="buyerWizardStatus" hidden></p>
+        </div>
+      </form>
+    </section>
+
+    <section class="preview-panel">
+      <aside class="wizard-panel">
+        <article class="buyer-preview-card">
+          <div class="buyer-preview-banner">
+            <div class="buyer-preview-banner__content">
+              <span class="buyer-preview-banner__eyebrow">Buyer preview</span>
+              <strong id="buyerWizardPreviewMode">Profile getting ready</strong>
+            </div>
+          </div>
+
+          <div class="buyer-preview-header">
+            <div class="buyer-preview-avatar" id="buyerWizardPreviewAvatar">B</div>
+            <div class="buyer-preview-meta">
+              <h3 id="buyerWizardPreviewName">Buyer profile</h3>
+              <p id="buyerWizardPreviewEmail">your@email.com</p>
+              <span class="buyer-preview-phone" id="buyerWizardPreviewPhone">Phone not added yet</span>
+            </div>
+          </div>
+
+          <div class="buyer-preview-body">
+            <section class="buyer-preview-section">
+              <h4>About</h4>
+              <p id="buyerWizardPreviewBio">
+                Your short buyer bio will appear here once you add a few details about what you like discovering on Zest.
+              </p>
+            </section>
+
+            <section class="buyer-preview-section">
+              <h4>Interest signals</h4>
+              <div class="buyer-preview-chip-list" id="buyerWizardPreviewSignals"></div>
+            </section>
+
+            <section class="buyer-preview-section">
+              <h4>Where this opens up</h4>
+              <div class="buyer-route-grid">
+                <article class="buyer-route-card">
+                  <span>Profile</span>
+                  <code>/buyer/profile</code>
+                </article>
+                <article class="buyer-route-card">
+                  <span>Buyer feed</span>
+                  <code>/buyer/feed</code>
+                </article>
+                <article class="buyer-route-card">
+                  <span>Marketplace</span>
+                  <code>/marketplace</code>
+                </article>
+                <article class="buyer-route-card">
+                  <span>Global feed</span>
+                  <code>/feed</code>
+                </article>
+              </div>
+            </section>
+          </div>
+        </article>
+      </aside>
+    </section>
+  </main>
+</div>

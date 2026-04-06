@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huckberry x Timex Ironman Flix - Product Details</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav class="container nav-bar">
+      <div class="logo">Huckberry</div>
+      <ul class="nav-links">
+        <li><a href="javascript:void(0)">Home</a></li>
+        <li><a href="javascript:void(0)">Feed</a></li>
+        <li><a href="javascript:void(0)">Store</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="nav-cta">Sign In</button>
+        <div class="cart-icon">🛒</div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-inner container">
+      <div class="breadcrumb">
+        <a href="javascript:void(0)">Home</a> /
+        <a href="javascript:void(0)">Watches</a> /
+        <span>Huckberry Tech Store</span>
+      </div>
+      <h1>Huckberry Tech Store</h1>
+      <p class="hero-subtitle">
+        A modern spin on the ’80s training legend — built for trail runs, city commutes, and everything in between.
+      </p>
+      <div class="hero-meta">
+        <span class="badge badge-gold">Visit Store</span>
+        <span class="badge badge-outline">Follow</span>
+        <span class="hero-rating">
+          ★★★★☆ <span>4.7 · 128 reviews</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN PRODUCT SECTION -->
+  <main class="container">
+    <section class="product-main">
+      <!-- IMAGES -->
+      <div class="images-section">
+        <div class="main-image-wrapper">
+          <img
+            id="mainImage"
+            class="main-image"
+            src="imgs/5.jpg"
+            alt="Huckberry Tech Store front view"
+          />
+        </div>
+
+        <div class="gallery">
+          <img src="imgs/1.jpg"
+               alt="Front view"
+               class="active"
+               onclick="changeImage(this)">
+          <img src="imgs/2.jpg"
+               alt="Side view"
+               onclick="changeImage(this)">
+          <img src="imgs/3.jpg"
+               alt="Back view"
+               onclick="changeImage(this)">
+          <img src="imgs/4.jpg"
+               alt="Lifestyle shot"
+               onclick="changeImage(this)">
+        </div>
+      </div>
+
+      <!-- PRODUCT INFO -->
+      <div class="product-info">
+        <div class="product-header">
+          <h2 class="product-title">Huckberry x Timex Ironman Flix</h2>
+          <p class="product-tagline">
+            Retro digital toughness with Huckberry’s modern design language.
+          </p>
+        </div>
+
+        <div class="price-row">
+          <div>
+            <span class="price-large">$129</span>
+            <span class="price-note">Tax included · Free shipping over $98</span>
+          </div>
+          <span class="stock-status in-stock">In stock · Deliver in 1–2 hours</span>
+        </div>
+
+        <div class="variant-row">
+          <div class="variant-label">Color</div>
+          <div class="variant-options">
+            <button class="chip active">Midnight Black</button>
+            <button class="chip">Steel Grey</button>
+            <button class="chip">Neon Accent</button>
+          </div>
+        </div>
+
+        <button class="add-to-cart" onclick="addToCart()">
+          Add to Cart
+        </button>
+
+        <div class="trust-row">
+          <div class="trust-item">
+            <span class="trust-icon">✓</span>
+            <span>30-day returns</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon">✓</span>
+            <span>Secure checkout</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon">✓</span>
+            <span>2-year Timex warranty</span>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+  </main>
+
+  <!-- TABS -->
+  <section class="tabs-wrapper">
+    <div class="tabs">
+      <button class="tab-button active" onclick="openTab(event, 'descriptionTab')">Description</button>
+      <button class="tab-button" onclick="openTab(event, 'specsTab')">Specifications</button>
+      <button class="tab-button" onclick="openTab(event, 'shippingTab')">Shipping & Returns</button>
+      <button class="tab-button" onclick="openTab(event, 'reviewsTab')">Reviews (128)</button>
+    </div>
+
+    <div id="descriptionTab" class="tab-content active">
+      <div class="container">
+        <h3>Full Story</h3>
+        <p>
+          Back in the ’80s, the Timex Ironman was the unofficial uniform for anyone training with a purpose.
+          This Huckberry edition keeps that same DNA but strips away the neon excess. You get a clean,
+          matte black profile, subtle detailing, and functionality that feels overbuilt for everyday life
+          — in the best way.
+        </p>
+        <p>
+          From track sessions to trailheads, it’s the watch you don’t have to think about — it just works.
+        </p>
+      </div>
+    </div>
+
+    <div id="specsTab" class="tab-content">
+      <div class="container">
+        <h3>Specifications</h3>
+        <table class="specs-table">
+          <tr><th>Case Material</th><td>Resin</td></tr>
+          <tr><th>Case Size</th><td>38 mm</td></tr>
+          <tr><th>Case Thickness</th><td>11 mm</td></tr>
+          <tr><th>Band Material</th><td>Resin strap</td></tr>
+          <tr><th>Band Width</th><td>18 mm</td></tr>
+          <tr><th>Water Resistance</th><td>50 m / 5 ATM</td></tr>
+          <tr><th>Display</th><td>Digital LCD with Indiglo</td></tr>
+          <tr><th>Battery Life</th><td>Up to 3 years</td></tr>
+          <tr><th>Functions</th><td>Chronograph, alarms, timer, day/date</td></tr>
+          <tr><th>Weight</th><td>Approx. 28 g</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="shippingTab" class="tab-content">
+      <div class="container">
+        <h3>Shipping & Returns</h3>
+        <ul class="shipping-list">
+          <li>Free shipping on orders over $98 (US only).</li>
+          <li>Most orders ship within 1–2 business days.</li>
+          <li>30-day returns in original condition for a full refund.</li>
+          <li>Prepaid return labels available at checkout.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="reviewsTab" class="tab-content">
+      <div class="container">
+        <div class="reviews-header">
+          <h3>Customer Reviews</h3>
+          <div class="reviews-summary">
+            <div class="reviews-score">4.7</div>
+            <div>
+              <div class="reviews-stars">★★★★☆</div>
+              <div class="reviews-count">128 verified reviews</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews">
+          <div class="review">
+            <div class="stars">★★★★★</div>
+            <p>"Feels like the watch I grew up with, but cleaner. Zero fuss, takes a beating."</p>
+            <small>- Alex T.</small>
+          </div>
+          <div class="review">
+            <div class="stars">★★★★☆</div>
+            <p>"Perfect training watch. Strap took a week to break in but now it disappears on the wrist."</p>
+            <small>- Jordan L.</small>
+          </div>
+          <div class="review">
+            <div class="stars">★★★★★</div>
+            <p>"Indiglo is still king. Use it for early runs and late flights. Battery just keeps going."</p>
+            <small>- Sam R.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED PRODUCTS -->
+  <section class="container related-section">
+    <h3>You may also like</h3>
+    <div class="related-grid">
+      <article class="related-card">
+        <img src="https://m.media-amazon.com/images/I/81PBcC2f7UL._AC_SL1500_.jpg" alt="Timex Ironman Classic" />
+        <div class="related-info">
+          <h4>Timex Ironman Classic 30</h4>
+          <p>$79</p>
+        </div>
+      </article>
+      <article class="related-card">
+        <img src="https://m.media-amazon.com/images/I/81lhJpNmpyL._AC_SL1500_.jpg" alt="Timex Ironman Transit" />
+        <div class="related-info">
+          <h4>Timex Ironman Transit</h4>
+          <p>$89</p>
+        </div>
+      </article>
+      <article class="related-card">
+        <img src="https://m.media-amazon.com/images/I/71xXQ4vOBTL._AC_SL1500_.jpg" alt="Timex Ironman Sleek" />
+        <div class="related-info">
+          <h4>Timex Ironman Sleek</h4>
+          <p>$99</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" src="" alt="Expanded watch image" />
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="script.js"></script>
+</body>
+</html>

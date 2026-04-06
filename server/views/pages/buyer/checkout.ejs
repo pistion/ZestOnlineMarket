@@ -1,0 +1,137 @@
+<header class="checkout-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="checkout-brand">
+                <span class="brand-mark">Z</span>
+                <div>
+                    <div class="logo">Zest Checkout</div>
+                    <p class="checkout-tagline">A cleaner handoff from product to purchase.</p>
+                </div>
+            </div>
+            <div class="checkout-status-chip">Secure checkout flow</div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <main>
+        <section class="cart-section">
+            <div class="ui-state ui-state--empty checkout-status-panel" id="checkoutStatusPanel">
+                <p class="ui-state__copy" id="checkoutStatusText">Loading checkout.</p>
+            </div>
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Order review</p>
+                    <h2>Shopping cart</h2>
+                </div>
+                <button class="btn btn-secondary btn-inline" id="update-cart-btn" type="button">Refresh totals</button>
+            </div>
+            <div id="cart-items"></div>
+        </section>
+
+        <aside class="checkout-sidebar">
+            <div class="order-summary">
+                <div class="section-heading compact">
+                    <div>
+                        <p class="eyebrow">Summary</p>
+                        <h3>Order summary</h3>
+                    </div>
+                </div>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">K0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>GST (10%)</span>
+                    <span id="gst" class="gst">K0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span id="shipping">K0.00</span>
+                </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span id="total">K0.00</span>
+            </div>
+            <div class="summary-row summary-row--selected" id="selected-variant-row" hidden>
+                <span id="selected-summary-label">Selected option</span>
+                <span id="selected-variant-summary">Standard</span>
+            </div>
+        </div>
+
+            <div class="form-group">
+                <label for="coupon">Coupon code</label>
+                <div class="coupon-row">
+                    <input type="text" id="coupon" placeholder="Enter coupon" />
+                    <button class="btn btn-secondary btn-inline" id="apply-coupon-btn" type="button">Apply</button>
+                </div>
+            </div>
+
+            <div class="payment-section payment-section--details">
+                <div class="section-heading compact">
+                    <div>
+                        <p class="eyebrow">Delivery details</p>
+                        <h3>Buyer details</h3>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="checkout-saved-address">Saved address</label>
+                    <select id="checkout-saved-address">
+                        <option value="">Choose a saved address</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="checkout-customer-name">Full name</label>
+                    <input id="checkout-customer-name" type="text" placeholder="Your full name" />
+                </div>
+                <div class="form-group">
+                    <label for="checkout-customer-email">Email</label>
+                    <input id="checkout-customer-email" type="email" placeholder="you@example.com" />
+                </div>
+                <div class="form-group">
+                    <label for="checkout-customer-phone">Phone</label>
+                    <input id="checkout-customer-phone" type="text" placeholder="Phone number" />
+                </div>
+                <div class="form-group">
+                    <label for="checkout-delivery-method">Delivery method</label>
+                    <input id="checkout-delivery-method" type="text" placeholder="Pickup, delivery, seller-arranged..." />
+                </div>
+                <div class="form-group">
+                    <label for="checkout-delivery-address">Delivery address</label>
+                    <textarea id="checkout-delivery-address" rows="3" placeholder="Street, suburb, landmark"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="checkout-delivery-city">City / area</label>
+                    <input id="checkout-delivery-city" type="text" placeholder="Port Moresby" />
+                </div>
+                <div class="form-group">
+                    <label for="checkout-delivery-notes">Delivery notes</label>
+                    <textarea id="checkout-delivery-notes" rows="3" placeholder="Optional delivery instructions"></textarea>
+                </div>
+            </div>
+
+            <div class="payment-section">
+                <div class="section-heading compact">
+                    <div>
+                        <p class="eyebrow">Payment</p>
+                        <h3>Payment method</h3>
+                    </div>
+                </div>
+                <button class="payment-method bsp-pay" data-payment="bsp-pay" type="button">
+                    <span>BSP Pay</span>
+                    <small>Fast local checkout</small>
+                </button>
+                <button class="payment-method paypal" data-payment="paypal" type="button">
+                    <span>PayPal</span>
+                    <small>Card or PayPal balance</small>
+                </button>
+            </div>
+
+            <div class="checkout-actions">
+                <a href="/buyer/purchases" class="btn btn-secondary btn-link">Order history</a>
+                <a id="back-to-product" href="/marketplace" class="btn btn-secondary btn-link">Back to product</a>
+                <button class="btn btn-primary" id="checkout-btn" disabled type="button">Place order</button>
+            </div>
+        </aside>
+    </main>
+</div>

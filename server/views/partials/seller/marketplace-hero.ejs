@@ -1,0 +1,87 @@
+<% const viewerRole = typeof currentUser !== "undefined" && currentUser ? currentUser.role : null; %>
+<section class="market-hero">
+  <div class="container">
+    <div class="row g-4 align-items-stretch">
+      <div class="col-xl-7">
+        <div class="market-hero__panel">
+          <span class="market-kicker">Store discovery</span>
+          <h1>Browse living storefronts, not just loose product tiles.</h1>
+          <p class="market-copy">
+            Follow the stores you like, open each stall directly, and keep your browsing flow clean
+            from marketplace to storefront to featured listing.
+          </p>
+
+          <div class="market-search-wrap">
+            <label class="market-search" for="marketplaceSearch">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input
+                id="marketplaceSearch"
+                type="search"
+                placeholder="Search stores, tags, or locations..."
+                autocomplete="off"
+              >
+            </label>
+
+            <label class="market-filter" for="marketplaceTemplate">
+              <span>Type</span>
+              <select id="marketplaceTemplate">
+                <option value="all">All stores</option>
+                <option value="products">Product stores</option>
+                <option value="live">Live seller stores</option>
+                <option value="demo">Demo showcase</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="market-hero__actions">
+            <a class="market-btn market-btn--primary" href="/feed">Open Global Feed</a>
+            <% if (!viewerRole) { %>
+              <a class="market-btn market-btn--secondary" href="/auth/signin?role=seller&amp;returnTo=%2Fseller%2Fstore">Launch a store</a>
+            <% } else if (viewerRole === "buyer") { %>
+              <a class="market-btn market-btn--secondary" href="/buyer/feed">My Buyer Feed</a>
+            <% } else if (viewerRole === "seller") { %>
+              <a class="market-btn market-btn--secondary" href="/seller/dashboard">Seller Dashboard</a>
+            <% } %>
+          </div>
+
+          <div class="market-status-row" aria-label="Marketplace overview">
+            <span class="market-status-pill" id="marketplaceStatusSummary">Showing all stalls in the marketplace.</span>
+            <span class="market-status-pill" id="marketplaceFollowSummary">0 followed stores ready for your feed.</span>
+          </div>
+
+          <div class="market-quick-filters" role="group" aria-label="Quick marketplace filters">
+            <button class="market-quick-filter is-active" type="button" data-market-filter-chip="all">All stalls</button>
+            <button class="market-quick-filter" type="button" data-market-filter-chip="live">Live stores</button>
+            <button class="market-quick-filter" type="button" data-market-filter-chip="following">Following</button>
+            <button class="market-quick-filter" type="button" data-market-filter-chip="demo">Demo showcase</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-5">
+        <div class="market-metrics">
+          <article class="market-metric">
+            <span>Stores loaded</span>
+            <strong id="marketplaceTotalCount">0</strong>
+            <small>Combined live and demo stalls</small>
+          </article>
+          <article class="market-metric">
+            <span>Live stores</span>
+            <strong id="marketplaceLiveCount">0</strong>
+            <small>Saved seller storefronts</small>
+          </article>
+          <article class="market-metric">
+            <span>Following</span>
+            <strong id="marketplaceFollowedCount">0</strong>
+            <small>Stores in your personal watchlist</small>
+          </article>
+          <article class="market-metric">
+            <span>Demo showcase</span>
+            <strong id="marketplaceDemoCount">0</strong>
+            <small>Fixture-backed browsing examples</small>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

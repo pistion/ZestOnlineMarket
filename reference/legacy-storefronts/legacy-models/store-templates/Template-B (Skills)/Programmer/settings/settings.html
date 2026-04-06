@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Store Settings • Glondia Marketplace</title>
+  <link rel="stylesheet" href="settings.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body data-page="settings" class="settings-open">
+
+<header class="topbar">
+  <div class="container wrap">
+    <a class="brandmark" href="#">
+      <span class="dot"></span>
+      <span>Artists Store</span>
+    </a>
+    <nav class="nav" data-nav>
+      <a href="#" data-page="feed"><i class="fa-solid fa-globe"></i><span>Global Feed</span></a>
+      <a href="#" data-page="templates"><i class="fa-solid fa-store"></i><span>StoreHub</span></a>
+      <a href="#" data-page="dashboard"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+      <a href="#" data-page="settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container settings-layout">
+    <div class="container-grid">
+      <aside class="settings-sidebar" data-settings-sidebar>
+        <div class="settings-sidebar-header">
+          <div class="settings-avatar-circle" data-preview="store-avatar-initial">
+            <span>AS</span>
+          </div>
+          <div class="settings-avatar-meta">
+            <h1 class="settings-store-name">Artists Store</h1>
+            <p class="settings-store-tagline">Tune how your store looks, feels and sells.</p>
+          </div>
+        </div>
+
+        <div class="settings-menu">
+          <span class="settings-menu-section-label">Store</span>
+          <button class="settings-menu-item is-active" type="button" data-settings-target="profile">
+            <i class="fa-solid fa-store"></i>
+            <span>Store profile</span>
+          </button>
+          <button class="settings-menu-item" type="button" data-settings-target="about">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>About & bio</span>
+          </button>
+
+          <span class="settings-menu-section-label">Offers</span>
+          <button class="settings-menu-item" type="button" data-settings-target="offers">
+            <i class="fa-solid fa-palette"></i>
+            <span>What you offer</span>
+          </button>
+          <button class="settings-menu-item" type="button" data-settings-target="artwork">
+            <i class="fa-solid fa-image"></i>
+            <span>Artwork & catalog</span>
+          </button>
+          <button class="settings-menu-item" type="button" data-settings-target="extras">
+            <i class="fa-solid fa-border-all"></i>
+            <span>Framing & extras</span>
+          </button>
+
+          <span class="settings-menu-section-label">Presence</span>
+          <button class="settings-menu-item" type="button" data-settings-target="social">
+            <i class="fa-solid fa-share-nodes"></i>
+            <span>Social links</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="settings-main" data-settings-main>
+
+        <!-- Store Profile -->
+        <section class="settings-panel is-active" data-settings-panel="profile">
+          <h2 class="settings-panel-title">Store profile</h2>
+          <p class="settings-panel-subtitle">Update your store name, logo and header so buyers instantly recognise you.</p>
+
+          <div class="grid grid-2 settings-grid-stack">
+            <div class="card">
+              <div class="form-row">
+                <label>Store name</label>
+                <input class="input" type="text" placeholder="e.g. Highlands Carvings Studio" />
+              </div>
+              <div class="form-row">
+                <label>Store handle / URL slug</label>
+                <input class="input" type="text" placeholder="e.g. highlands-carvings" />
+                <small class="muted">This becomes part of your public store link.</small>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="form-row">
+                <label>Store logo</label>
+                <div class="upload-field">
+                  <div class="upload-preview avatar" data-preview="store-avatar">
+                    <span>Logo</span>
+                  </div>
+                  <div class="upload-meta">
+                    <label class="btn ghost">
+                      <span><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload logo</span>
+                      <input type="file" accept="image/*" class="sr-only" data-preview-target="store-avatar">
+                    </label>
+                    <small>PNG or JPG, at least 400×400px.</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <label>Store cover image</label>
+                <div class="upload-field">
+                  <div class="upload-preview cover" data-preview="store-cover">
+                    <span>Cover</span>
+                  </div>
+                  <div class="upload-meta">
+                    <label class="btn ghost">
+                      <span><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload cover</span>
+                      <input type="file" accept="image/*" class="sr-only" data-preview-target="store-cover">
+                    </label>
+                    <small>Wide image works best, 1600×500px or similar.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-actions-row">
+            <button class="btn secondary" type="button">Reset changes</button>
+            <button class="btn green" type="button">Save store profile</button>
+          </div>
+        </section>
+
+        <!-- About & Bio -->
+        <section class="settings-panel" data-settings-panel="about">
+          <h2 class="settings-panel-title">About the store</h2>
+          <p class="settings-panel-subtitle">Tell buyers who you are, your style and what makes your work unique.</p>
+
+          <div class="card">
+            <div class="form-row">
+              <label>Short headline</label>
+              <input class="input" type="text" placeholder="e.g. Carved stories from the Highlands" />
+            </div>
+            <div class="form-row">
+              <label>About the store</label>
+              <textarea class="input" rows="6" placeholder="Share a short story about your practice, your team and what you offer to collectors."></textarea>
+              <small class="muted">Aim for 3–6 sentences. You can update this any time.</small>
+            </div>
+          </div>
+
+          <div class="settings-actions-row">
+            <span class="muted" style="font-size:12px">This text appears on your main store profile.</span>
+            <button class="btn green" type="button">Save about section</button>
+          </div>
+        </section>
+
+        <!-- What you offer -->
+        <section class="settings-panel" data-settings-panel="offers">
+          <h2 class="settings-panel-title">What you offer</h2>
+          <p class="settings-panel-subtitle">List the main services and products you provide for buyers and collaborators.</p>
+
+          <div class="card">
+            <div class="settings-list" data-offers-list>
+              <div class="settings-list-item" data-offer-item>
+                <div class="settings-list-item-header">
+                  <strong>Custom carvings</strong>
+                  <button class="btn-ghost-small" type="button" data-remove-offer><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+                <div class="form-row">
+                  <label>Title</label>
+                  <input class="input" type="text" value="Custom carvings" />
+                </div>
+                <div class="form-row">
+                  <label>Description</label>
+                  <textarea class="input" rows="3" placeholder="Describe what this offer includes, lead times and any requirements."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <button class="btn ghost" type="button" data-add-offer>
+                <i class="fa-solid fa-plus"></i> Add another offer
+              </button>
+              <button class="btn green" type="button">Save offers</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Artwork & catalog -->
+        <section class="settings-panel" data-settings-panel="artwork">
+          <h2 class="settings-panel-title">Artwork & catalog</h2>
+          <p class="settings-panel-subtitle">Add new pieces so they appear in your store gallery.</p>
+
+          <div class="card">
+            <div class="settings-list" data-artwork-list>
+              <div class="settings-list-item" data-artwork-item>
+                <div class="settings-list-item-header">
+                  <span class="settings-chip"><i class="fa-solid fa-image"></i> New artwork</span>
+                  <button class="btn-ghost-small" type="button" data-remove-artwork><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+
+                <div class="form-row">
+                  <label>Artwork image</label>
+                  <div class="upload-field">
+                    <div class="upload-preview artwork" data-preview="artwork-1">
+                      <span>Image</span>
+                    </div>
+                    <div class="upload-meta">
+                      <label class="btn ghost">
+                        <span><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload artwork</span>
+                        <input type="file" accept="image/*" class="sr-only" data-preview-target="artwork-1">
+                      </label>
+                      <small>High quality image helps your work stand out.</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>Title</label>
+                  <input class="input" type="text" placeholder="e.g. Spirit of the Coral Sea" />
+                </div>
+
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label>Price (PGK)</label>
+                    <input class="input" type="number" min="0" step="1" placeholder="e.g. 350" />
+                  </div>
+                  <div class="form-row">
+                    <label>Available quantity</label>
+                    <input class="input" type="number" min="1" step="1" value="1" />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>Description / story</label>
+                  <textarea class="input" rows="3" placeholder="Share the story, materials and size of this piece."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <button class="btn ghost" type="button" data-add-artwork>
+                <i class="fa-solid fa-plus"></i> Add another artwork
+              </button>
+              <button class="btn green" type="button">Save artwork list</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Framing & extras -->
+        <section class="settings-panel" data-settings-panel="extras">
+          <h2 class="settings-panel-title">Framing & extras</h2>
+          <p class="settings-panel-subtitle">Offer optional framing or add-on services at checkout.</p>
+
+          <div class="card">
+            <div class="settings-list" data-extras-list>
+              <div class="settings-list-item" data-extra-item>
+                <div class="settings-list-item-header">
+                  <span class="settings-chip"><i class="fa-solid fa-border-all"></i> Framing option</span>
+                  <button class="btn-ghost-small" type="button" data-remove-extra><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+
+                <div class="form-row">
+                  <label>Extra name</label>
+                  <input class="input" type="text" placeholder="e.g. Solid timber frame" />
+                </div>
+
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label>Additional price (PGK)</label>
+                    <input class="input" type="number" min="0" step="1" placeholder="e.g. 80" />
+                  </div>
+                  <div class="form-row">
+                    <label>Applies to</label>
+                    <input class="input" type="text" placeholder="e.g. All wall-hung works" />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>Notes</label>
+                  <textarea class="input" rows="3" placeholder="Let buyers know how framing works, timelines and delivery details."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <button class="btn ghost" type="button" data-add-extra>
+                <i class="fa-solid fa-plus"></i> Add another extra
+              </button>
+              <button class="btn green" type="button">Save extras</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Social links -->
+        <section class="settings-panel" data-settings-panel="social">
+          <h2 class="settings-panel-title">Social links</h2>
+          <p class="settings-panel-subtitle">Connect your social profiles so buyers can follow your work.</p>
+
+          <div class="card">
+            <div class="settings-list">
+              <div class="social-row">
+                <label><i class="fa-brands fa-instagram"></i> Instagram</label>
+                <input class="input" type="url" placeholder="https://instagram.com/your-handle" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-brands fa-facebook"></i> Facebook</label>
+                <input class="input" type="url" placeholder="https://facebook.com/your-page" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-brands fa-tiktok"></i> TikTok</label>
+                <input class="input" type="url" placeholder="https://www.tiktok.com/@your-handle" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-brands fa-youtube"></i> YouTube</label>
+                <input class="input" type="url" placeholder="https://youtube.com/@yourchannel" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-brands fa-behance"></i> Behance / Dribbble</label>
+                <input class="input" type="url" placeholder="https://www.behance.net/yourprofile" />
+              </div>
+              <div class="social-row">
+                <label><i class="fa-solid fa-globe"></i> Website</label>
+                <input class="input" type="url" placeholder="https://yourstudio.com" />
+              </div>
+            </div>
+
+            <div class="settings-actions-row">
+              <span class="muted" style="font-size:12px">We’ll show these as icons on your public profile.</span>
+              <button class="btn green" type="button">Save social links</button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</section>
+
+<div class="toast"></div>
+
+<div class="modal" data-modal>
+  <div class="panel container" data-modal-body></div>
+</div>
+
+<script src="script.js"></script>
+<script src="settings.js"></script>
+</body>
+</html>

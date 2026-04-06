@@ -1,0 +1,16 @@
+node_modules/
+server/node_modules/
+Main/node_modules/
+.env
+.local-backups/
+*.db
+*.sqlite
+*.sqlite3
+storage/uploads/
+reference/sqlite/
+reference/migration-snapshots/
+.pgdata/
+*.log
+npm-debug.log*
+tmp-server-*.log
+*.bak

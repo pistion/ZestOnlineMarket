@@ -1,0 +1,483 @@
+/* ===============================
+   Music Store V2 – Extended Styles
+   This file IMPORTS the main style.css so all base styling is applied.
+   Make sure style.css sits in the same folder as this file.
+   =============================== */
+@import url('style.css');
+
+/* HERO overrides for music */
+.cover-music-v2{
+  height:420px;
+  border-radius:20px;
+  margin-bottom:70px;
+  background:
+    radial-gradient(800px 460px at 0% 0%, rgba(59,130,246,.35), transparent 60%),
+    radial-gradient(800px 460px at 100% 0%, rgba(34,197,94,.28), transparent 60%),
+    linear-gradient(135deg,#020617,#0b1120);
+  background-image:
+    linear-gradient(135deg,rgba(15,23,42,.96),rgba(30,64,175,.92)),
+    url('imgs/2.jpg');
+  background-blend-mode:overlay;
+  background-size:cover;
+  background-position:center;
+  box-shadow:var(--shadow);
+}
+
+.avatar-music-v2{
+  width:112px;
+  height:112px;
+  border-radius:18px;
+  border:4px solid #0f172a;
+  position:relative;
+  overflow:hidden;
+background-image: url(imgs/1.jpg);
+
+}
+.avatar-music-v2::after{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  letter-spacing:.2em;
+  color:#dbeafe;
+}
+
+/* NEW RELEASES row (horizontal scroll) */
+.new-releases-row{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  padding:18px 2px 6px;
+  scroll-snap-type:x mandatory;
+}
+.new-releases-row::-webkit-scrollbar{
+  height:6px;
+}
+.new-releases-row::-webkit-scrollbar-thumb{
+  background:#cbd5f5;
+  border-radius:999px;
+}
+.new-release-card{
+  min-width:260px;
+  max-width:260px;
+  scroll-snap-align:start;
+}
+
+/* Music cards */
+.music-card{
+  position:relative;
+  overflow:hidden;
+}
+.music-card .thumb{
+  position:relative;
+  aspect-ratio:1/1;
+  border-radius:14px;
+  background:#020617;
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:flex-end;
+  padding:10px;
+}
+.music-card .thumb-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent,rgba(15,23,42,.9));
+  opacity:0;
+  transition:opacity .2s ease;
+}
+.music-card:hover .thumb-overlay{
+  opacity:1;
+}
+.music-card .thumb-top{
+  position:absolute;
+  inset:10px 10px auto auto;
+  display:flex;
+  gap:6px;
+}
+.music-tag-pill{
+  padding:3px 9px;
+  border-radius:999px;
+  background:rgba(15,23,42,.9);
+  color:#e5edff;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.play-pill{
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(15,23,42,.92);
+  color:#e5edff;
+  font-size:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.play-pill span{
+  font-size:11px;
+}
+.music-card .body{
+  padding:10px 2px 2px;
+}
+.music-meta{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.music-meta .title{
+  font-weight:800;
+}
+.music-meta .sub{
+  font-size:13px;
+  color:var(--muted);
+}
+.music-meta .row-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:6px;
+}
+.music-meta .pill{
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  color:var(--muted);
+}
+
+/* Producer packs */
+.pack-card .thumb{
+  aspect-ratio:16/9;
+  border-radius:14px;
+  background:radial-gradient(circle at 10% 0%,#22c55e 0,transparent 60%),
+             radial-gradient(circle at 100% 0%,#3b82f6 0,transparent 60%),
+             #020617;
+  display:grid;
+  place-items:center;
+  color:#e5edff;
+  font-weight:800;
+}
+
+/* Reviews upgraded */
+.testi .stars{
+  color:#fbbf24;
+  font-size:13px;
+}
+
+/* Sticky player */
+.sticky-player{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:80;
+  padding:10px 16px;
+  background:rgba(15,23,42,.96);
+  border-top:1px solid rgba(148,163,184,.5);
+  box-shadow:0 -10px 30px rgba(15,23,42,.85);
+}
+.sticky-player.hidden{
+  display:none;
+}
+.player-inner{
+  max-width:var(--maxw);
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.player-main{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
+}
+.player-cover{
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  background:#020617;
+  background-size:cover;
+  background-position:center;
+}
+.player-meta{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.player-title{
+  font-weight:800;
+  font-size:14px;
+  color:#e5edff;
+}
+.player-sub{
+  font-size:12px;
+  color:#9ca3af;
+}
+.player-wave{
+  display:flex;
+  gap:2px;
+  margin-top:2px;
+}
+.wave-bar{
+  width:3px;
+  height:14px;
+  border-radius:999px;
+  background:#4b5563;
+  animation:waveStill 1s infinite ease-in-out;
+}
+.player-wave.playing .wave-bar{
+  animation:wavePlay 1s infinite ease-in-out;
+}
+.wave-bar:nth-child(2){animation-delay:.1s}
+.wave-bar:nth-child(3){animation-delay:.2s}
+.wave-bar:nth-child(4){animation-delay:.3s}
+.wave-bar:nth-child(5){animation-delay:.4s}
+
+@keyframes wavePlay{
+  0%,100%{transform:scaleY(.5)}
+  50%{transform:scaleY(1.6)}
+}
+@keyframes waveStill{
+  0%,100%{transform:scaleY(.4)}
+  50%{transform:scaleY(.8)}
+}
+
+.player-controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:260px;
+}
+.player-btn{
+  padding:8px 14px;
+  font-size:13px;
+}
+.player-timeline{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.player-timeline-bar{
+  position:relative;
+  width:100%;
+  height:5px;
+  border-radius:999px;
+  background:#111827;
+  overflow:hidden;
+}
+.player-timeline-fill{
+  position:absolute;
+  inset:0 auto 0 0;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#3b82f6,#22c55e);
+  transition:width .1s linear;
+}
+.player-time{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  color:#9ca3af;
+}
+.player-close{
+  border:none;
+  background:transparent;
+  color:#e5edff;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* Modal album tracklist */
+.album-tracklist{
+  margin-top:12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#f9fbff;
+  overflow:hidden;
+}
+.album-track{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+  border-bottom:1px solid var(--line);
+}
+.album-track:last-child{
+  border-bottom:none;
+}
+.album-track-num{
+  font-size:12px;
+  color:var(--muted);
+  width:18px;
+}
+.album-track-main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.album-track-title{
+  font-size:13px;
+  font-weight:600;
+}
+.album-track-meta{
+  font-size:11px;
+  color:var(--muted);
+}
+.album-track-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.album-track-actions button{
+  font-size:11px;
+  padding:5px 9px;
+}
+
+/* Responsive tweaks for sticky player */
+@media (max-width:700px){
+  .player-inner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .player-controls{
+    width:100%;
+  }
+}
+
+.profile-actions-group{
+  margin-left: auto;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 40px;
+}
+
+/* Social icons row */
+.profile-socials{
+  display: flex;
+  gap: 8px;
+}
+
+/* Circular icon buttons */
+.profile-socials a{
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+  background: #fff;
+  transition: all .25s ease;
+}
+
+.profile-socials a:hover{
+  color: var(--brand);
+  border-color: var(--brand);
+  transform: translateY(-2px);
+}
+
+
+/* --- Persistent Upload Card (refined) --- */
+.upload-card{
+  cursor: pointer;
+  width: fit-content;
+}
+
+
+
+/* Make upload card slightly larger than others */
+.upload-card .upload-thumb{
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1.5px dashed var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  color: var(--muted);
+  font-weight: 700;
+  transition: 
+    background .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    transform .25s ease;
+}
+
+/* Plus icon */
+.upload-thumb i{
+  font-size: 26px;
+  color: var(--text);
+  transition: color .25s ease;
+}
+
+/* Label text */
+.upload-thumb span{
+  font-size: 13px;
+  letter-spacing: .02em;
+}
+
+/* Hover = confident black */
+.upload-card:hover .upload-thumb{
+  background: #020617; /* deep black-blue used elsewhere */
+  border-color: #020617;
+  color: #e5edff;
+  transform: translateY(-2px);
+}
+
+.upload-card:hover .upload-thumb i{
+  color: #e5edff;
+}
+
+/* Upload card inside tier grid */
+.tier.upload-card{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: auto;
+}
+
+/* Reuse existing upload-thumb styling */
+.tier.upload-card .upload-thumb{
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Context-aware sizing for upload cards --- */
+
+/* Default: no forced height */
+.upload-thumb{
+  min-height: unset;
+  height: 100%;
+}
+
+/* Fresh Drops – square cards */
+.new-releases-row .upload-thumb{
+  aspect-ratio: 1 / 1;
+}
+
+/* Full Music Collections (Albums & EPs) */
+#albums .upload-thumb{
+  height:130px;
+}
+
+/* Browse / Library grid */
+.media-grid .upload-thumb{
+  aspect-ratio: 16 / 9;
+}
+
+/* Licensing tiers */
+.tier.upload-card .upload-thumb{
+  min-height: 160px;
+}

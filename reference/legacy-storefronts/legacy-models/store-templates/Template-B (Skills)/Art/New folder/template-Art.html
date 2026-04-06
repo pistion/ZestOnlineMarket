@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artists Studio • Glondia Marketplace</title>
+  <link rel="stylesheet" href="style.css" />
+   <link rel="stylesheet" href="style_card.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body data-page="art-profile">
+
+<header class="topbar">
+  <div class="container wrap">
+    <a class="brandmark" href="#">
+      <span class="dot"></span>
+      <span>Artists Store</span>
+    </a>
+    <button class="btn ghost nav-toggle" data-nav-toggle aria-label="Toggle navigation">☰ Menu</button>
+    <nav class="nav" data-nav>
+<a href="#" data-page="global-feed"><i class="fa-solid fa-globe"></i> Global Feed</a>
+
+<a href="#" data-page="templates"><i class="fa-solid fa-store"></i> StoreHub</a>
+<a href="#" data-page="dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+<a href="#" data-page="auth"><i class="fa-solid fa-gear"></i> Settings</a>
+<a href="#" data-page="cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+
+      
+    </nav>
+  </div>
+</header>
+
+
+<!-- =========================================================== -->
+<!-- HERO + ARTIST COLLECTIVE BRANDING                           -->
+<!-- =========================================================== -->
+
+<section class="profile-hero section">
+  <div class="container">
+   
+    <div class="cover"></div>
+          <div class="profile-actions">
+        <button class="btn green" data-toast="Commission flow is frontend-only in this demo.">Request Commission</button>
+        <button class="btn secondary">Follow Store</button>
+    <button class="btn ghost" data-toast="Share link copied (demo)." aria-label="Share">
+      <i class="fa-solid fa-share-nodes"></i>
+    </button>
+
+</button>
+
+      </div>
+    <div class="profile-bar">
+      <div class="avatar"></div>
+      <div class="profile-meta">
+        <div class="profile-title">Aurora Art Collective</div>
+        <div class="muted">Paintings • Carvings • Drawings • Limited Prints</div>
+        <div class="stats-row">
+          <div class="stat-chip">🖼️ 180+ Artworks Online</div>
+          <div class="stat-chip">🎨 30+ PNG & Pacific Artists</div>
+          <div class="stat-chip">⭐ 4.9 Average Rating</div>
+          <div class="stat-chip">🌍 Worldwide Shipping Ready</div>
+        </div>
+      </div>
+
+    </div>
+
+    <nav class="profile-nav">
+      <a href="#about">About</a>
+      <a href="#programs">Originals & Prints</a>
+      <a href="#sessions">Framing & Extras</a>
+      <a href="#results">Gallery</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+
+</section>
+
+
+
+
+<!-- =========================================================== -->
+<!-- ABOUT SECTION – ARTISTS MARKETPLACE                         -->
+<!-- =========================================================== -->
+
+<section id="about" class="section">
+  <div class="container grid grid-2">
+
+    <article class="card">
+      <div class="kicker">About this Store</div>
+      <h3 class="h3">A home for painters, carvers & illustrators</h3>
+      <p class="muted">
+        This template turns your Glondia profile into a modern art storefront — built for painters, sculptors,
+        wood carvers, illustrators and mixed-media artists who want to sell originals, carvings and prints online.
+      </p>
+      <ul class="muted">
+        <li>Showcase curated collections of paintings, carvings and drawings</li>
+        <li>Sell originals, numbered editions and fine-art prints</li>
+        <li>Offer custom commissions right from your profile</li>
+        <li>Highlight artists from PNG and across the Pacific</li>
+        <li>Use the dynamic gallery to surface your best pieces</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <div class="kicker">For Art Sellers</div>
+      <h3 class="h3">What you can offer here</h3>
+      <div class="grid">
+        <div class="badge good">Original Paintings</div>
+        <div class="badge">Limited Prints</div>
+        <div class="badge">Wood & Stone Carvings</div>
+        <div class="badge">Ink & Pencil Drawings</div>
+        <div class="badge warn">Custom Commissions</div>
+        <div class="badge">Digital Illustration Files</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- =========================================================== -->
+<!-- DYNAMIC GALLERY / RESULTS                                   -->
+<!-- =========================================================== -->
+
+<section id="results" class="section">
+  <div class="container">
+    <div class="kicker">Gallery</div>
+    <h2 class="h2">Discover Artwork</h2>
+    <p class="muted">Browse paintings, carvings and drawings from independent artists.</p>
+
+    <div class="gallery-toolbar">
+      <div class="chip-row" data-gallery-filters>
+        <button class="chip active" data-gallery-filter="all">All</button>
+        <button class="chip" data-gallery-filter="painting">Paintings</button>
+        <button class="chip" data-gallery-filter="carving">Carvings</button>
+        <button class="chip" data-gallery-filter="drawing">Drawings</button>
+      </div>
+      <div class="row" style="flex:1;justify-content:flex-end;gap:8px;">
+        <input type="search" class="input" placeholder="Search title, artist, style..." data-gallery-search />
+        <select class="input" data-gallery-sort style="max-width:210px">
+          <option value="featured">Featured</option>
+          <option value="new">Newest</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-4 section-tight media-grid" data-gallery-grid></div>
+    <p class="muted center" data-gallery-empty style="display:none;margin-top:18px">
+      No artworks match right now. Try a different filter or search term.
+    </p>
+  </div>
+</section>
+
+<!-- =========================================================== -->
+<!-- ORIGINALS & PRINTS (PRODUCT-STYLE CARDS)                    -->
+<!-- =========================================================== -->
+
+<section id="programs" class="section">
+  <div class="container">
+
+    <div class="row space-between">
+      <div>
+        <div class="kicker">Featured Collections</div>
+        <h2 class="h2">Originals & Limited Prints</h2>
+        <p class="muted">A quick sample of how you can present art products in this layout.</p>
+      </div>
+      <button class="btn" data-toast="Creating products is demo-only right now.">Add New Artwork</button>
+    </div>
+
+    
+          <main class="container" style="padding:26px 18px;max-width:520px">
+    <div id="singleCardMount" aria-label="Single product card"></div>
+  </main>
+
+  <!-- Minimal toast used by the card actions -->
+  <div class="toast" role="status" aria-live="polite"></div>
+      </article>
+
+
+
+<!-- =========================================================== -->
+<!-- FRAMING & EXTRAS (ADD-ONS)                                 -->
+<!-- =========================================================== -->
+
+<section id="sessions" class="section">
+  <div class="container">
+    <div class="kicker">Framing & Extras</div>
+    <h2 class="h2">Upsell services for each piece</h2>
+    <p class="muted">Attach extras like framing, certificates and faster shipping to your artworks.</p>
+
+    <div class="grid grid-3 section-tight">
+
+      <article class="tier">
+        <div class="tier-name">Gallery Frame</div>
+        <div class="tier-price">K180</div>
+        <div class="muted">Minimal wood frame, ready to hang.</div>
+        <button class="btn block" data-toast="Added Gallery Frame (demo).">Add to Cart</button>
+       <button class="btn ghost" data-toast="Share link copied (demo).">View Details</button> 
+      </article>
+
+      <article class="tier featured">
+        <div class="tier-name">Certificate & Story cart</div>
+        <div class="tier-price">K95</div>
+        <div class="muted">Signed certificate of authenticity + backstory card.</div>
+        <button class="btn green block" data-toast="Added certificate (demo).">Add to Cart</button>
+       <button class="btn ghost" data-toast="Share link copied (demo).">View Details</button> 
+      </article>
+
+      <article class="tier">
+        <div class="tier-name">Express Shipping</div>
+        <div class="tier-price">K130</div>
+        <div class="muted">Priority packing and express courier delivery.</div>
+        <button class="btn block" data-toast="Added express shipping (demo).">Add to Cart</button>
+       <button class="btn ghost" data-toast="Share link copied (demo).">View Details</button> 
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<!-- =========================================================== -->
+<!-- REVIEWS SECTION                                             -->
+<!-- =========================================================== -->
+
+<section id="reviews" class="section">
+  <div class="container">
+    <div class="kicker">Reviews</div>
+    <h2 class="h2">Collect your social proof</h2>
+
+    <div class="grid grid-3 section-tight">
+      <article class="testi">
+        <div class="who"><span class="dot">M</span> Maria T.</div>
+        <div class="muted">“The carving arrived perfectly packed, with a beautiful story card. Will order again.”</div>
+      </article>
+      <article class="testi">
+        <div class="who"><span class="dot">J</span> Jason L.</div>
+        <div class="muted">“Loved the painting in person — colours are richer than the photos.”</div>
+      </article>
+      <article class="testi">
+        <div class="who"><span class="dot">A</span> Anna R.</div>
+        <div class="muted">“Print quality is amazing. Framing add-on saved me time.”</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- =========================================================== -->
+<!-- FAQ SECTION – ART STORE                                     -->
+<!-- =========================================================== -->
+
+<section id="faq" class="section">
+  <div class="container faq">
+    <div class="kicker">FAQ</div>
+    <h2 class="h2">Buying & Shipping Art</h2>
+
+    <div class="grid section-tight">
+
+      <div class="item">
+        <div class="q">Are these original artworks or prints? <span>+</span></div>
+        <div class="a">You can sell both on this template. Each product card should clearly state if it is an original, limited edition print or open print.</div>
+      </div>
+
+      <div class="item">
+        <div class="q">Do you ship outside PNG? <span>+</span></div>
+        <div class="a">Yes, this layout is designed for PNG-based artists who want to ship regionally and internationally. Your real store settings will control which countries you support.</div>
+      </div>
+
+      <div class="item">
+        <div class="q">How are artworks packed? <span>+</span></div>
+        <div class="a">We recommend rigid packaging, corner protectors and waterproof wrapping. Use the description area on each artwork to explain your packing process.</div>
+      </div>
+
+      <div class="item">
+        <div class="q">Can I request a custom piece? <span>+</span></div>
+        <div class="a">Yes. The “Request Commission” button at the top can be wired to your real commission form or chat flow in production.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- =========================================================== -->
+<!-- FOOTER                                                      -->
+<!-- =========================================================== -->
+
+<footer class="footer">
+  <div class="container cols">
+    <div>
+      <div class="brandmark" style="margin-bottom:10px">
+        <span class="dot"></span><span>Glondia Marketplace</span>
+      </div>
+      <p class="muted">A marketplace for artists, carvers and digital creators in PNG and beyond.</p>
+      <div class="row" style="margin-top:10px">
+        <span class="badge">Light Blue</span>
+        <span class="badge">Dark Blue</span>
+        <span class="badge good">Green Accent</span>
+      </div>
+    </div>
+    <div>
+      <h4>Marketplace</h4>
+      <div class="form-row">
+        <a href="#">Global Feed</a>
+        <a href="#">Products</a>
+        <a href="#">Templates</a>
+        <a href="#">Purchase Flow</a>
+      </div>
+    </div>
+    <div>
+      <h4>Account</h4>
+      <div class="form-row">
+        <a href="#">Sign In / Up</a>
+        <a href="#">Buyer Profile</a>
+        <a href="#">Seller Profile</a>
+        <a href="#">Seller Dashboard</a>
+      </div>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <div class="form-row">
+        <a href="#">Terms & Policies</a>
+        <a href="#">Payout Policy</a>
+        <a href="#" data-toast="Security module is frontend-only right now.">Security</a>
+      </div>
+    </div>
+  </div>
+  <div class="container section-tight muted" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+    <small>© 2025 Glondia. All rights reserved.</small>
+    <small>Artists store profile template.</small>
+  </div>
+</footer>
+
+<div class="toast"></div>
+
+<div class="modal" data-modal>
+  <div class="panel container" data-modal-body></div>
+</div>
+
+<script>
+
+
+
+// === Gallery Image Click → Popup Modal ===
+(function setupArtThumbModal(){
+  const modal = document.querySelector('[data-modal]');
+  const modalBody = document.querySelector('[data-modal-body]');
+  const galleryGrid = document.querySelector('[data-gallery-grid]');
+
+  // Safety checks
+  if (!modal || !modalBody || !galleryGrid) return;
+
+  // When user clicks inside the gallery grid
+  galleryGrid.addEventListener('click', (e) => {
+    // Only react if they clicked on an art thumbnail
+    const thumb = e.target.closest('.art-thumb');
+    if (!thumb) return;
+
+    // Extract the background-image URL from the thumb
+    const bg = window.getComputedStyle(thumb).backgroundImage;
+    const match = bg && bg !== 'none' ? bg.match(/url\(["']?(.*?)["']?\)/) : null;
+    const imgUrl = match && match[1] ? match[1] : null;
+    if (!imgUrl) return;
+
+    // Build the popup content
+    modalBody.innerHTML = `
+      <div class="image-modal-inner">
+        <img src="${imgUrl}" alt="" />
+        <div style="margin-top:12px; text-align:right;">
+          <button class="btn secondary" data-close>Close</button>
+        </div>
+      </div>
+    `;
+
+    // Show modal
+    modal.classList.add('open');
+
+    // Trigger enter animation on the inner container
+    requestAnimationFrame(() => {
+      const inner = modalBody.querySelector('.image-modal-inner');
+      if (inner) {
+        inner.classList.add('enter');
+      }
+    });
+  });
+
+  // Close on outside click or Close button
+  modal.addEventListener('click', (e) => {
+    const clickedOutside = (e.target === modal);
+    const clickedClose = !!e.target.closest('[data-close]');
+
+    if (!clickedOutside && !clickedClose) return;
+
+    const inner = modalBody.querySelector('.image-modal-inner');
+    if (inner) {
+      inner.classList.remove('enter');
+    }
+
+    // Wait for the exit animation to finish, then hide modal
+    setTimeout(() => {
+      modal.classList.remove('open');
+      modalBody.innerHTML = '';
+    }, 200); // matches the 0.2s animation below
+  });
+})();
+
+
+</script>
+<script src="script.js"></script>
+<script src="script_card.js"></script>
+</body>
+</html>

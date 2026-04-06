@@ -1,0 +1,289 @@
+<header class="topbar">
+  <div class="container wrap">
+    <a class="brandmark" href="/marketplace" aria-label="Zest Marketplace Home">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Zest Marketplace</span>
+    </a>
+
+    <button class="btn ghost nav-toggle" data-nav-toggle aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i> Menu
+    </button>
+
+    <nav class="nav" data-nav aria-label="Primary navigation">
+      <a href="/feed" data-page="feed">Global Feed</a>
+      <a href="/marketplace" data-page="marketplace">Marketplace</a>
+      <a href="/seller/dashboard" data-page="dashboard">Dashboard</a>
+      <a href="/buyer/checkout" data-page="cart">Cart <span class="nav-count" data-cart-badge>0</span></a>
+      <a href="/seller/store" data-page="settings">Store Settings</a>
+    </nav>
+  </div>
+</header>
+
+<section class="profile-hero section">
+  <div class="container">
+    <div class="cover cover-dev" role="img" aria-label="Developer cover"></div>
+
+    <div class="profile-bar">
+      <div class="avatar avatar-dev" role="img" aria-label="Developer avatar"></div>
+
+      <div class="profile-meta">
+        <div class="pro-follow-organiser">
+          <div class="profile-title">devKrypt</div>
+          <a class="btn secondary" href="/auth/signin?role=buyer&amp;returnTo=%2Fmarketplace">Follow</a>
+        </div>
+
+        <div class="muted">Full-Stack Engineer • React | Node | Python | Cloud</div>
+
+        <div class="stats-row">
+          <div class="stat-chip">🚀 180+ Projects Delivered</div>
+          <div class="stat-chip">⚡ 4.9 Rating (127 reviews)</div>
+          <div class="stat-chip">✅ Available for Hire</div>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <a class="btn green" href="/auth/signin?role=buyer&amp;returnTo=%2Fmarketplace">Hire Me</a>
+        <button class="btn ghost icon" data-share-current type="button" aria-label="Share profile">
+          <i class="fa-solid fa-share-nodes"></i>
+        </button>
+
+        <div class="social-row" aria-label="Social links">
+          <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" aria-label="Stack Overflow"><i class="fa-brands fa-stack-overflow"></i></a>
+          <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="profile-nav">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#packages">Packages</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="container grid grid-2">
+    <article class="card">
+      <div class="kicker">About devKrypt</div>
+      <h3 class="h3">Turning ideas into scalable, modern web applications</h3>
+      <p class="muted">
+        Full-stack developer specializing in React/Next.js frontends, Node.js + Python backends, cloud architecture,
+        and automation. This template is designed for developers showcasing work like a post feed - complete with
+        likes, comments, previews, and purchase/hire actions.
+      </p>
+      <ul class="muted list">
+        <li>Pixel-perfect, responsive web apps</li>
+        <li>REST & GraphQL APIs</li>
+        <li>Database design (PostgreSQL, MongoDB, Firebase)</li>
+        <li>DevOps & CI/CD pipelines</li>
+        <li>Mentorship & code reviews</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <div class="kicker">Tech Stack</div>
+      <h3 class="h3">Tools & Technologies</h3>
+      <div class="grid chips">
+        <div class="badge">React / Next.js</div>
+        <div class="badge">Node.js</div>
+        <div class="badge">Python / FastAPI</div>
+        <div class="badge">TypeScript</div>
+        <div class="badge good">AWS | Docker</div>
+        <div class="badge warn">Tailwind | Shadcn</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="services" class="section">
+  <div class="container">
+    <div class="row space-between">
+      <div>
+        <div class="kicker">Development</div>
+        <h2 class="h2">Most Popular Services</h2>
+        <p class="muted">Each service card behaves like a post: react, preview, add, comment - fully autonomous.</p>
+      </div>
+      <a class="btn" href="/marketplace">View All Services</a>
+    </div>
+
+    <div class="grid grid-3 section-tight" id="serviceCardGrid" aria-label="Service cards"></div>
+  </div>
+</section>
+
+<section id="packages" class="section">
+  <div class="container">
+    <div class="kicker">Add-Ons & Extras</div>
+    <h2 class="h2">Boost Your Project</h2>
+    <p class="muted">Add any of these to your main package.</p>
+
+    <div class="grid grid-3 section-tight">
+      <article class="tier">
+        <div class="tier-name">Performance Audit</div>
+        <div class="tier-price">K149</div>
+        <div class="muted">Lighthouse 95+ • Core Web Vitals</div>
+        <button class="btn block" data-add-cart='{"id":"addon_perf","title":"Performance Audit","price":"K149"}'>Add to cart</button>
+      </article>
+
+      <article class="tier featured">
+        <div class="tier-name">1 Month Support</div>
+        <div class="tier-price">K299</div>
+        <div class="muted">Bug fixes + small feature updates</div>
+        <button class="btn green block" data-add-cart='{"id":"addon_support","title":"1 Month Support","price":"K299"}'>Add to cart</button>
+      </article>
+
+      <article class="tier">
+        <div class="tier-name">Deploy + CI/CD</div>
+        <div class="tier-price">K199</div>
+        <div class="muted">Vercel / Railway / Docker setup</div>
+        <button class="btn block" data-add-cart='{"id":"addon_deploy","title":"Deploy + CI/CD","price":"K199"}'>Add to cart</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio" class="section">
+  <div class="container">
+    <div class="kicker">Portfolio</div>
+    <h2 class="h2">Recent Projects</h2>
+    <p class="muted">Live apps, dashboards, and tools built for clients worldwide.</p>
+
+    <div class="grid grid-4 section-tight media-grid">
+      <article class="media">
+        <div class="thumb code-thumb">SaaS Dashboard</div>
+        <div class="body">
+          <h3 class="h3">Analytics Platform</h3>
+          <div class="muted">Next.js + Supabase</div>
+        </div>
+        <button class="btn block" data-play data-play-title="Analytics Platform">Preview</button>
+      </article>
+      <article class="media">
+        <div class="thumb code-thumb">E-Commerce</div>
+        <div class="body">
+          <h3 class="h3">Headless Storefront</h3>
+          <div class="muted">Medusa + React</div>
+        </div>
+        <button class="btn block" data-play data-play-title="Headless Storefront">Preview</button>
+      </article>
+      <article class="media">
+        <div class="thumb code-thumb">Mobile App</div>
+        <div class="body">
+          <h3 class="h3">React Native MVP</h3>
+          <div class="muted">Expo + Firebase</div>
+        </div>
+        <button class="btn block" data-play data-play-title="React Native MVP">Preview</button>
+      </article>
+      <article class="media">
+        <div class="thumb code-thumb">Automation</div>
+        <div class="body">
+          <h3 class="h3">Python Tooling</h3>
+          <div class="muted">FastAPI + Workers</div>
+        </div>
+        <button class="btn block" data-play data-play-title="Python Tooling">Preview</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="section">
+  <div class="container">
+    <div class="kicker">Reviews</div>
+    <h2 class="h2">Client Testimonials</h2>
+
+    <div class="grid grid-3 section-tight">
+      <article class="testi">
+        <div class="who"><div class="dot-mini">S</div><span>Sarah M.</span></div>
+        <div class="muted">“Delivered a production-ready SaaS in just 3 weeks. Clean code!”</div>
+        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+      </article>
+      <article class="testi">
+        <div class="who"><div class="dot-mini">R</div><span>Raj P.</span></div>
+        <div class="muted">“Best developer I’ve worked with. 10/10 communication.”</div>
+        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+      </article>
+      <article class="testi">
+        <div class="who"><div class="dot-mini">L</div><span>Liam K.</span></div>
+        <div class="muted">“Turned my idea into a beautiful Next.js app. Will hire again.”</div>
+        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="section">
+  <div class="container faq">
+    <div class="kicker">FAQ</div>
+    <h2 class="h2">Common Questions</h2>
+
+    <div class="grid section-tight">
+      <div class="item">
+        <div class="q" role="button" tabindex="0" aria-expanded="false">Do you provide source code? <span>+</span></div>
+        <div class="a">Yes — full ownership and clean, commented source code with handover guidance.</div>
+      </div>
+      <div class="item">
+        <div class="q" role="button" tabindex="0" aria-expanded="false">What is your revision policy? <span>+</span></div>
+        <div class="a">Two free revision rounds included. Additional revisions at K50/hr (demo text).</div>
+      </div>
+      <div class="item">
+        <div class="q" role="button" tabindex="0" aria-expanded="false">Can you maintain the project long-term? <span>+</span></div>
+        <div class="a">Absolutely — monthly retainer packages available.</div>
+      </div>
+      <div class="item">
+        <div class="q" role="button" tabindex="0" aria-expanded="false">Do you sign NDAs? <span>+</span></div>
+        <div class="a">Yes, happy to sign an NDA before we discuss details.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container cols">
+    <div>
+      <div class="brandmark" style="margin-bottom:10px">
+        <span class="dot" aria-hidden="true"></span><span>Zest Marketplace</span>
+      </div>
+      <p class="muted">Hire top developers, designers & digital creators in PNG and worldwide.</p>
+    </div>
+    <div>
+      <h4>Marketplace</h4>
+      <div class="form-row links">
+        <a href="/feed">Global Feed</a>
+        <a href="/marketplace">Services</a>
+        <a href="/marketplace">Templates</a>
+      </div>
+    </div>
+    <div>
+      <h4>Account</h4>
+      <div class="form-row links">
+        <a href="/seller/dashboard">Dashboard</a>
+        <a href="/buyer/profile">Orders</a>
+        <a href="/buyer/feed">Messages</a>
+      </div>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <div class="form-row links">
+        <a href="/marketplace">Help Center</a>
+        <a href="/marketplace">Terms</a>
+        <a href="/marketplace">Privacy</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container section-tight muted footer-bottom">
+    <small>© 2025 Zest. All rights reserved.</small>
+    <small>Developer profile template.</small>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+
+<div class="modal" data-modal role="dialog" aria-modal="true" aria-label="Preview dialog">
+  <div class="panel container" data-modal-body></div>
+</div>

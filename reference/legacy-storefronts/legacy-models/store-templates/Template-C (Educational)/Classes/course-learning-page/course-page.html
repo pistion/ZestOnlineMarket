@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Ocean Studio — Quiet Luxury Learning Space</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="course-page.css" />
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar reef-nav">
+            <div class="topbar-left">
+                <div class="brand-mark">OS</div>
+                <div class="brand-copy">
+                    <h1 class="brand-title serif-heading">Ocean Studio</h1>
+                    <p class="brand-subtitle">Quiet luxury learning space for calm, focused study.</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <nav class="reef-links" aria-label="Primary navigation">
+                    <a href="#aboutReef" class="reef-link">About</a>
+                    <a href="#modulesReef" class="reef-link">Lessons</a>
+                    <a href="#chatReef" class="reef-link">Discussion</a>
+                </nav>
+                <div class="overall-progress">
+                    <span class="overall-progress-label">Overall Progress</span>
+                    <div class="overall-progress-bar">
+                        <div class="overall-progress-fill" id="overallProgressFill"></div>
+                    </div>
+                    <span class="overall-progress-value" id="overallProgressValue">0%</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="course-layout">
+            <!-- LEFT SIDEBAR: Modules, Lessons, Materials -->
+            <aside class="sidebar reef-sidebar" id="modulesReef">
+                <section class="course-meta reef-hero-card" id="aboutReef">
+                    <div class="reef-hero-header">
+                        <div class="reef-avatar-ring">
+                            <div class="reef-avatar-initials">OS</div>
+                        </div>
+                        <div class="reef-hero-copy">
+                            <h2 class="course-title serif-heading" id="courseTitle">
+                                Intro to Creative Storytelling
+                            </h2>
+                            <p class="course-summary" id="courseSummary">
+                                Use this Ocean Studio space as a calm, focused container for your lessons:
+                                a soft sidebar for modules, a main reef for video, and a quiet discussion tide
+                                beneath every session.
+                            </p>
+                            <div class="reef-metrics-row">
+                                <span class="reef-metric-pill">1.2k+ students</span>
+                                <span class="reef-metric-pill">8 lessons</span>
+                                <span class="reef-metric-pill">3 modules</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="modules-section coral-section">
+                    <div class="section-header">
+                        <h3>Reef Lessons & Modules</h3>
+                        <span class="section-note" id="lessonCountLabel">0 lessons</span>
+                    </div>
+                    <div id="modulesContainer" class="modules-container">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </section>
+
+                <section class="materials-section coral-section">
+                    <div class="section-header">
+                        <h3>Resources & Tide Downloads</h3>
+                    </div>
+                    <ul class="materials-list" id="materialsList">
+                        <!-- Populated by JavaScript -->
+                    </ul>
+                </section>
+            </aside>
+
+            <!-- RIGHT: Video + Chat -->
+            <main class="main-panel">
+                <section class="video-section reef-video-shell">
+                    <div class="video-header">
+                        <div>
+                            <h2 class="lesson-title serif-heading" id="activeLessonTitle">Select a lesson to begin</h2>
+                            <p class="lesson-meta" id="activeLessonMeta"></p>
+                        </div>
+                        <button class="mark-complete-btn" id="markCompleteBtn" disabled>
+                            Mark as complete
+                        </button>
+                    </div>
+
+                    <div class="video-player-shell">
+                        <div class="video-gradient-overlay"></div>
+                        <video
+                            id="lessonVideo"
+                            class="lesson-video"
+                            controls
+                            preload="metadata"
+                        >
+                            <source id="lessonVideoSource" src="" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <div class="lesson-description" id="activeLessonDescription">
+                        Choose a lesson from the left reef to load the video and description here.
+                        Move through modules slowly, at your own tide and rhythm.
+                    </div>
+                </section>
+
+                <section class="chat-section" id="chatReef">
+                    <header class="chat-header">
+                        <div>
+                            <h3 class="serif-heading">Lesson Discussion Tide</h3>
+                            <p class="chat-subtitle">
+                                A soft space to ask questions, leave reflections, and anchor what you&apos;re learning.
+                            </p>
+                        </div>
+                        <div class="chat-lesson-indicator" id="chatLessonLabel">
+                            No lesson selected
+                        </div>
+                    </header>
+
+                    <div class="chat-body">
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- Chat messages injected here -->
+                        </div>
+                    </div>
+
+                    <form class="chat-input-row" id="chatForm">
+                        <input
+                            type="text"
+                            id="chatName"
+                            class="chat-input chat-input-name"
+                            placeholder="Your name (optional)"
+                            autocomplete="off"
+                        />
+                        <input
+                            type="text"
+                            id="chatMessage"
+                            class="chat-input chat-input-message"
+                            placeholder="Write a calm note or question..."
+                            autocomplete="off"
+                            required
+                        />
+                        <button type="submit" class="chat-send-btn">Send</button>
+                    </form>
+                </section>
+
+                <footer class="reef-footer">
+                    <div class="reef-footer-inner">
+                        <div class="reef-footer-brand">
+                            <span class="reef-footer-mark">OS</span>
+                            <span class="reef-footer-title serif-heading">Ocean Studio</span>
+                        </div>
+                        <p class="reef-footer-copy">
+                            A quiet, ocean-inspired learning studio for psychology, coaching, wellness, and self-development.
+                        </p>
+                        <div class="reef-footer-links">
+                            <a href="#aboutReef">About this space</a>
+                            <a href="#modulesReef">Lessons</a>
+                            <a href="#chatReef">Discussion</a>
+                        </div>
+                    </div>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <script src="course-page.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+COMMENTS SYSTEM — ABSTRACT CONCEPT NOTE
+
+Concept Overview:
+The Comments system represents a structured space for written feedback, discussion, and dialogue around content. Unlike likes, comments are expressive and contextual, allowing users to contribute thoughts, questions, reflections, or critiques tied to a specific target.
+
+Conceptually, a comment is a persistent text-based contribution authored by a user and attached to a content entity. Comments may exist independently or as part of a threaded conversation. The system is designed to support moderation, ordering, visibility control, and long-term discussion without being tightly coupled to any specific UI or layout.
+
+Design Intent:
+The Comments system exists to capture meaning, conversation, and qualitative engagement. It is designed to be flexible enough to support simple comment lists or complex threaded discussions, while remaining abstract and presentation-agnostic so that its structure can evolve independently of visual design.

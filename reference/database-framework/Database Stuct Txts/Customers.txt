@@ -1,0 +1,27 @@
+Customers
+ ├── customer_profile
+ │     ├── full_name
+ │     ├── email
+ │     ├── phone
+ │     └── created_at
+ │
+ ├── CustomerAddresses
+ │     ├── billing_address
+ │     └── shipping_address
+ │
+ ├── PurchaseHistory
+ │     ├── order_id
+ │     ├── total_spent
+ │     └── purchase_date
+ │
+ ├── ComplaintsRefunds
+ │     ├── complaint_id
+ │     ├── order_id
+ │     ├── description
+ │     ├── resolution_status
+ │     └── created_at
+ │
+ └── Preferences (computed)
+        ├── popular_categories
+        ├── viewed_products
+        └── interaction_summary

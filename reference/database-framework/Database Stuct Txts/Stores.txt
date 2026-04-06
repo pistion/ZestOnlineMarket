@@ -1,0 +1,26 @@
+Stores
+ ├── Basic Info
+ │     ├── store_name
+ │     ├── store_slug
+ │     ├── description
+ │     ├── logo_image_id
+ │     ├── cover_image_id
+ │     └── created_at
+ │
+ ├── StoreSettings
+ │     ├── currency
+ │     ├── default_language
+ │     ├── theme_settings
+ │     └── shipping_profile_id (FK)
+ │
+ ├── ThemeSettings
+ │     ├── color_palette
+ │     ├── font_choices
+ │     └── layout_preferences
+ │
+ ├── CurrencySettings
+ │     ├── currency_code
+ │     └── formatting_rules
+ │
+ └── ShippingProfileLink
+        └── shipping_profile_id

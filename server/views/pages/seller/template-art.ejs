@@ -1,0 +1,581 @@
+<%
+  const bodyAttrs = page.bodyAttrs || {};
+  const isPublicStore = bodyAttrs["public-store"] === "1";
+  const viewer = typeof currentUser !== "undefined" ? currentUser : null;
+  const viewerRole = viewer && viewer.role ? String(viewer.role).trim().toLowerCase() : "";
+  const isBuyerViewer = isPublicStore && viewerRole === "buyer";
+  const isGuestViewer = isPublicStore && !viewerRole;
+  const paths = {
+    marketplace: bodyAttrs["marketplace-path"] || "/marketplace",
+    globalFeed: bodyAttrs["global-feed-path"] || "/feed",
+    cart: bodyAttrs["checkout-path"] || "/buyer/checkout",
+    settings: bodyAttrs["seller-settings-path"] || "/seller/store/settings",
+    dashboard: bodyAttrs["seller-dashboard-path"] || "/seller/dashboard",
+    templateManager: bodyAttrs["seller-template-manager-path"] || "/seller/store/template",
+    store: bodyAttrs["store-path"] || "/marketplace",
+    signIn: bodyAttrs["signin-path"] || "/auth/signin?role=buyer",
+    orders: "/buyer/purchases",
+  };
+%>
+
+<div class="atelier-page">
+  <header class="atelier-topbar">
+    <div class="atelier-topbar__inner">
+      <div class="atelier-topbar__branding">
+        <a class="atelier-brand" id="artStoreBrand" href="<%= paths.store %>">
+          <span class="atelier-brand__mark" aria-hidden="true"></span>
+          <span id="artStoreBrandLabel">Artists Store</span>
+        </a>
+        <p class="atelier-brand__caption">Art-led storefront workspace</p>
+      </div>
+
+      <div class="atelier-topbar__actions">
+        <button
+          class="atelier-nav-toggle"
+          type="button"
+          data-nav-toggle
+          aria-expanded="false"
+          aria-controls="atelier-store-nav"
+          aria-label="Toggle store navigation"
+        >
+          <i class="fa-solid fa-bars"></i>
+          <span>Menu</span>
+        </button>
+
+        <nav class="atelier-nav" id="atelier-store-nav" data-nav aria-label="Art store navigation">
+          <a href="<%= paths.globalFeed %>">
+            <i class="fa-solid fa-earth-africa"></i>
+            <span>Global Feed</span>
+          </a>
+          <a href="<%= paths.marketplace %>">
+            <i class="fa-solid fa-compass"></i>
+            <span>Marketplace</span>
+          </a>
+
+          <% if (isPublicStore) { %>
+            <% if (isBuyerViewer) { %>
+              <a href="<%= paths.orders %>">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span>Orders</span>
+              </a>
+              <a href="<%= paths.cart %>">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Cart</span>
+              </a>
+            <% } else { %>
+              <a href="<%= paths.signIn %>">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Sign In</span>
+              </a>
+            <% } %>
+          <% } else { %>
+            <a href="<%= paths.dashboard %>">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Dashboard</span>
+            </a>
+            <a href="<%= paths.settings %>">
+              <i class="fa-solid fa-sliders"></i>
+              <span>Store Settings</span>
+            </a>
+            <a href="<%= paths.templateManager %>">
+              <i class="fa-solid fa-swatchbook"></i>
+              <span>Templates</span>
+            </a>
+            <a href="#studio-management">
+              <i class="fa-solid fa-palette"></i>
+              <span>Art Studio</span>
+            </a>
+          <% } %>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="atelier-container">
+    <section class="atelier-profile-shell">
+      <div class="atelier-profile-banner" id="artStoreCover">
+        <div class="atelier-profile-banner__wash"></div>
+      </div>
+
+      <div class="atelier-profile-card">
+        <div class="atelier-profile-identity">
+          <div class="atelier-profile-avatar" id="artStoreAvatar">A</div>
+
+          <div class="atelier-profile-main">
+            <div class="atelier-profile-main__top">
+              <div class="atelier-name-block">
+                <div class="atelier-eyebrow">Art storefront</div>
+                <h1 class="atelier-name" id="artStoreName">Artists Store</h1>
+                <div class="atelier-handle" id="artStoreHandle">@store</div>
+              </div>
+
+              <div class="atelier-profile-actions">
+                <% if (!isPublicStore) { %>
+                  <a class="atelier-chip atelier-chip--soft" id="artPreviewStoreBtn" href="<%= paths.store %>">
+                    <i class="fa-regular fa-eye"></i>
+                    <span>Preview public store</span>
+                  </a>
+                  <a class="atelier-chip" href="#studio-management">
+                    <i class="fa-solid fa-palette"></i>
+                    <span>Open art studio</span>
+                  </a>
+                <% } else if (isBuyerViewer) { %>
+                  <button class="atelier-chip atelier-chip--soft" id="artFollowBtn" type="button">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Follow</span>
+                  </button>
+                  <button class="atelier-chip atelier-chip--ghost" id="artShareBtn" type="button">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span>Share</span>
+                  </button>
+                  <a class="atelier-chip" id="artOpenCartLink" href="<%= paths.cart %>">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Open cart</span>
+                  </a>
+                <% } else if (isGuestViewer) { %>
+                  <a class="atelier-chip atelier-chip--soft" href="<%= paths.signIn %>">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Sign in to buy</span>
+                  </a>
+                  <button class="atelier-chip atelier-chip--ghost" id="artShareBtn" type="button">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span>Share</span>
+                  </button>
+                <% } else { %>
+                  <button class="atelier-chip atelier-chip--ghost" id="artShareBtn" type="button">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span>Share</span>
+                  </button>
+                <% } %>
+              </div>
+            </div>
+
+            <p class="atelier-tagline" id="artStoreTagline">
+              A gallery-led storefront for originals, commissions, and collector-ready releases.
+            </p>
+            <p class="atelier-about" id="artStoreAbout">
+              Present paintings, carvings, prints, and custom work in one live store without losing the clarity of the real listing flow.
+            </p>
+
+            <div class="atelier-pills" id="artStoreMeta"></div>
+            <div class="atelier-socials" id="artStoreSocials" hidden></div>
+          </div>
+        </div>
+
+        <div class="atelier-stats" id="artStoreStats">
+          <article class="atelier-stat">
+            <span class="atelier-stat__label">Live listings</span>
+            <strong class="atelier-stat__value" id="artMetricListings">0</strong>
+          </article>
+          <article class="atelier-stat">
+            <span class="atelier-stat__label">Studio updates</span>
+            <strong class="atelier-stat__value" id="artMetricUpdates">0</strong>
+          </article>
+          <article class="atelier-stat">
+            <span class="atelier-stat__label">Store status</span>
+            <strong class="atelier-stat__value" id="artMetricStatus">Draft</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="atelier-overview-grid" id="about">
+      <article class="atelier-welcome-card">
+        <div class="atelier-eyebrow">Studio profile</div>
+        <div class="atelier-welcome-head">
+          <div>
+            <h2 class="atelier-section-title">A storefront shaped for artwork, commissions, and collector trust.</h2>
+            <p class="atelier-section-copy" id="artStudioSummary">
+              This public storefront introduces the artist, highlights recent work, and keeps the listing path clear for every visitor.
+            </p>
+          </div>
+
+          <div class="atelier-chip-stack" id="artBestForChips">
+            <span class="atelier-chip-stack__item">Original paintings</span>
+            <span class="atelier-chip-stack__item">Limited prints</span>
+            <span class="atelier-chip-stack__item">Illustration work</span>
+            <span class="atelier-chip-stack__item">Carvings and objects</span>
+            <span class="atelier-chip-stack__item">Portrait commissions</span>
+            <span class="atelier-chip-stack__item">Creative drops</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="atelier-feature-stack">
+        <article class="atelier-feature-tile">
+          <div class="atelier-feature-tile__icon"><i class="fa-solid fa-palette"></i></div>
+          <div>
+            <h3>Art-led layout</h3>
+            <p>Gallery-first presentation with a clean path from discovery to listing detail.</p>
+          </div>
+        </article>
+
+        <article class="atelier-feature-tile">
+          <div class="atelier-feature-tile__icon"><i class="fa-solid fa-user-group"></i></div>
+          <div>
+            <h3>Buyer and guest separation</h3>
+            <p id="artPublicNote">Guests can browse and open listings. Buyers unlock follow, cart, and purchase actions.</p>
+          </div>
+        </article>
+
+        <article class="atelier-feature-tile">
+          <div class="atelier-feature-tile__icon"><i class="fa-solid fa-swatchbook"></i></div>
+          <div>
+            <h3>Seller preview controls</h3>
+            <p id="artSellerNote">Seller preview keeps studio controls nearby without rendering them into the public view.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <% if (!isPublicStore) { %>
+      <section class="atelier-section atelier-section--management" id="studio-management">
+        <div class="atelier-section-head">
+          <div>
+            <div class="atelier-eyebrow">Art studio</div>
+            <h2 class="atelier-section-title">Manage art settings and live artworks inside the art engine</h2>
+            <p class="atelier-section-copy">
+              This seller view keeps studio settings and art listings inside the art template while the shared platform still powers marketplace discovery, feed, checkout, and orders.
+            </p>
+          </div>
+        </div>
+
+        <div class="atelier-management-grid">
+          <article class="atelier-panel">
+            <div class="atelier-panel__eyebrow">Studio settings</div>
+            <form id="artStudioForm" class="atelier-form">
+              <label class="atelier-field atelier-field--full">
+                <span>Studio headline</span>
+                <input class="atelier-input" id="artStudioHeadline" name="studioHeadline" type="text" maxlength="255" placeholder="A short headline for your studio">
+              </label>
+
+              <label class="atelier-field atelier-field--full">
+                <span>Artist statement</span>
+                <textarea class="atelier-textarea" id="artArtistStatement" name="artistStatement" rows="5" maxlength="2000" placeholder="Describe your studio, process, and the kind of work you create."></textarea>
+              </label>
+
+              <div class="atelier-form__grid">
+                <label class="atelier-field">
+                  <span>Featured mediums</span>
+                  <input class="atelier-input" id="artFeaturedMediums" name="featuredMediums" type="text" placeholder="painting, print, commission">
+                </label>
+
+                <label class="atelier-field">
+                  <span>Contact email</span>
+                  <input class="atelier-input" id="artContactEmail" name="contactEmail" type="email" maxlength="120" placeholder="studio@example.com">
+                </label>
+              </div>
+
+              <label class="atelier-field atelier-field--full">
+                <span>Commission policy</span>
+                <textarea class="atelier-textarea" id="artCommissionPolicy" name="commissionPolicy" rows="4" maxlength="1200" placeholder="Outline lead time, revision terms, and how commissions work."></textarea>
+              </label>
+
+              <label class="atelier-check">
+                <input id="artCommissionOpen" name="commissionOpen" type="checkbox">
+                <span>Open for commissions</span>
+              </label>
+
+              <div class="atelier-form__actions">
+                <button class="atelier-chip" type="submit">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span>Save studio settings</span>
+                </button>
+              </div>
+              <p class="atelier-form__hint" id="artStudioFormHint">These are art-engine settings, separate from the shared store profile page.</p>
+            </form>
+          </article>
+
+          <article class="atelier-panel">
+            <div class="atelier-panel__eyebrow">Art listings</div>
+            <form id="artListingForm" class="atelier-form">
+              <input id="artListingId" name="artListingId" type="hidden">
+
+              <label class="atelier-field atelier-field--full">
+                <span>Artwork title</span>
+                <input class="atelier-input" id="artListingTitle" name="title" type="text" maxlength="120" placeholder="Title of the artwork">
+              </label>
+
+              <label class="atelier-field atelier-field--full">
+                <span>Description</span>
+                <textarea class="atelier-textarea" id="artListingDescription" name="description" rows="5" maxlength="2000" placeholder="Describe the work, the story behind it, and any collector details."></textarea>
+              </label>
+
+              <div class="atelier-form__grid">
+                <label class="atelier-field">
+                  <span>Medium</span>
+                  <input class="atelier-input" id="artListingMedium" name="medium" type="text" maxlength="80" placeholder="Painting, drawing, carving">
+                </label>
+
+                <label class="atelier-field">
+                  <span>Category</span>
+                  <input class="atelier-input" id="artListingCategory" name="artCategory" type="text" maxlength="80" placeholder="Original, print, commission">
+                </label>
+
+                <label class="atelier-field">
+                  <span>Collection</span>
+                  <input class="atelier-input" id="artListingCollection" name="collectionName" type="text" maxlength="120" placeholder="Series or collection name">
+                </label>
+
+                <label class="atelier-field">
+                  <span>Price (PGK)</span>
+                  <input class="atelier-input" id="artListingPrice" name="price" type="number" min="0" step="0.01" placeholder="0.00">
+                </label>
+
+                <label class="atelier-field">
+                  <span>Stock quantity</span>
+                  <input class="atelier-input" id="artListingStock" name="stockQuantity" type="number" min="0" step="1" placeholder="1">
+                </label>
+
+                <label class="atelier-field">
+                  <span>Delivery</span>
+                  <input class="atelier-input" id="artListingDelivery" name="delivery" type="text" maxlength="180" placeholder="Pickup, courier, digital delivery">
+                </label>
+
+                <label class="atelier-field">
+                  <span>Location</span>
+                  <input class="atelier-input" id="artListingLocation" name="location" type="text" maxlength="120" placeholder="Studio or dispatch location">
+                </label>
+
+                <label class="atelier-field">
+                  <span>Transport fee</span>
+                  <input class="atelier-input" id="artListingTransportFee" name="transportFee" type="number" min="0" step="0.01" placeholder="0.00">
+                </label>
+
+                <label class="atelier-field">
+                  <span>Status</span>
+                  <select class="atelier-select" id="artListingStatus" name="status">
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                    <option value="archived">Archived</option>
+                  </select>
+                </label>
+
+                <label class="atelier-field">
+                  <span>Visibility</span>
+                  <select class="atelier-select" id="artListingVisibility" name="visibility">
+                    <option value="public">Public</option>
+                    <option value="unlisted">Unlisted</option>
+                    <option value="private">Private</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="atelier-form__checks">
+                <label class="atelier-check">
+                  <input id="artListingFeatured" name="featured" type="checkbox">
+                  <span>Feature this artwork in the gallery</span>
+                </label>
+                <label class="atelier-check">
+                  <input id="artListingCommissionOpen" name="commissionOpen" type="checkbox">
+                  <span>Open as a commission-ready offer</span>
+                </label>
+              </div>
+
+              <label class="atelier-field atelier-field--full">
+                <span>Artwork images</span>
+                <input class="atelier-input atelier-input--file" id="artListingImages" name="images" type="file" accept="image/*" multiple>
+              </label>
+
+              <div class="atelier-image-grid" id="artListingImagePreview" hidden></div>
+
+              <div class="atelier-form__actions">
+                <button class="atelier-chip" type="submit">
+                  <i class="fa-solid fa-brush"></i>
+                  <span>Save artwork</span>
+                </button>
+                <button class="atelier-chip atelier-chip--ghost" id="artListingReset" type="button">
+                  <i class="fa-solid fa-rotate-left"></i>
+                  <span>Clear form</span>
+                </button>
+              </div>
+              <p class="atelier-form__hint" id="artListingFormHint">
+                Artworks saved here stay inside the art engine and are then adapted back into the shared marketplace and checkout system.
+              </p>
+            </form>
+          </article>
+        </div>
+      </section>
+    <% } %>
+
+    <section class="atelier-section" id="journal">
+      <div class="atelier-section-head">
+        <div>
+          <div class="atelier-eyebrow">Studio journal</div>
+          <h2 class="atelier-section-title">Latest updates from the artist</h2>
+          <p class="atelier-section-copy">
+            Keep the art store feeling alive with studio notes, fresh work announcements, and behind-the-scenes updates.
+          </p>
+        </div>
+
+        <% if (!isPublicStore) { %>
+          <div class="atelier-section-actions">
+            <a class="atelier-chip atelier-chip--soft" href="<%= paths.dashboard %>">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Open dashboard</span>
+            </a>
+          </div>
+        <% } %>
+      </div>
+
+      <div class="atelier-update-list" id="artUpdatesList" role="feed" aria-live="polite"></div>
+
+      <div class="atelier-empty-state" id="artUpdatesEmpty" hidden>
+        <div class="atelier-empty-state__icon">
+          <i class="fa-solid fa-brush"></i>
+        </div>
+        <h3>No studio notes yet</h3>
+        <p>
+          <% if (isPublicStore) { %>
+            This store has not shared a live update yet.
+          <% } else { %>
+            Studio updates published through the platform feed will appear here automatically.
+          <% } %>
+        </p>
+      </div>
+    </section>
+
+    <section class="atelier-section" id="gallery">
+      <div class="atelier-section-head atelier-section-head--gallery">
+        <div>
+          <div class="atelier-eyebrow">Gallery</div>
+          <h2 class="atelier-section-title">Discover live artworks and creative offers</h2>
+          <p class="atelier-section-copy">
+            This art template keeps the page gallery-led, while every card still moves into the real listing and checkout flow.
+          </p>
+        </div>
+
+        <% if (!isPublicStore) { %>
+          <div class="atelier-section-actions">
+            <a class="atelier-chip atelier-chip--soft" href="#studio-management">
+              <i class="fa-solid fa-pen-ruler"></i>
+              <span>Manage art listings</span>
+            </a>
+          </div>
+        <% } %>
+      </div>
+
+      <div class="atelier-gallery-toolbar">
+        <div class="atelier-filter-row" role="toolbar" aria-label="Filter artworks">
+          <button class="atelier-filter is-active" type="button" data-art-filter="all">All</button>
+          <button class="atelier-filter" type="button" data-art-filter="painting">Paintings</button>
+          <button class="atelier-filter" type="button" data-art-filter="drawing">Drawings</button>
+          <button class="atelier-filter" type="button" data-art-filter="carving">Carvings</button>
+          <button class="atelier-filter" type="button" data-art-filter="commission">Commissions</button>
+        </div>
+
+        <div class="atelier-gallery-toolbar__controls">
+          <label class="atelier-field atelier-field--search">
+            <span class="sr-only">Search artworks</span>
+            <input class="atelier-input" id="artGallerySearch" type="search" placeholder="Search title, style, medium, or notes">
+          </label>
+
+          <label class="atelier-field atelier-field--sort">
+            <span class="sr-only">Sort artworks</span>
+            <select class="atelier-select" id="artGallerySort">
+              <option value="featured">Featured</option>
+              <option value="new">Newest</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="atelier-spotlight" id="artFeaturedSpotlight"></div>
+      <div class="atelier-gallery-grid" id="artProductGrid"></div>
+
+      <div class="atelier-empty-state" id="artGalleryEmpty" hidden>
+        <div class="atelier-empty-state__icon">
+          <i class="fa-solid fa-image"></i>
+        </div>
+        <h3>No artworks match right now</h3>
+        <p>
+          <% if (isPublicStore) { %>
+            This art store has not published matching public listings yet.
+          <% } else { %>
+            Add or publish artworks from the art studio and they will appear here automatically.
+          <% } %>
+        </p>
+      </div>
+    </section>
+
+    <section class="atelier-section" id="collector">
+      <div class="atelier-section-head">
+        <div>
+          <div class="atelier-eyebrow">Collector notes</div>
+          <h2 class="atelier-section-title">Keep the art experience expressive without losing buying clarity</h2>
+        </div>
+      </div>
+
+      <div class="atelier-insight-grid">
+        <article class="atelier-insight-card">
+          <h3>Art-first presentation</h3>
+          <p>The page leads with the studio identity, featured work, and a strong gallery before it asks the buyer to commit.</p>
+        </article>
+        <article class="atelier-insight-card">
+          <h3>Unified Zest flow</h3>
+          <p>The art engine stays isolated behind the scenes, but the marketplace, listing detail, cart, and checkout flow stay familiar to buyers.</p>
+        </article>
+        <article class="atelier-insight-card">
+          <h3>Role separation</h3>
+          <p>Guests browse, buyers interact and purchase, and sellers manage only from their own art studio view.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="atelier-section" id="faq">
+      <div class="atelier-section-head">
+        <div>
+          <div class="atelier-eyebrow">FAQ</div>
+          <h2 class="atelier-section-title">Common questions for the art storefront</h2>
+        </div>
+      </div>
+
+      <div class="atelier-faq">
+        <article class="atelier-faq__item">
+          <button class="atelier-faq__question" type="button">
+            <span>Can this template support originals, prints, and commissions together?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="atelier-faq__answer">
+            <p>Yes. The art engine keeps art-specific listing data separate while the storefront presents originals, editions, and commissions together.</p>
+          </div>
+        </article>
+
+        <article class="atelier-faq__item">
+          <button class="atelier-faq__question" type="button">
+            <span>What changes for guests versus buyers?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="atelier-faq__answer">
+            <p>Guests can browse the store and open listings, while authenticated buyers unlock follow, cart, and purchase actions.</p>
+          </div>
+        </article>
+
+        <article class="atelier-faq__item">
+          <button class="atelier-faq__question" type="button">
+            <span>Where does the seller manage the real art listings?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="atelier-faq__answer">
+            <p>The seller manages the art store directly inside the art studio section of this template, using art-specific settings and art-specific listing records.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="atelier-footer">
+    <div class="atelier-footer__inner">
+      <p>&copy; <%= new Date().getFullYear() %> Zest Marketplace. All rights reserved.</p>
+      <div class="atelier-footer__links">
+        <a href="<%= paths.marketplace %>">Marketplace</a>
+        <a href="<%= paths.globalFeed %>">Global Feed</a>
+        <% if (!isPublicStore) { %>
+          <a href="<%= paths.dashboard %>">Dashboard</a>
+        <% } %>
+      </div>
+    </div>
+  </footer>
+</div>
