@@ -15,6 +15,14 @@ const {
 } = require("../controllers/engagement.controller");
 const { requireAuth } = require("../middleware/auth.middleware");
 const { createRateLimiter } = require("../middleware/rate-limit.middleware");
+const {
+  engagementCommentBodySchema,
+  engagementReactionBodySchema,
+  engagementReportBodySchema,
+  engagementShareBodySchema,
+  engagementTargetBodySchema,
+} = require("../schemas/engagement.schema");
+const { validate } = require("../utils/validate");
 
 const router = express.Router();
 const engagementWriteLimiter = createRateLimiter({
@@ -30,10 +38,40 @@ const reportWriteLimiter = createRateLimiter({
   message: "Too many reports were submitted. Please wait before sending another one.",
 });
 
-router.post("/likes/toggle", requireAuth, engagementWriteLimiter, toggleLike);
-router.post("/comments", requireAuth, engagementWriteLimiter, createComment);
-router.post("/reports", requireAuth, reportWriteLimiter, createReport);
-router.post("/shares", requireAuth, engagementWriteLimiter, recordShare);
-router.post("/reactions", requireAuth, engagementWriteLimiter, setReaction);
+router.post(
+  "/likes/toggle",
+  requireAuth,
+  engagementWriteLimiter,
+  validate(engagementTargetBodySchema),
+  toggleLike
+);
+router.post(
+  "/comments",
+  requireAuth,
+  engagementWriteLimiter,
+  validate(engagementCommentBodySchema),
+  createComment
+);
+router.post(
+  "/reports",
+  requireAuth,
+  reportWriteLimiter,
+  validate(engagementReportBodySchema),
+  createReport
+);
+router.post(
+  "/shares",
+  requireAuth,
+  engagementWriteLimiter,
+  validate(engagementShareBodySchema),
+  recordShare
+);
+router.post(
+  "/reactions",
+  requireAuth,
+  engagementWriteLimiter,
+  validate(engagementReactionBodySchema),
+  setReaction
+);
 
 module.exports = router;

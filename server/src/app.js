@@ -1,18 +1,31 @@
+const compression = require("compression");
 const cors = require("cors");
 const express = require("express");
+const helmet = require("helmet");
 
-const { allowedOrigins, jsonLimit, paths } = require("./config/env");
+const {
+  allowedOrigins,
+  featureAdminEnabled,
+  featureDiscountsEnabled,
+  featureSearchEnabled,
+  jsonLimit,
+  paths,
+} = require("./config/env");
 const artRoutes = require("./routes/art.routes");
 const authRoutes = require("./routes/auth.routes");
 const buyerRoutes = require("./routes/buyer.routes");
+const cartRoutes = require("./routes/cart.routes");
+const discountRoutes = require("./routes/discount.routes");
 const engagementRoutes = require("./routes/engagement.routes");
 const feedRoutes = require("./routes/feed.routes");
 const marketplaceRoutes = require("./routes/marketplace.routes");
 const pageRoutes = require("./routes/page.routes");
 const productRoutes = require("./routes/product.routes");
 const sandboxRoutes = require("./routes/sandbox.routes");
+const searchRoutes = require("./routes/search.routes");
 const sellerRoutes = require("./routes/seller.routes");
 const storeRoutes = require("./routes/store.routes");
+const adminRoutes = require("./routes/admin.routes");
 const { attachOptionalUser } = require("./middleware/auth.middleware");
 const { attachCsrfProtection } = require("./middleware/csrf.middleware");
 const { errorHandler, notFoundHandler } = require("./middleware/error.middleware");
@@ -24,6 +37,12 @@ function createApp() {
   app.disable("x-powered-by");
   app.set("view engine", "ejs");
   app.set("views", paths.viewsDir);
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    })
+  );
+  app.use(compression());
 
   app.use(
     cors({
@@ -57,12 +76,22 @@ function createApp() {
   app.use("/auth", authRoutes);
   app.use("/api/art", artRoutes);
   app.use("/api/buyer", buyerRoutes);
+  app.use("/api/cart", cartRoutes);
   app.use("/api/engagement", engagementRoutes);
   app.use("/api/feed", feedRoutes);
   app.use("/api/marketplace", marketplaceRoutes);
   app.use("/api/store", storeRoutes);
   app.use("/api/seller", sellerRoutes);
   app.use("/api/products", productRoutes);
+  if (featureDiscountsEnabled) {
+    app.use("/api/discounts", discountRoutes);
+  }
+  if (featureSearchEnabled) {
+    app.use("/api/search", searchRoutes);
+  }
+  if (featureAdminEnabled) {
+    app.use(adminRoutes);
+  }
   app.use(sandboxRoutes);
   app.use(pageRoutes);
 

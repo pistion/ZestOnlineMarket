@@ -8,7 +8,8 @@ const {
   resolveBuyerSetupPath,
   resolveRoleAwareReturnPath,
 } = require("../services/account-routing.service");
-const { sendSuccess } = require("../utils/api-response");
+const { sendTemplateMail } = require("../services/email.service");
+const { createHttpError, sendSuccess } = require("../utils/api-response");
 const {
   appendResponseCookie,
   buildAuthCookie,
@@ -16,7 +17,6 @@ const {
   buildClearedCsrfCookie,
   normalizeInternalPath,
 } = require("../utils/auth-session");
-const { validateAuthPayload } = require("../utils/request-validation");
 
 function signToken(user) {
   return jwt.sign(
@@ -49,7 +49,7 @@ function buildAuthResult(user, token, appState, redirectTo, roleMismatch = false
 
 async function register(req, res, next) {
   try {
-    const { email, password, role } = validateAuthPayload(req.body, "register");
+    const { email, password, role, returnTo } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await createUser({
       email,
@@ -58,13 +58,23 @@ async function register(req, res, next) {
     });
     const token = signToken(user);
     const appState = await resolveAuthenticatedAppState(user);
-    const returnTo = normalizeInternalPath(req.body && req.body.returnTo, "");
+    const safeReturnTo = normalizeInternalPath(returnTo, "");
     const redirectTo =
       user.role === "buyer"
         ? resolveBuyerSetupPath()
-        : resolveRoleAwareReturnPath(user.role, returnTo, appState.redirectTo);
+        : resolveRoleAwareReturnPath(user.role, safeReturnTo, appState.redirectTo);
 
     appendResponseCookie(res, buildAuthCookie(token));
+    await sendTemplateMail({
+      to: user.email,
+      subject: "Welcome to Zest Market",
+      template: "welcome",
+      data: {
+        email: user.email,
+        role: user.role,
+        redirectTo,
+      },
+    });
 
     return sendSuccess(
       res,
@@ -76,10 +86,11 @@ async function register(req, res, next) {
       (error.message && error.message.includes("UNIQUE constraint failed: users.email")) ||
       error.code === "23505"
     ) {
-      return res.status(400).json({
-        success: false,
-        message: "Email already exists",
-      });
+      return next(
+        createHttpError(400, "Email already exists", {
+          code: "EMAIL_TAKEN",
+        })
+      );
     }
 
     return next(error);
@@ -88,30 +99,28 @@ async function register(req, res, next) {
 
 async function login(req, res, next) {
   try {
-    const { email, password } = validateAuthPayload(req.body, "login");
+    const { email, password, intentRole, returnTo } = req.body;
     const user = await findUserByEmail(email);
 
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid email or password",
+      throw createHttpError(401, "Invalid email or password", {
+        code: "INVALID_CREDENTIALS",
       });
     }
 
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid email or password",
+      throw createHttpError(401, "Invalid email or password", {
+        code: "INVALID_CREDENTIALS",
       });
     }
 
     const token = signToken(user);
     const appState = await resolveAuthenticatedAppState(user);
-    const returnTo = normalizeInternalPath(req.body && req.body.returnTo, "");
-    const requestedRole = normalizeIntentRole(req.body && req.body.intentRole);
+    const safeReturnTo = normalizeInternalPath(returnTo, "");
+    const requestedRole = normalizeIntentRole(intentRole);
     const isRoleMismatch = Boolean(requestedRole && requestedRole !== user.role);
-    const redirectTo = resolveRoleAwareReturnPath(user.role, returnTo, appState.redirectTo);
+    const redirectTo = resolveRoleAwareReturnPath(user.role, safeReturnTo, appState.redirectTo);
     appendResponseCookie(res, buildAuthCookie(token));
 
     return sendSuccess(

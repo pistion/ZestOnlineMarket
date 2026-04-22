@@ -5,7 +5,7 @@
   const feedPath = "/feed";
   const globalFeedPath = "/feed";
   const marketplacePath = "/marketplace";
-  const checkoutPath = document.body.dataset.checkoutPath || "/buyer/checkout";
+  const checkoutPath = document.body.dataset.checkoutPath || "/buyer/cart";
   const sellerStoreHubPath = publicStore
     ? `/auth/signin?role=seller&returnTo=${encodeURIComponent("/seller/store")}`
     : "/seller/store";
@@ -49,7 +49,7 @@
     }
 
     if (pageKey === "cart") {
-      return pathname === "/buyer/checkout";
+      return pathname === "/buyer/cart" || pathname === "/buyer/checkout";
     }
 
     if (pageKey === "auth" || pageKey === "settings") {

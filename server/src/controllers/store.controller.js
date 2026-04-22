@@ -19,15 +19,10 @@ const {
   upsertStoreByUserId,
 } = require("../repositories/store.repository");
 const { resolveStoreWriteSource } = require("../repositories/repository-source");
-const { buildRealStorePayload, resolveStorePayloadByHandle } = require("../services/storefront.service");
+const { buildRealStorePayload, buildTemplateData, resolveStorePayloadByHandle } = require("../services/storefront.service");
 const { sendSuccess, createHttpError } = require("../utils/api-response");
 const { deleteUploadedFiles, saveBase64ImageToFolder } = require("../utils/image.util");
-const {
-  normalizeHandle,
-  validateSellerStoreDraftPayload,
-  validateStorePayload,
-  validateStoreVisibilityPayload,
-} = require("../utils/request-validation");
+const { normalizeHandle } = require("../schemas/shared.schema");
 
 const DRAFT_STORE_NAME_PREFIX = "Draft seller store";
 const DRAFT_HANDLE_PREFIX = "draft-seller-";
@@ -222,6 +217,7 @@ async function buildStorePayload(storeRow) {
         setupStep: (storeRow && storeRow.setupStep) || 1,
         visibilityStatus: (storeRow && storeRow.visibilityStatus) || "draft",
       },
+      templateData: payload.templateData || buildTemplateData(payload.store, payload.products || []),
     };
   }
 
@@ -249,76 +245,94 @@ async function buildStorePayload(storeRow) {
         .filter(Boolean)
     : [];
 
+  const mergedStore = {
+    ...fallbackStore,
+    storeName:
+      storeDraft.storeName ||
+      (!isDraftPlaceholderStoreName(fallbackStore.storeName) ? fallbackStore.storeName : ""),
+    handle:
+      storeDraft.handle ||
+      (!isDraftPlaceholderHandle(fallbackStore.handle) ? fallbackStore.handle : ""),
+    templateKey: draftState.templateKey || fallbackStore.templateKey || "products",
+    tagline: storeDraft.tagline || fallbackStore.tagline || "",
+    about: storeDraft.about || fallbackStore.about || "",
+    accentColor: storeDraft.accentColor || fallbackStore.accentColor || "#2563eb",
+    avatarUrl: storeDraft.avatarUrl || fallbackStore.avatarUrl || "",
+    coverUrl: storeDraft.coverUrl || fallbackStore.coverUrl || "",
+    socials: {
+      instagram:
+        (storeDraft.socials && storeDraft.socials.instagram) ||
+        (fallbackStore.socials && fallbackStore.socials.instagram) ||
+        "",
+      facebook:
+        (storeDraft.socials && storeDraft.socials.facebook) ||
+        (fallbackStore.socials && fallbackStore.socials.facebook) ||
+        "",
+      tiktok:
+        (storeDraft.socials && storeDraft.socials.tiktok) ||
+        (fallbackStore.socials && fallbackStore.socials.tiktok) ||
+        "",
+      xhandle:
+        (storeDraft.socials && storeDraft.socials.xhandle) ||
+        (fallbackStore.socials && fallbackStore.socials.xhandle) ||
+        "",
+    },
+  };
+
+  const mergedProduct = {
+    ...fallbackProduct,
+    name: productDraft.name || fallbackProduct.name || "",
+    description: productDraft.description || fallbackProduct.description || "",
+    price:
+      productDraft.price === 0 || productDraft.price
+        ? productDraft.price
+        : fallbackProduct.price || 0,
+    delivery: productDraft.delivery || fallbackProduct.delivery || "",
+    location: productDraft.location || fallbackProduct.location || "",
+    transportFee:
+      productDraft.transportFee === 0 || productDraft.transportFee
+        ? productDraft.transportFee
+        : fallbackProduct.transportFee || 0,
+    stockQuantity:
+      productDraft.stockQuantity === 0 || productDraft.stockQuantity
+        ? productDraft.stockQuantity
+        : fallbackProduct.stockQuantity || 0,
+    status: productDraft.status || fallbackProduct.status || "published",
+    visibility: productDraft.visibility || fallbackProduct.visibility || "public",
+    variants: Array.isArray(productDraft.variants)
+      ? productDraft.variants
+      : Array.isArray(fallbackProduct.variants)
+        ? fallbackProduct.variants
+        : [],
+    images: draftImages.length
+      ? draftImages.map((image) => ({ url: image.url, src: image.src }))
+      : Array.isArray(fallbackProduct.images)
+        ? fallbackProduct.images
+        : [],
+  };
+
+  const mergedProducts = hasProductPayload({
+    ...mergedProduct,
+    images: Array.isArray(mergedProduct.images) ? mergedProduct.images : [],
+    variants: Array.isArray(mergedProduct.variants) ? mergedProduct.variants : [],
+  })
+    ? [mergedProduct]
+    : Array.isArray(payload.products)
+      ? payload.products
+      : [];
+
   return {
     ...payload,
-    store: {
-      ...fallbackStore,
-      storeName:
-        storeDraft.storeName ||
-        (!isDraftPlaceholderStoreName(fallbackStore.storeName) ? fallbackStore.storeName : ""),
-      handle:
-        storeDraft.handle ||
-        (!isDraftPlaceholderHandle(fallbackStore.handle) ? fallbackStore.handle : ""),
-      templateKey: draftState.templateKey || fallbackStore.templateKey || "products",
-      tagline: storeDraft.tagline || fallbackStore.tagline || "",
-      about: storeDraft.about || fallbackStore.about || "",
-      accentColor: storeDraft.accentColor || fallbackStore.accentColor || "#2563eb",
-      avatarUrl: storeDraft.avatarUrl || fallbackStore.avatarUrl || "",
-      coverUrl: storeDraft.coverUrl || fallbackStore.coverUrl || "",
-      socials: {
-        instagram:
-          (storeDraft.socials && storeDraft.socials.instagram) ||
-          (fallbackStore.socials && fallbackStore.socials.instagram) ||
-          "",
-        facebook:
-          (storeDraft.socials && storeDraft.socials.facebook) ||
-          (fallbackStore.socials && fallbackStore.socials.facebook) ||
-          "",
-        tiktok:
-          (storeDraft.socials && storeDraft.socials.tiktok) ||
-          (fallbackStore.socials && fallbackStore.socials.tiktok) ||
-          "",
-        xhandle:
-          (storeDraft.socials && storeDraft.socials.xhandle) ||
-          (fallbackStore.socials && fallbackStore.socials.xhandle) ||
-          "",
-      },
-    },
-    product: {
-      ...fallbackProduct,
-      name: productDraft.name || fallbackProduct.name || "",
-      description: productDraft.description || fallbackProduct.description || "",
-      price:
-        productDraft.price === 0 || productDraft.price
-          ? productDraft.price
-          : fallbackProduct.price || 0,
-      delivery: productDraft.delivery || fallbackProduct.delivery || "",
-      location: productDraft.location || fallbackProduct.location || "",
-      transportFee:
-        productDraft.transportFee === 0 || productDraft.transportFee
-          ? productDraft.transportFee
-          : fallbackProduct.transportFee || 0,
-      stockQuantity:
-        productDraft.stockQuantity === 0 || productDraft.stockQuantity
-          ? productDraft.stockQuantity
-          : fallbackProduct.stockQuantity || 0,
-      status: productDraft.status || fallbackProduct.status || "published",
-      visibility: productDraft.visibility || fallbackProduct.visibility || "public",
-      variants: Array.isArray(productDraft.variants)
-        ? productDraft.variants
-        : Array.isArray(fallbackProduct.variants)
-          ? fallbackProduct.variants
-          : [],
-      images: draftImages.length
-        ? draftImages.map((image) => ({ src: image.src }))
-        : fallbackProduct.images || [],
-    },
+    store: mergedStore,
+    product: mergedProduct,
     images: draftImages.length ? draftImages : payload.images || [],
+    products: mergedProducts,
     meta: {
       ...(payload.meta || {}),
       setupStep: Number(draftState.setupStep || storeRow.setupStep || 1) || 1,
       visibilityStatus: storeRow.visibilityStatus || "draft",
     },
+    templateData: buildTemplateData(mergedStore, mergedProducts),
   };
 }
 
@@ -327,7 +341,7 @@ async function saveStoreDraft(req, res, next) {
   const writeSource = resolveStoreWriteSource();
 
   try {
-    const payload = validateSellerStoreDraftPayload(req.body);
+    const payload = req.body;
     const result = await transaction(async (txContext) => {
       const repoOptions = {
         source: writeSource,
@@ -368,7 +382,7 @@ async function saveStore(req, res, next) {
   let finalStoreAssetUrls = [];
 
   try {
-    const payload = validateStorePayload(req.body);
+    const payload = req.body;
     const result = await transaction(async (txContext) => {
       const repoOptions = {
         source: writeSource,
@@ -376,7 +390,7 @@ async function saveStore(req, res, next) {
       };
       const existingStoreRow = await findStoreByUserId(userId, repoOptions);
       const resolvedVisibilityStatus = normalizeVisibilityStatus(
-        req.body && req.body.visibilityStatus,
+        payload.visibilityStatus,
         existingStoreRow && existingStoreRow.profileCompleted
           ? existingStoreRow.visibilityStatus || "published"
           : "published"
@@ -577,6 +591,7 @@ async function getMyStore(req, res, next) {
         images: payload.images,
         products: payload.products || [],
         meta: payload.meta,
+        templateData: payload.templateData || buildTemplateData(payload.store, payload.products || []),
       },
       payload.message || "Store loaded"
     );
@@ -587,7 +602,7 @@ async function getMyStore(req, res, next) {
 
 async function updateStoreVisibility(req, res, next) {
   try {
-    const { visibilityStatus } = validateStoreVisibilityPayload(req.body);
+    const { visibilityStatus } = req.body;
     const storeRow = await findStoreByUserId(req.user.id);
     if (!storeRow) {
       throw createHttpError(404, "Store not found");
@@ -616,7 +631,7 @@ async function updateStoreVisibility(req, res, next) {
 
 async function getStoreByHandle(req, res, next) {
   try {
-    const handle = normalizeHandle(req.params.handle);
+    const { handle } = req.params;
     const payload = await resolveStorePayloadByHandle(handle);
 
     if (!payload) {
@@ -634,6 +649,7 @@ async function getStoreByHandle(req, res, next) {
         images: payload.images,
         products: payload.products || [],
         meta: payload.meta,
+        templateData: payload.templateData || buildTemplateData(payload.store, payload.products || []),
       },
       payload.message || "Store loaded"
     );

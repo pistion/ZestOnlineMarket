@@ -22,6 +22,7 @@ const routes = [
   { path: "/buyer/wizard-setup", status: 302, locationPrefix: "/auth/signup?role=buyer" },
   { path: "/buyer/feed", status: 302 },
   { path: "/feed", status: 200 },
+  { path: "/search", status: 200 },
   { path: "/global-feed", status: 302, location: "/feed" },
   { path: "/buyer/profile", status: 302 },
   { path: "/buyer/settings", status: 302 },
@@ -47,6 +48,26 @@ function buildPgClient() {
           password: pgConfig.password,
         }
   );
+}
+
+async function runMigrations() {
+  await new Promise((resolve, reject) => {
+    const migrateProcess = spawn(process.execPath, ["ops/db/migrate.js"], {
+      cwd: root,
+      env,
+      stdio: "inherit",
+    });
+
+    migrateProcess.once("error", reject);
+    migrateProcess.once("exit", (code) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+
+      reject(new Error(`Smoke migration step failed with exit code ${code}.`));
+    });
+  });
 }
 
 async function request(routePath, options = {}) {
@@ -228,6 +249,32 @@ async function verifyPostgresWritePath() {
   const productId = Number(productPayload.product.id || 0);
   const variantId = Number((productPayload.variants && productPayload.variants[0] && productPayload.variants[0].id) || 0);
 
+  const discountCreateResponse = await request("/api/discounts", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${registerPayload.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      code: `SMOKE${String(smokeStamp).slice(-4)}`,
+      title: "Smoke launch offer",
+      discountType: "percentage",
+      amount: 10,
+      minOrderAmount: 10,
+      maxUses: 10,
+      active: true,
+    }),
+  });
+  const discountCreatePayload = JSON.parse(discountCreateResponse.body);
+  if (
+    discountCreateResponse.statusCode !== 201 ||
+    discountCreatePayload.success !== true ||
+    !discountCreatePayload.discount
+  ) {
+    throw new Error("Discount create failed during commerce smoke verification.");
+  }
+  const couponCode = discountCreatePayload.discount.code;
+
   const storePostResponse = await request("/api/feed/store-posts", {
     method: "POST",
     headers: {
@@ -297,6 +344,18 @@ async function verifyPostgresWritePath() {
     throw new Error("Checkout summary failed during commerce smoke verification.");
   }
 
+  const searchResponse = await request(`/api/search?q=${encodeURIComponent("Smoke Commerce")}`, {
+    method: "GET",
+  });
+  const searchPayload = JSON.parse(searchResponse.body);
+  if (
+    searchResponse.statusCode !== 200 ||
+    searchPayload.success !== true ||
+    Number(searchPayload.totalResults || 0) < 1
+  ) {
+    throw new Error("Search API failed during phase-3 smoke verification.");
+  }
+
   const orderCreateResponse = await request("/api/buyer/checkout/orders", {
     method: "POST",
     headers: {
@@ -321,6 +380,7 @@ async function verifyPostgresWritePath() {
   if (orderCreateResponse.statusCode !== 201 || orderCreatePayload.success !== true || !orderCreatePayload.order) {
     throw new Error("Checkout order creation failed during commerce smoke verification.");
   }
+  const directOrderId = Number(orderCreatePayload.order.id || 0);
 
   const buyerSettingsSaveResponse = await request("/api/buyer/settings", {
     method: "PATCH",
@@ -361,6 +421,191 @@ async function verifyPostgresWritePath() {
   const buyerAddressCreatePayload = JSON.parse(buyerAddressCreateResponse.body);
   if (buyerAddressCreateResponse.statusCode !== 200 || buyerAddressCreatePayload.success !== true) {
     throw new Error("Buyer address create failed during smoke verification.");
+  }
+
+  const cartAddResponse = await request("/api/cart/items", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${buyerRegisterPayload.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      productId,
+      variantId,
+      quantity: 1,
+    }),
+  });
+  const cartAddPayload = JSON.parse(cartAddResponse.body);
+  if (
+    cartAddResponse.statusCode !== 201 ||
+    cartAddPayload.success !== true ||
+    !cartAddPayload.cart ||
+    Number(cartAddPayload.cart.itemCount || 0) < 1
+  ) {
+    throw new Error("Cart add failed during phase-3 smoke verification.");
+  }
+
+  const discountValidateResponse = await request("/api/discounts/validate", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${buyerRegisterPayload.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      code: couponCode,
+    }),
+  });
+  const discountValidatePayload = JSON.parse(discountValidateResponse.body);
+  if (
+    discountValidateResponse.statusCode !== 200 ||
+    discountValidatePayload.success !== true ||
+    !discountValidatePayload.preview ||
+    Number(discountValidatePayload.preview.amountApplied || 0) <= 0
+  ) {
+    throw new Error("Discount validation failed during phase-4 smoke verification.");
+  }
+
+  const cartSummaryResponse = await request("/api/cart", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${buyerRegisterPayload.token}`,
+    },
+  });
+  const cartSummaryPayload = JSON.parse(cartSummaryResponse.body);
+  if (
+    cartSummaryResponse.statusCode !== 200 ||
+    cartSummaryPayload.success !== true ||
+    !cartSummaryPayload.cart ||
+    Number(cartSummaryPayload.cart.readyItemCount || 0) < 1
+  ) {
+    throw new Error("Cart summary failed during phase-3 smoke verification.");
+  }
+
+  const cartCheckoutSummaryResponse = await request("/api/buyer/checkout/summary", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${buyerRegisterPayload.token}`,
+    },
+  });
+  const cartCheckoutSummaryPayload = JSON.parse(cartCheckoutSummaryResponse.body);
+  if (
+    cartCheckoutSummaryResponse.statusCode !== 200 ||
+    cartCheckoutSummaryPayload.success !== true ||
+    String(cartCheckoutSummaryPayload.mode || "") !== "cart" ||
+    !cartCheckoutSummaryPayload.cart ||
+    Number(cartCheckoutSummaryPayload.cart.readyItemCount || 0) < 1
+  ) {
+    throw new Error("Cart-backed checkout summary failed during phase-3 smoke verification.");
+  }
+
+  const cartOrderCreateResponse = await request("/api/buyer/checkout/orders", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${buyerRegisterPayload.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      paymentMethod: "bsp-pay",
+      couponCode,
+      customerName: "Smoke Buyer",
+      customerEmail: buyerEmail,
+      customerPhone: "70000000",
+      deliveryMethod: "pickup",
+      deliveryAddress: "Smoke test address",
+      deliveryCity: "Port Moresby",
+      deliveryNotes: "Cart checkout verification",
+    }),
+  });
+  const cartOrderCreatePayload = JSON.parse(cartOrderCreateResponse.body);
+  if (
+    cartOrderCreateResponse.statusCode !== 201 ||
+    cartOrderCreatePayload.success !== true ||
+    !Array.isArray(cartOrderCreatePayload.orders) ||
+    !cartOrderCreatePayload.orders.length
+  ) {
+    throw new Error("Cart-backed checkout order creation failed during phase-3 smoke verification.");
+  }
+
+  const sellerOrderShippedResponse = await request(`/api/seller/orders/${directOrderId}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${registerPayload.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      status: "shipped",
+      trackingNumber: `SMOKE-${smokeStamp}`,
+      carrier: "PNG Post",
+    }),
+  });
+  const sellerOrderShippedPayload = JSON.parse(sellerOrderShippedResponse.body);
+  if (sellerOrderShippedResponse.statusCode !== 200 || sellerOrderShippedPayload.success !== true) {
+    throw new Error("Seller shipped order update failed during review smoke verification.");
+  }
+
+  const sellerOrderDeliveredResponse = await request(`/api/seller/orders/${directOrderId}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${registerPayload.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      status: "delivered",
+      carrier: "PNG Post",
+    }),
+  });
+  const sellerOrderDeliveredPayload = JSON.parse(sellerOrderDeliveredResponse.body);
+  if (sellerOrderDeliveredResponse.statusCode !== 200 || sellerOrderDeliveredPayload.success !== true) {
+    throw new Error("Seller delivered order update failed during review smoke verification.");
+  }
+
+  const reviewCreateResponse = await request(`/api/products/${productId}/reviews`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${buyerRegisterPayload.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      rating: 5,
+      title: "Smoke verified review",
+      body: "Smoke review created after delivered purchase verification.",
+    }),
+  });
+  const reviewCreatePayload = JSON.parse(reviewCreateResponse.body);
+  if (reviewCreateResponse.statusCode !== 201 || reviewCreatePayload.success !== true || !reviewCreatePayload.review) {
+    throw new Error("Review creation failed during phase-3 smoke verification.");
+  }
+
+  const reviewListResponse = await request(`/api/products/${productId}/reviews`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${buyerRegisterPayload.token}`,
+    },
+  });
+  const reviewListPayload = JSON.parse(reviewListResponse.body);
+  if (
+    reviewListResponse.statusCode !== 200 ||
+    reviewListPayload.success !== true ||
+    !Array.isArray(reviewListPayload.reviews) ||
+    !reviewListPayload.reviews.length
+  ) {
+    throw new Error("Review listing failed during phase-3 smoke verification.");
+  }
+
+  const cartAfterOrderResponse = await request("/api/cart", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${buyerRegisterPayload.token}`,
+    },
+  });
+  const cartAfterOrderPayload = JSON.parse(cartAfterOrderResponse.body);
+  if (
+    cartAfterOrderResponse.statusCode !== 200 ||
+    cartAfterOrderPayload.success !== true ||
+    !cartAfterOrderPayload.cart ||
+    Number(cartAfterOrderPayload.cart.itemCount || 0) !== 0
+  ) {
+    throw new Error("Cart did not clear after checkout during phase-3 smoke verification.");
   }
 
   const buyerWishlistAddResponse = await request("/api/buyer/wishlist", {
@@ -579,6 +824,8 @@ async function verifyPostgresWritePath() {
 }
 
 async function run() {
+  await runMigrations();
+
   const serverProcess = spawn(process.execPath, ["server.js"], {
     cwd: root,
     env,

@@ -43,7 +43,7 @@ function buildBuyerActivity(snapshot) {
       icon: "fa-solid fa-store",
       text: `Following ${store.storeName || `@${store.handle}`}`,
       time: formatActivityTime(store.followedAt),
-      href: store.handle ? `/stores/${encodeURIComponent(store.handle)}` : "/marketplace",
+      href: store.storePath || (store.handle ? `/stores/${encodeURIComponent(store.handle)}` : "/marketplace"),
     });
   });
 
@@ -86,8 +86,9 @@ function buildBuyerStoreNetwork(snapshot) {
     title: `Updates and drops from ${store.storeName || `@${store.handle}`}`,
     meta: `Followed store - ${formatActivityTime(store.followedAt)}`,
     thumbnailUrl: store.avatarUrl || store.coverUrl || "",
-    storePath: store.handle ? `/stores/${encodeURIComponent(store.handle)}` : "/marketplace",
-    actionLabel: "Visit store",
+    storePath: store.storePath || (store.handle ? `/stores/${encodeURIComponent(store.handle)}` : "/marketplace"),
+    actionLabel: "Open seller profile",
+    secondaryActionLabel: "Marketplace",
   }));
 }
 
@@ -176,7 +177,8 @@ function buildBuyerNetwork(feedPayload) {
     thumbnailUrl: item.thumbnail || (Array.isArray(item.images) ? item.images[0] : "") || "",
     storePath: item.storePath || "/marketplace",
     productPath: item.productPath || "",
-    actionLabel: item.productPath ? "Open listing" : "Visit store",
+    actionLabel: item.productPath ? "Open listing" : "Open seller profile",
+    secondaryActionLabel: "Seller profile",
   }));
 }
 

@@ -17,13 +17,8 @@ const {
   deleteFeedReactionsForFeedItem,
 } = require("../repositories/engagement.repository");
 const { resolveCatalogSource } = require("../repositories/repository-source");
-const { sendSuccess } = require("../utils/api-response");
+const { createHttpError, sendSuccess } = require("../utils/api-response");
 const { deleteUploadedFiles, saveBase64ImageToFolder } = require("../utils/image.util");
-const {
-  normalizeHandle,
-  validateFeedQueryPayload,
-  validateStoreFeedPostPayload,
-} = require("../utils/request-validation");
 
 const renderBuyerFeedPage = renderPage("buyerFeed");
 const renderGlobalFeedPage = renderPage("globalFeed");
@@ -81,7 +76,7 @@ function saveStoreUpdateImages(userId, images) {
 
 async function getFeed(req, res, next) {
   try {
-    const queryOptions = validateFeedQueryPayload(req.query || {});
+    const queryOptions = req.query || {};
     const payload = await buildFeedPayload(req.user || null, queryOptions);
     return sendSuccess(res, payload, "Feed loaded");
   } catch (error) {
@@ -129,13 +124,10 @@ async function getMyStoreFeed(req, res, next) {
 
 async function getStoreFeedByHandle(req, res, next) {
   try {
-    const handle = normalizeHandle(req.params.handle);
+    const { handle } = req.params;
     const storeRow = await findStoreByHandle(handle);
     if (!storeRow) {
-      return res.status(404).json({
-        success: false,
-        message: "Store not found",
-      });
+      throw createHttpError(404, "Store not found");
     }
 
     const items = await listStoreFeedItemsByStoreId(storeRow.id, {
@@ -164,13 +156,10 @@ async function createSellerFeedPost(req, res, next) {
   try {
     const storeRow = await findStoreByUserId(req.user.id);
     if (!storeRow) {
-      return res.status(400).json({
-        success: false,
-        message: "Create your store before publishing updates",
-      });
+      throw createHttpError(400, "Create your store before publishing updates");
     }
 
-    const payload = validateStoreFeedPostPayload(req.body);
+    const payload = req.body;
     let linkedCatalogItem = null;
     if (payload.catalogItemId > 0) {
       linkedCatalogItem = await findCatalogItemByPublicIdAndStoreId(payload.catalogItemId, storeRow.id, {
@@ -178,20 +167,14 @@ async function createSellerFeedPost(req, res, next) {
       });
 
       if (!linkedCatalogItem) {
-        return res.status(404).json({
-          success: false,
-          message: "Linked listing not found for this store",
-        });
+        throw createHttpError(404, "Linked listing not found for this store");
       }
 
       if (
         String(linkedCatalogItem.status || "published").trim().toLowerCase() !== "published" ||
         String(linkedCatalogItem.visibility || "public").trim().toLowerCase() !== "public"
       ) {
-        return res.status(400).json({
-          success: false,
-          message: "Only published public listings can be attached to store updates",
-        });
+        throw createHttpError(400, "Only published public listings can be attached to store updates");
       }
     }
     const imageResult = saveStoreUpdateImages(req.user.id, payload.images);
@@ -243,21 +226,11 @@ async function createSellerFeedPost(req, res, next) {
 }
 
 async function deleteSellerFeedPost(req, res, next) {
-  const feedItemId = Number(req.params.feedItemId);
-  if (!Number.isInteger(feedItemId) || feedItemId <= 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid store update id",
-    });
-  }
-
   try {
+    const { feedItemId } = req.params;
     const storeRow = await findStoreByUserId(req.user.id);
     if (!storeRow) {
-      return res.status(400).json({
-        success: false,
-        message: "Create your store before managing updates",
-      });
+      throw createHttpError(400, "Create your store before managing updates");
     }
 
     const writeSource = resolveCatalogSource();
@@ -266,17 +239,11 @@ async function deleteSellerFeedPost(req, res, next) {
     });
 
     if (!existingItem) {
-      return res.status(404).json({
-        success: false,
-        message: "Store update not found",
-      });
+      throw createHttpError(404, "Store update not found");
     }
 
     if (existingItem.type === "product_published") {
-      return res.status(400).json({
-        success: false,
-        message: "Linked product posts must be managed from listings",
-      });
+      throw createHttpError(400, "Linked product posts must be managed from listings");
     }
 
     const uploadedImageUrls = Array.isArray(existingItem.images)

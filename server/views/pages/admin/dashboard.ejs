@@ -1,0 +1,78 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a class="admin-brand" href="/admin/dashboard">Zest Admin</a>
+    <nav class="admin-nav">
+      <a class="admin-nav__link<%= page.bodyAttrs['admin-section'] === 'dashboard' ? ' is-active' : '' %>" href="/admin/dashboard">Dashboard</a>
+      <a class="admin-nav__link<%= page.bodyAttrs['admin-section'] === 'users' ? ' is-active' : '' %>" href="/admin/users">Users</a>
+      <a class="admin-nav__link<%= page.bodyAttrs['admin-section'] === 'reports' ? ' is-active' : '' %>" href="/admin/reports">Reports</a>
+      <a class="admin-nav__link<%= page.bodyAttrs['admin-section'] === 'orders' ? ' is-active' : '' %>" href="/admin/orders">Orders</a>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div>
+        <p class="ui-eyebrow">Internal operations</p>
+        <h1>Platform dashboard</h1>
+      </div>
+      <p class="admin-header__copy">Keep moderation, user status, and platform commerce visible from one place.</p>
+    </header>
+
+    <section class="admin-card-grid">
+      <article class="admin-metric-card">
+        <span>Total users</span>
+        <strong><%= adminData.summary.totals.users %></strong>
+      </article>
+      <article class="admin-metric-card">
+        <span>Open reports</span>
+        <strong><%= adminData.summary.totals.openReports %></strong>
+      </article>
+      <article class="admin-metric-card">
+        <span>Total orders</span>
+        <strong><%= adminData.summary.totals.orders %></strong>
+      </article>
+      <article class="admin-metric-card">
+        <span>Gross revenue</span>
+        <strong>K<%= Number(adminData.summary.totals.grossRevenue || 0).toFixed(2) %></strong>
+      </article>
+    </section>
+
+    <section class="admin-grid admin-grid--two">
+      <article class="admin-panel">
+        <div class="admin-panel__head">
+          <h2>Recent reports</h2>
+          <a href="/admin/reports">Open queue</a>
+        </div>
+        <div class="admin-list">
+          <% if (!adminData.reports.length) { %>
+          <p class="admin-empty">No reports yet.</p>
+          <% } %>
+          <% adminData.reports.slice(0, 5).forEach((report) => { %>
+          <div class="admin-list__item">
+            <strong><%= report.reason %></strong>
+            <span><%= report.targetType %> #<%= report.targetId %> | <%= report.status %></span>
+          </div>
+          <% }) %>
+        </div>
+      </article>
+
+      <article class="admin-panel">
+        <div class="admin-panel__head">
+          <h2>Recent orders</h2>
+          <a href="/admin/orders">View all</a>
+        </div>
+        <div class="admin-list">
+          <% if (!adminData.orders.length) { %>
+          <p class="admin-empty">No orders yet.</p>
+          <% } %>
+          <% adminData.orders.slice(0, 5).forEach((order) => { %>
+          <div class="admin-list__item">
+            <strong><%= order.orderNumber %></strong>
+            <span><%= order.storeName %> | <%= order.status %> | K<%= Number(order.totalAmount || 0).toFixed(2) %></span>
+          </div>
+          <% }) %>
+        </div>
+      </article>
+    </section>
+  </main>
+</div>

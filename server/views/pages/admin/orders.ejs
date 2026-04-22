@@ -1,0 +1,53 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a class="admin-brand" href="/admin/dashboard">Zest Admin</a>
+    <nav class="admin-nav">
+      <a class="admin-nav__link" href="/admin/dashboard">Dashboard</a>
+      <a class="admin-nav__link" href="/admin/users">Users</a>
+      <a class="admin-nav__link" href="/admin/reports">Reports</a>
+      <a class="admin-nav__link is-active" href="/admin/orders">Orders</a>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div>
+        <p class="ui-eyebrow">Platform commerce</p>
+        <h1>Orders</h1>
+      </div>
+    </header>
+
+    <section class="admin-panel">
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Store</th>
+              <th>Buyer</th>
+              <th>Status</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% adminData.orders.forEach((order) => { %>
+            <tr>
+              <td>
+                <strong><%= order.orderNumber %></strong>
+                <div class="admin-table__meta"><%= order.placedAt ? new Date(order.placedAt).toLocaleString() : '' %></div>
+              </td>
+              <td><%= order.storeName || order.storeHandle || 'Store' %></td>
+              <td>
+                <strong><%= order.customerName || 'Buyer' %></strong>
+                <div class="admin-table__meta"><%= order.customerEmail %></div>
+              </td>
+              <td><span class="admin-badge"><%= order.status %></span></td>
+              <td>K<%= Number(order.totalAmount || 0).toFixed(2) %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>

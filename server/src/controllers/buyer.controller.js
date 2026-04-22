@@ -3,6 +3,7 @@ const path = require("path");
 const { paths } = require("../config/env");
 const { transaction } = require("../config/db");
 const {
+  renderCartPage,
   renderCompatibilityProductViewer,
   renderCheckoutPage,
   renderPage,
@@ -26,15 +27,6 @@ const {
 } = require("../services/buyer.service");
 const { createHttpError, sendSuccess } = require("../utils/api-response");
 const { deleteUploadedFiles, saveBase64ImageToFolder } = require("../utils/image.util");
-const {
-  normalizeHandle,
-  validateBuyerAddressPayload,
-  validateBuyerInteractionPayload,
-  validateFeedQueryPayload,
-  validateBuyerProfilePayload,
-  validateBuyerSettingsPayload,
-  validateBuyerWishlistPayload,
-} = require("../utils/request-validation");
 const {
   resolveBuyerAppPath,
   resolveBuyerHomePath,
@@ -78,15 +70,6 @@ function saveBuyerProfileAsset(userId, source, filePrefix, fieldLabel) {
     finalUrl: savedUrl,
     createdUrl: savedUrl,
   };
-}
-
-function normalizePositiveId(value, fieldName) {
-  const parsed = Number(value);
-  if (!Number.isInteger(parsed) || parsed <= 0) {
-    throw createHttpError(400, `${fieldName} is invalid`);
-  }
-
-  return parsed;
 }
 
 async function persistBuyerAccountState(req, res, payload, saveFn, message, options = {}) {
@@ -282,7 +265,7 @@ async function getBuyerAddresses(req, res, next) {
 
 async function getBuyerFeed(req, res, next) {
   try {
-    const queryOptions = validateFeedQueryPayload(req.query || {});
+    const queryOptions = req.query || {};
     const payload = await buildFeedPayload(req.user, {
       includeFallbackItems: false,
       ...queryOptions,
@@ -295,7 +278,7 @@ async function getBuyerFeed(req, res, next) {
 
 async function postBuyerFollowing(req, res, next) {
   try {
-    const handle = normalizeHandle(req.params.handle);
+    const { handle } = req.params;
     const payload = await followBuyerStore(req.user, handle);
     if (!payload) {
       throw createHttpError(404, "Store not found");
@@ -317,7 +300,7 @@ async function postBuyerFollowing(req, res, next) {
 
 async function deleteBuyerFollowing(req, res, next) {
   try {
-    const handle = normalizeHandle(req.params.handle);
+    const { handle } = req.params;
     const payload = await unfollowBuyerStore(req.user, handle);
     return sendSuccess(
       res,
@@ -335,10 +318,7 @@ async function deleteBuyerFollowing(req, res, next) {
 
 async function postBuyerInteraction(req, res, next) {
   try {
-    const payload = await recordBuyerInteraction(
-      req.user || null,
-      validateBuyerInteractionPayload(req.body || {})
-    );
+    const payload = await recordBuyerInteraction(req.user || null, req.body || {});
     return sendSuccess(
       res,
       {
@@ -354,8 +334,7 @@ async function postBuyerInteraction(req, res, next) {
 
 async function postBuyerWishlist(req, res, next) {
   try {
-    const payload = validateBuyerWishlistPayload(req.body);
-    const result = await addBuyerWishlistEntry(req.user, payload.productId);
+    const result = await addBuyerWishlistEntry(req.user, req.body.productId);
     if (!result) {
       throw createHttpError(404, "Listing not found");
     }
@@ -368,7 +347,7 @@ async function postBuyerWishlist(req, res, next) {
 
 async function deleteBuyerWishlist(req, res, next) {
   try {
-    const productId = normalizePositiveId(req.params.productId, "Product id");
+    const { productId } = req.params;
     const result = await removeBuyerWishlistEntry(req.user, productId);
     return sendSuccess(res, result, "Listing removed from wishlist");
   } catch (error) {
@@ -378,8 +357,7 @@ async function deleteBuyerWishlist(req, res, next) {
 
 async function postBuyerAddress(req, res, next) {
   try {
-    const payload = validateBuyerAddressPayload(req.body);
-    const result = await createBuyerAddressEntry(req.user, payload);
+    const result = await createBuyerAddressEntry(req.user, req.body);
     return sendSuccess(res, result, "Address saved");
   } catch (error) {
     return next(error);
@@ -388,9 +366,8 @@ async function postBuyerAddress(req, res, next) {
 
 async function patchBuyerAddress(req, res, next) {
   try {
-    const addressId = normalizePositiveId(req.params.addressId, "Address id");
-    const payload = validateBuyerAddressPayload(req.body);
-    const result = await updateBuyerAddressEntry(req.user, addressId, payload);
+    const { addressId } = req.params;
+    const result = await updateBuyerAddressEntry(req.user, addressId, req.body);
     if (!result.address) {
       throw createHttpError(404, "Address not found");
     }
@@ -403,7 +380,7 @@ async function patchBuyerAddress(req, res, next) {
 
 async function destroyBuyerAddress(req, res, next) {
   try {
-    const addressId = normalizePositiveId(req.params.addressId, "Address id");
+    const { addressId } = req.params;
     const result = await deleteBuyerAddressEntry(req.user, addressId);
     if (!result.removed) {
       throw createHttpError(404, "Address not found");
@@ -417,11 +394,10 @@ async function destroyBuyerAddress(req, res, next) {
 
 async function saveBuyerProfile(req, res, next) {
   try {
-    const payload = validateBuyerProfilePayload(req.body);
     return await persistBuyerAccountState(
       req,
       res,
-      payload,
+      req.body,
       saveBuyerSetup,
       "Buyer profile setup saved"
     );
@@ -432,11 +408,10 @@ async function saveBuyerProfile(req, res, next) {
 
 async function patchBuyerSettings(req, res, next) {
   try {
-    const payload = validateBuyerSettingsPayload(req.body);
     return await persistBuyerAccountState(
       req,
       res,
-      payload,
+      req.body,
       saveBuyerAccountSettings,
       "Buyer settings saved"
     );
@@ -463,6 +438,7 @@ module.exports = {
   postBuyerFollowing,
   postBuyerInteraction,
   postBuyerWishlist,
+  renderBuyerCartPage: renderCartPage,
   renderBuyerCheckoutPage: renderCheckoutPage,
   renderBuyerCompatibilityProductViewer: renderCompatibilityProductViewer,
   renderBuyerProfilePage,

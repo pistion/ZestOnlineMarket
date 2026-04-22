@@ -70,7 +70,7 @@
       </div>
 
       <div class="cta-row">
-        <button id="add-to-cart-btn" class="btn primary" type="button">Checkout now</button>
+        <button id="add-to-cart-btn" class="btn primary" type="button">Add to cart</button>
         <button id="viewer-wishlist-btn" class="btn ghost" type="button">Save to wishlist</button>
         <a id="back-to-store-btn" class="btn ghost" href="/marketplace">Back to store</a>
       </div>
@@ -87,9 +87,62 @@
       <button class="tab-link active" data-tab="specs" type="button">Specifications</button>
       <button class="tab-link" data-tab="shipping" type="button">Shipping</button>
       <button class="tab-link" data-tab="delivery" type="button">Delivery</button>
-      <button class="tab-link" data-tab="review" type="button">Review</button>
+      <button class="tab-link" data-tab="seller" type="button">Seller note</button>
     </div>
     <div class="tab-body" id="tab-content"></div>
+  </section>
+
+  <section class="reviews-section">
+    <div class="reviews-section__head">
+      <div>
+        <p class="meta-label">Verified reviews</p>
+        <h2>Buyer ratings and feedback</h2>
+      </div>
+      <div class="reviews-summary" id="reviewsSummaryCard">
+        <strong id="reviewsAverageRating">0.0</strong>
+        <span id="reviewsAverageMeta">0 reviews</span>
+      </div>
+    </div>
+
+    <div class="ui-state ui-state--empty product-status" id="reviewsStatusPanel">
+      <p class="ui-state__copy" id="reviewsStatusText">Loading reviews.</p>
+    </div>
+
+    <div class="review-breakdown" id="reviewBreakdown"></div>
+
+    <form class="review-form" id="reviewForm" hidden>
+      <div class="review-form__head">
+        <h3>Write a review</h3>
+        <p>Reviews are available after a delivered purchase.</p>
+      </div>
+      <div class="review-form__grid">
+        <label class="review-field">
+          <span>Rating</span>
+          <select id="reviewRating" required>
+            <option value="">Choose a rating</option>
+            <option value="5">5 stars</option>
+            <option value="4">4 stars</option>
+            <option value="3">3 stars</option>
+            <option value="2">2 stars</option>
+            <option value="1">1 star</option>
+          </select>
+        </label>
+        <label class="review-field">
+          <span>Title</span>
+          <input id="reviewTitle" type="text" maxlength="120" placeholder="Short headline" />
+        </label>
+      </div>
+      <label class="review-field">
+        <span>Review</span>
+        <textarea id="reviewBody" rows="4" maxlength="800" placeholder="Share what the buying and delivery experience was like." required></textarea>
+      </label>
+      <div class="review-form__actions">
+        <button class="btn primary" id="reviewSubmitBtn" type="submit">Submit review</button>
+      </div>
+    </form>
+
+    <div class="review-empty" id="reviewEligibilityNote" hidden></div>
+    <div class="reviews-list" id="reviewsList"></div>
   </section>
 
   <div class="lightbox" id="lightbox">

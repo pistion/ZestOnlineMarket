@@ -1,6 +1,3 @@
-const test = require("node:test");
-const assert = require("node:assert/strict");
-
 const {
   appendResponseCookie,
   buildAuthCookie,
@@ -10,50 +7,52 @@ const {
   parseCookies,
 } = require("../../server/src/utils/auth-session");
 
-test("parseCookies reads cookie pairs safely", () => {
-  const cookies = parseCookies("foo=bar; zest_auth=token123; another=value");
-  assert.equal(cookies.foo, "bar");
-  assert.equal(cookies.zest_auth, "token123");
-  assert.equal(cookies.another, "value");
-});
+describe("auth session helpers", () => {
+  it("reads cookie pairs safely", () => {
+    const cookies = parseCookies("foo=bar; zest_auth=token123; another=value");
+    expect(cookies.foo).toBe("bar");
+    expect(cookies.zest_auth).toBe("token123");
+    expect(cookies.another).toBe("value");
+  });
 
-test("normalizeInternalPath allows only safe internal paths", () => {
-  assert.equal(normalizeInternalPath("/buyer/profile"), "/buyer/profile");
-  assert.equal(normalizeInternalPath("https://example.com", "/"), "/");
-  assert.equal(normalizeInternalPath("//evil.test", "/"), "/");
-});
+  it("allows only safe internal paths", () => {
+    expect(normalizeInternalPath("/buyer/profile")).toBe("/buyer/profile");
+    expect(normalizeInternalPath("https://example.com", "/")).toBe("/");
+    expect(normalizeInternalPath("//evil.test", "/")).toBe("/");
+  });
 
-test("hasBearerAuthHeader detects bearer tokens only", () => {
-  assert.equal(hasBearerAuthHeader({ headers: { authorization: "Bearer abc123" } }), true);
-  assert.equal(hasBearerAuthHeader({ headers: { authorization: "Basic abc123" } }), false);
-  assert.equal(hasBearerAuthHeader({ headers: {} }), false);
-});
+  it("detects bearer tokens only", () => {
+    expect(hasBearerAuthHeader({ headers: { authorization: "Bearer abc123" } })).toBe(true);
+    expect(hasBearerAuthHeader({ headers: { authorization: "Basic abc123" } })).toBe(false);
+    expect(hasBearerAuthHeader({ headers: {} })).toBe(false);
+  });
 
-test("appendResponseCookie preserves existing cookies", () => {
-  const headers = new Map();
-  const response = {
-    getHeader(name) {
-      return headers.get(name);
-    },
-    setHeader(name, value) {
-      headers.set(name, value);
-    },
-  };
+  it("preserves existing cookies when appending response cookies", () => {
+    const headers = new Map();
+    const response = {
+      getHeader(name) {
+        return headers.get(name);
+      },
+      setHeader(name, value) {
+        headers.set(name, value);
+      },
+    };
 
-  appendResponseCookie(response, buildAuthCookie("token-one"));
-  appendResponseCookie(response, "zest_csrf=csrf-token; Path=/");
+    appendResponseCookie(response, buildAuthCookie("token-one"));
+    appendResponseCookie(response, "zest_csrf=csrf-token; Path=/");
 
-  const cookies = response.getHeader("Set-Cookie");
-  assert.ok(Array.isArray(cookies));
-  assert.equal(cookies.length, 2);
-  assert.match(cookies[0], /zest_auth=/);
-  assert.match(cookies[1], /zest_csrf=/);
-});
+    const cookies = response.getHeader("Set-Cookie");
+    expect(Array.isArray(cookies)).toBe(true);
+    expect(cookies).toHaveLength(2);
+    expect(cookies[0]).toMatch(/zest_auth=/);
+    expect(cookies[1]).toMatch(/zest_csrf=/);
+  });
 
-test("getCookieValue extracts a single cookie by name", () => {
-  const value = getCookieValue(
-    { headers: { cookie: "zest_csrf=abc; zest_auth=def" } },
-    "zest_csrf"
-  );
-  assert.equal(value, "abc");
+  it("extracts a single cookie by name", () => {
+    const value = getCookieValue(
+      { headers: { cookie: "zest_csrf=abc; zest_auth=def" } },
+      "zest_csrf"
+    );
+    expect(value).toBe("abc");
+  });
 });

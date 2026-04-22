@@ -1,3 +1,5 @@
+const { createAppError } = require("./errors");
+
 function sendSuccess(res, payload = {}, message = "OK", statusCode = 200) {
   return res.status(statusCode).json({
     success: true,
@@ -6,10 +8,8 @@ function sendSuccess(res, payload = {}, message = "OK", statusCode = 200) {
   });
 }
 
-function createHttpError(status, message) {
-  const error = new Error(message);
-  error.status = status;
-  return error;
+function createHttpError(status, message, options = {}) {
+  return createAppError(status, message, options);
 }
 
 module.exports = {

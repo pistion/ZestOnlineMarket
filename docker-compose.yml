@@ -11,3 +11,28 @@ services:
       - "5432:5432"
     volumes:
       - .pgdata:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      APP_ENV: production
+      NODE_ENV: production
+      PORT: 3000
+      DB_PROVIDER: postgres
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: zest_online_market
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      FEATURE_SEARCH: "true"
+      FEATURE_REVIEWS: "true"
+      FEATURE_DISCOUNTS: "true"
+      FEATURE_ADMIN: "true"
+      ENABLE_DEMO_STALLS: "false"
+      JWT_SECRET: replace-with-a-production-secret
+    ports:
+      - "3000:3000"

@@ -336,6 +336,10 @@
               <div class="wishlist-title">${escapeHtml(item.title || "Store update")}</div>
               <div class="wishlist-price">${escapeHtml(item.storeName || "Marketplace store")}</div>
               <div class="wishlist-meta">${escapeHtml(item.description || "Open this update to see more.")}</div>
+              <div class="card-actions">
+                <a class="card-action-link card-action-link--primary" href="${escapeHtml(item.productPath || item.storePath || "/marketplace")}">Open update</a>
+                <a class="card-action-link" href="${escapeHtml(item.storePath || "/marketplace")}">Seller profile</a>
+              </div>
             </div>
           </article>
         `
@@ -375,6 +379,10 @@
               <div class="wishlist-title">${escapeHtml(item.title || "Saved item")}</div>
               <div class="wishlist-price">${escapeHtml(formatCurrency(item.price))}</div>
               <div class="wishlist-meta">${escapeHtml(item.storeName || "Saved from marketplace")}</div>
+              <div class="card-actions">
+                <a class="card-action-link card-action-link--primary" href="${escapeHtml(item.productPath || item.storePath || "/marketplace")}">Open listing</a>
+                <a class="card-action-link" href="${escapeHtml(item.storePath || "/marketplace")}">Seller profile</a>
+              </div>
             </div>
           </article>
         `
@@ -410,6 +418,10 @@
               <div class="wishlist-title">${escapeHtml(item.title || "Viewed listing")}</div>
               <div class="wishlist-price">${escapeHtml(formatCurrency(item.price))}</div>
               <div class="wishlist-meta">${escapeHtml(item.storeName || "Marketplace listing")}</div>
+              <div class="card-actions">
+                <a class="card-action-link card-action-link--primary" href="${escapeHtml(item.productPath || item.storePath || "/marketplace")}">Open listing</a>
+                <a class="card-action-link" href="${escapeHtml(item.storePath || "/marketplace")}">Seller profile</a>
+              </div>
             </div>
           </article>
         `
@@ -446,6 +458,10 @@
               <div class="purchase-status">
                 <span class="status-badge">${escapeHtml(purchase.status || "pending")}</span>
                 <span>${escapeHtml(formatDate(purchase.purchasedAt))}</span>
+              </div>
+              <div class="card-actions">
+                <a class="card-action-link card-action-link--primary" href="${escapeHtml(purchase.orderPath || purchase.productPath || purchase.storePath || "/marketplace")}">Open order</a>
+                <a class="card-action-link" href="${escapeHtml(purchase.storePath || "/marketplace")}">Seller profile</a>
               </div>
             </div>
           </article>
@@ -507,7 +523,7 @@
               <div class="interaction-meta">${escapeHtml(item.meta || "Recently")}</div>
               <div class="interaction-actions">
                 <a class="interaction-btn" href="${escapeHtml(item.productPath || item.storePath || "/marketplace")}">${escapeHtml(item.actionLabel || "Open")}</a>
-                <a class="interaction-btn" href="${escapeHtml(item.storePath || "/marketplace")}">Visit Store</a>
+                <a class="interaction-btn" href="${escapeHtml(item.storePath || "/marketplace")}">${escapeHtml(item.secondaryActionLabel || "Seller profile")}</a>
               </div>
             </div>
           </div>
@@ -543,6 +559,10 @@
               <div class="recommendation-title">${escapeHtml(item.title || "Recommended listing")}</div>
               <div class="recommendation-price">${escapeHtml(formatCurrency(item.price))}</div>
               <div class="recommendation-reason">${escapeHtml(item.reason || "Suggested for your buyer activity")}</div>
+              <div class="card-actions">
+                <a class="card-action-link card-action-link--primary" href="${escapeHtml(item.productPath || item.storePath || "/marketplace")}">Open listing</a>
+                <a class="card-action-link" href="${escapeHtml(item.storePath || "/marketplace")}">Seller profile</a>
+              </div>
             </div>
           </article>
         `
@@ -579,7 +599,7 @@
               <div class="subscription-actions">
                 <a class="btn btn-primary" href="${escapeHtml(
                   store.storePath || (store.handle ? `/stores/${encodeURIComponent(store.handle)}` : "/marketplace")
-                )}">Visit Stall</a>
+                )}">Open seller profile</a>
                 <button class="btn" type="button" data-unfollow-handle="${escapeHtml(store.handle)}">Unfollow</button>
               </div>
             </div>

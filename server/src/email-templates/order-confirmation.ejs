@@ -1,0 +1,8 @@
+<div style="font-family: Inter, Arial, sans-serif; color: #0f172a; line-height: 1.6;">
+  <p style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #2563eb;">Zest Market</p>
+  <h1 style="margin: 0 0 12px;">Order confirmed</h1>
+  <p>Hi <%= customerName || "there" %>,</p>
+  <p>Your order <strong><%= orderNumber %></strong> with <strong><%= storeName %></strong> has been confirmed.</p>
+  <p>Total: <strong>K<%= Number(totalAmount || 0).toFixed(2) %></strong></p>
+  <p>We will send another update when the seller ships or delivers your order.</p>
+</div>

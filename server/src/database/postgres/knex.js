@@ -16,7 +16,11 @@ function requireKnexRuntime() {
 
 function buildConnectionConfig() {
   if (databaseUrl) {
-    return databaseUrl;
+    const isRender = databaseUrl.includes("render.com");
+    return {
+      connectionString: databaseUrl,
+      ssl: isRender ? { rejectUnauthorized: false } : false,
+    };
   }
 
   return {

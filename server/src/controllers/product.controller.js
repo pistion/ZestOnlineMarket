@@ -29,7 +29,6 @@ const { findStoreById, findStoreByUserId } = require("../repositories/store.repo
 const { resolveCatalogSource } = require("../repositories/repository-source");
 const { sendSuccess, createHttpError } = require("../utils/api-response");
 const { deleteUploadedFiles, saveBase64ImageToFolder } = require("../utils/image.util");
-const { validateProductPayload } = require("../utils/request-validation");
 const { mapProductImages, mapProductRow, mapStoreRow, mapProductVariantRow } = require("../utils/store-mappers");
 
 function isUploadedAssetUrl(value) {
@@ -205,13 +204,7 @@ async function listProducts(req, res, next) {
 }
 
 async function getProductDetail(req, res, next) {
-  const productId = Number(req.params.productId);
-  if (!Number.isInteger(productId) || productId <= 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid product id",
-    });
-  }
+  const { productId } = req.params;
 
   try {
     const payload = await buildProductDetailPayload(productId);
@@ -250,7 +243,7 @@ async function createSellerProduct(req, res, next) {
       });
     }
 
-    const payload = validateProductPayload(req.body);
+    const payload = req.body;
 
     const result = await transaction(async (txContext) => {
       const repoOptions = {
@@ -323,16 +316,9 @@ async function createSellerProduct(req, res, next) {
 
 async function updateSellerProduct(req, res, next) {
   const userId = req.user.id;
-  const productId = Number(req.params.productId);
+  const { productId } = req.params;
   const writeSource = resolveCatalogSource();
   let createdImageUrls = [];
-
-  if (!Number.isInteger(productId) || productId <= 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid product id",
-    });
-  }
 
   try {
     const storeRow = await findStoreByUserId(userId);
@@ -351,7 +337,7 @@ async function updateSellerProduct(req, res, next) {
       });
     }
 
-    const payload = validateProductPayload(req.body);
+    const payload = req.body;
     const previousImageUrls = (await findCatalogMedia(existingProduct.id)).map((image) => image.url);
 
     const result = await transaction(async (txContext) => {
@@ -420,15 +406,8 @@ async function updateSellerProduct(req, res, next) {
 
 async function deleteSellerProduct(req, res, next) {
   const userId = req.user.id;
-  const productId = Number(req.params.productId);
+  const { productId } = req.params;
   const writeSource = resolveCatalogSource();
-
-  if (!Number.isInteger(productId) || productId <= 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid product id",
-    });
-  }
 
   try {
     const storeRow = await findStoreByUserId(userId);

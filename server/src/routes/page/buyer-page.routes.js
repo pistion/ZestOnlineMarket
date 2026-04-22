@@ -8,6 +8,7 @@ const {
   requireBuyerSetupEntry,
 } = require("../../middleware/buyer.middleware");
 const {
+  renderBuyerCartPage,
   renderBuyerCheckoutPage,
   renderBuyerCompatibilityProductViewer,
   renderBuyerProfilePage,
@@ -67,6 +68,7 @@ function registerBuyerPageRoutes(router = express.Router()) {
   );
   router.get("/buyer/customer-profile", redirectLegacy("buyerProfile"));
   router.get("/buyer/product-viewer", renderBuyerCompatibilityProductViewer);
+  router.get("/buyer/cart", requirePageAuth("buyer"), requireBuyerPage, renderBuyerCartPage);
   router.get("/buyer/checkout", requirePageAuth("buyer"), requireBuyerPage, renderBuyerCheckoutPage);
   return router;
 }

@@ -5,8 +5,10 @@ const {
   authRateLimitMaxRegister,
   authRateLimitWindowMs,
 } = require("../config/env");
+const { loginBodySchema, registerBodySchema } = require("../schemas/auth.schema");
 const { login, logout, register } = require("../controllers/auth.controller");
 const { createRateLimiter } = require("../middleware/rate-limit.middleware");
+const { validate } = require("../utils/validate");
 
 const router = express.Router();
 const authKeyGenerator = (req) => {
@@ -26,6 +28,7 @@ router.post(
     message: "Too many registration attempts. Please try again later.",
     keyGenerator: authKeyGenerator,
   }),
+  validate(registerBodySchema),
   register
 );
 router.post(
@@ -37,6 +40,7 @@ router.post(
     message: "Too many sign-in attempts. Please try again later.",
     keyGenerator: authKeyGenerator,
   }),
+  validate(loginBodySchema),
   login
 );
 router.post("/logout", logout);

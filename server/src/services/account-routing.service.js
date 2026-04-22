@@ -19,6 +19,7 @@ const APP_PATHS = Object.freeze({
   buyerSettings: "/buyer/settings",
   buyerPurchases: "/buyer/purchases",
   buyerProductViewer: "/buyer/product-viewer",
+  buyerCart: "/buyer/cart",
   buyerCheckout: "/buyer/checkout",
   globalFeed: "/feed",
   globalFeedLegacy: "/global-feed",
@@ -28,6 +29,7 @@ const APP_PATHS = Object.freeze({
   sellerOrders: "/seller/orders",
   sellerDashboard: "/seller/dashboard",
   sellerWizard: "/seller/wizard-setup",
+  adminDashboard: "/admin/dashboard",
   authSignin: "/auth/signin",
 });
 
@@ -78,6 +80,10 @@ function isRoleAccessiblePath(role, path) {
 
   if (role === "seller") {
     return normalized.startsWith("/seller/");
+  }
+
+  if (role === "admin") {
+    return normalized.startsWith("/admin/");
   }
 
   return false;
@@ -174,6 +180,18 @@ async function resolveAuthenticatedAppState(user, options = {}) {
       sellerProfileCompleted,
       buyerProfile: null,
       sellerStore,
+    };
+  }
+
+  if (user.role === "admin") {
+    return {
+      role: "admin",
+      redirectTo: APP_PATHS.adminDashboard,
+      profileCompleted: true,
+      buyerProfileCompleted: false,
+      sellerProfileCompleted: false,
+      buyerProfile: null,
+      sellerStore: null,
     };
   }
 

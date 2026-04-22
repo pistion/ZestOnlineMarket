@@ -41,6 +41,7 @@
             <ul>
                 <li><button class="nav-btn" data-route="/seller/orders" type="button"><i class="fas fa-bag-shopping"></i> Orders</button></li>
                 <li><button class="nav-btn" data-section="reports" type="button"><i class="fas fa-file-invoice-dollar"></i> Reports</button></li>
+                <li><button class="nav-btn" data-section="promotions" type="button"><i class="fas fa-tags"></i> Promotions</button></li>
                 <li><button class="nav-btn" data-section="inventory-summary" type="button"><i class="fas fa-clipboard-list"></i> Inventory summary</button></li>
                 <li><button class="nav-btn" data-section="transactions" type="button"><i class="fas fa-arrows-rotate"></i> Transactions</button></li>
             </ul>
@@ -252,6 +253,76 @@
                     <li>Match refund trends with repeat support requests.</li>
                     <li>Check whether shipping fees need a seasonal update.</li>
                 </ul>
+            </article>
+        </div>
+    </section>
+
+    <section id="promotions" class="dashboard-section">
+        <div class="stack-grid">
+            <article class="surface-card">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Discount management</p>
+                        <h2>Promotions</h2>
+                    </div>
+                    <p class="section-copy">Create coupon codes, toggle them live, and keep a clean view of how buyers will see promotions at checkout.</p>
+                </div>
+
+                <form class="promotion-form" id="sellerPromotionForm">
+                    <label>
+                        <span>Code</span>
+                        <input id="sellerPromotionCode" name="code" type="text" maxlength="32" placeholder="WELCOME10" required>
+                    </label>
+                    <label>
+                        <span>Title</span>
+                        <input id="sellerPromotionTitle" name="title" type="text" maxlength="80" placeholder="Launch offer" required>
+                    </label>
+                    <label>
+                        <span>Type</span>
+                        <select id="sellerPromotionType" name="discountType">
+                            <option value="percentage">percentage</option>
+                            <option value="fixed">fixed</option>
+                            <option value="free_shipping">free shipping</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Amount</span>
+                        <input id="sellerPromotionAmount" name="amount" type="number" min="0" step="0.01" placeholder="10" required>
+                    </label>
+                    <label>
+                        <span>Minimum order</span>
+                        <input id="sellerPromotionMinimum" name="minOrderAmount" type="number" min="0" step="0.01" placeholder="0">
+                    </label>
+                    <label>
+                        <span>Max uses</span>
+                        <input id="sellerPromotionMaxUses" name="maxUses" type="number" min="1" step="1" placeholder="Optional">
+                    </label>
+                    <label>
+                        <span>Starts at</span>
+                        <input id="sellerPromotionStartsAt" name="startsAt" type="datetime-local">
+                    </label>
+                    <label>
+                        <span>Ends at</span>
+                        <input id="sellerPromotionEndsAt" name="endsAt" type="datetime-local">
+                    </label>
+                    <label class="promotion-form__checkbox">
+                        <input id="sellerPromotionActive" name="active" type="checkbox" checked>
+                        <span>Active immediately</span>
+                    </label>
+                    <button class="header-action-link header-action-link--primary" type="submit" id="sellerPromotionSubmit">Create promotion</button>
+                </form>
+            </article>
+
+            <article class="surface-card">
+                <div class="section-intro">
+                    <div>
+                        <p class="eyebrow">Live codes</p>
+                        <h2>Promotion list</h2>
+                    </div>
+                </div>
+                <div class="promotion-list" id="sellerPromotionList">
+                    <p class="card-copy">Loading promotions...</p>
+                </div>
             </article>
         </div>
     </section>

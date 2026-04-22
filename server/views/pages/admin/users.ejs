@@ -1,0 +1,59 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a class="admin-brand" href="/admin/dashboard">Zest Admin</a>
+    <nav class="admin-nav">
+      <a class="admin-nav__link" href="/admin/dashboard">Dashboard</a>
+      <a class="admin-nav__link is-active" href="/admin/users">Users</a>
+      <a class="admin-nav__link" href="/admin/reports">Reports</a>
+      <a class="admin-nav__link" href="/admin/orders">Orders</a>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div>
+        <p class="ui-eyebrow">Admin panel</p>
+        <h1>Users</h1>
+      </div>
+    </header>
+
+    <section class="admin-panel">
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% adminData.users.forEach((user) => { %>
+            <tr>
+              <td>
+                <strong><%= user.email %></strong>
+                <% if (user.fullName) { %>
+                <div class="admin-table__meta"><%= user.fullName %></div>
+                <% } %>
+              </td>
+              <td><span class="admin-badge"><%= user.role %></span></td>
+              <td><span class="admin-badge<%= user.status === 'suspended' ? ' admin-badge--danger' : '' %>" data-user-status="<%= user.id %>"><%= user.status %></span></td>
+              <td>
+                <form class="admin-inline-form" data-admin-user-form data-user-id="<%= user.id %>">
+                  <select name="status">
+                    <option value="active"<%= user.status === 'active' ? ' selected' : '' %>>active</option>
+                    <option value="suspended"<%= user.status === 'suspended' ? ' selected' : '' %>>suspended</option>
+                  </select>
+                  <input name="note" type="text" placeholder="Optional note">
+                  <button type="submit">Save</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>

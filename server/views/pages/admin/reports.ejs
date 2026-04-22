@@ -1,0 +1,50 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a class="admin-brand" href="/admin/dashboard">Zest Admin</a>
+    <nav class="admin-nav">
+      <a class="admin-nav__link" href="/admin/dashboard">Dashboard</a>
+      <a class="admin-nav__link" href="/admin/users">Users</a>
+      <a class="admin-nav__link is-active" href="/admin/reports">Reports</a>
+      <a class="admin-nav__link" href="/admin/orders">Orders</a>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div>
+        <p class="ui-eyebrow">Moderation queue</p>
+        <h1>Reports</h1>
+      </div>
+    </header>
+
+    <section class="admin-stack">
+      <% adminData.reports.forEach((report) => { %>
+      <article class="admin-panel admin-panel--stacked">
+        <div class="admin-panel__head">
+          <div>
+            <h2><%= report.reason %></h2>
+            <p class="admin-table__meta"><%= report.targetType %> #<%= report.targetId %> | reporter: <%= report.reporterEmail || 'anonymous' %></p>
+          </div>
+          <span class="admin-badge<%= report.status === 'resolved' ? ' admin-badge--success' : report.status === 'rejected' ? ' admin-badge--danger' : '' %>" data-report-status="<%= report.id %>"><%= report.status %></span>
+        </div>
+        <p><%= report.details %></p>
+        <form class="admin-inline-form" data-admin-report-form data-report-id="<%= report.id %>">
+          <select name="status">
+            <option value="open"<%= report.status === 'open' ? ' selected' : '' %>>open</option>
+            <option value="reviewing"<%= report.status === 'reviewing' ? ' selected' : '' %>>reviewing</option>
+            <option value="resolved"<%= report.status === 'resolved' ? ' selected' : '' %>>resolved</option>
+            <option value="rejected"<%= report.status === 'rejected' ? ' selected' : '' %>>rejected</option>
+          </select>
+          <input name="note" type="text" placeholder="Resolution note">
+          <button type="submit">Update</button>
+        </form>
+      </article>
+      <% }) %>
+      <% if (!adminData.reports.length) { %>
+      <article class="admin-panel">
+        <p class="admin-empty">No reports in the queue.</p>
+      </article>
+      <% } %>
+    </section>
+  </main>
+</div>

@@ -1,0 +1,72 @@
+<section class="buyer-cart-hero">
+  <div>
+    <p class="buyer-cart-hero__eyebrow">Buyer cart</p>
+    <h1>Your cart</h1>
+    <p class="buyer-cart-hero__copy">
+      Review saved items, adjust quantities, and head into checkout when everything looks right.
+    </p>
+  </div>
+  <div class="buyer-cart-hero__actions">
+    <a class="buyer-cart-btn buyer-cart-btn--ghost" href="/marketplace">Continue shopping</a>
+    <a class="buyer-cart-btn buyer-cart-btn--ghost" href="/buyer/purchases">Order history</a>
+  </div>
+</section>
+
+<section class="buyer-cart-layout">
+  <div class="buyer-cart-main">
+    <div class="ui-state ui-state--empty buyer-cart-status" id="cartPageStatusPanel">
+      <p class="ui-state__copy" id="cartPageStatusText">Loading your cart.</p>
+    </div>
+
+    <div class="buyer-cart-toolbar">
+      <div>
+        <p class="buyer-cart-toolbar__eyebrow">Saved listings</p>
+        <h2>Grouped by store</h2>
+      </div>
+      <button class="buyer-cart-btn buyer-cart-btn--ghost" id="cart-clear-btn" type="button">
+        Clear cart
+      </button>
+    </div>
+
+    <div class="buyer-cart-groups" id="cart-store-groups" aria-live="polite"></div>
+  </div>
+
+  <aside class="buyer-cart-summary">
+    <p class="buyer-cart-summary__eyebrow">Snapshot totals</p>
+    <h2>Ready for checkout</h2>
+
+    <div class="buyer-cart-summary__rows">
+      <div class="buyer-cart-summary__row">
+        <span>Items</span>
+        <strong id="cart-item-count">0</strong>
+      </div>
+      <div class="buyer-cart-summary__row">
+        <span>Subtotal</span>
+        <strong id="cart-subtotal">K0.00</strong>
+      </div>
+      <div class="buyer-cart-summary__row">
+        <span>GST (10%)</span>
+        <strong id="cart-tax">K0.00</strong>
+      </div>
+      <div class="buyer-cart-summary__row">
+        <span>Shipping</span>
+        <strong id="cart-shipping">K0.00</strong>
+      </div>
+      <div class="buyer-cart-summary__row buyer-cart-summary__row--total">
+        <span>Total</span>
+        <strong id="cart-total">K0.00</strong>
+      </div>
+    </div>
+
+    <p class="buyer-cart-summary__note" id="cart-summary-note">
+      We use the cart snapshot totals here so price changes do not silently change your order.
+    </p>
+
+    <div class="buyer-cart-summary__actions">
+      <a class="buyer-cart-btn buyer-cart-btn--ghost" href="/feed">Browse the feed</a>
+      <button class="buyer-cart-btn buyer-cart-btn--primary" id="cart-checkout-btn" type="button">
+        Proceed to checkout
+      </button>
+    </div>
+  </aside>
+</section>

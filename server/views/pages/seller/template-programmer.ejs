@@ -1,2 +1,219 @@
-<% const storefrontTemplate = "programmer"; %>
-<%- include("../../partials/seller/storefront-service-shell", { page, storefrontTemplate }) %>
+<%
+  const bodyAttrs = page.bodyAttrs || {};
+  const isPublicStore = bodyAttrs["public-store"] === "1";
+  const viewer = typeof currentUser !== "undefined" ? currentUser : null;
+  const viewerRole = viewer && viewer.role ? String(viewer.role).trim().toLowerCase() : "";
+  const isBuyerViewer = isPublicStore && viewerRole === "buyer";
+  const isGuestViewer = isPublicStore && !viewerRole;
+  const paths = {
+    marketplace: bodyAttrs["marketplace-path"] || "/marketplace",
+    globalFeed: bodyAttrs["global-feed-path"] || "/feed",
+    cart: bodyAttrs["checkout-path"] || "/buyer/cart",
+    settings: bodyAttrs["seller-settings-path"] || "/seller/store/settings",
+    dashboard: bodyAttrs["seller-dashboard-path"] || "/seller/dashboard",
+    templateManager: bodyAttrs["seller-template-manager-path"] || "/seller/store/template",
+    products: bodyAttrs["seller-products-path"] || "/seller/templates/products",
+    store: bodyAttrs["store-path"] || "/marketplace",
+    signIn: bodyAttrs["signin-path"] || "/auth/signin?role=buyer",
+    orders: "/buyer/purchases",
+  };
+%>
+
+<div class="forge-storefront">
+  <header class="forge-topbar">
+    <div class="forge-topbar__inner">
+      <a class="forge-brand" id="forgeStoreBrand" href="<%= paths.store %>">
+        <span class="forge-brand__mark" aria-hidden="true">&lt;/&gt;</span>
+        <span id="forgeStoreBrandLabel">Developer Studio</span>
+      </a>
+
+      <div class="forge-topbar__actions">
+        <button
+          class="forge-nav-toggle"
+          type="button"
+          data-nav-toggle
+          aria-expanded="false"
+          aria-controls="forge-storefront-nav"
+          aria-label="Toggle store navigation"
+        >
+          <i class="fa-solid fa-bars"></i>
+          <span>Menu</span>
+        </button>
+
+        <nav class="forge-nav" id="forge-storefront-nav" data-nav aria-label="Developer storefront navigation">
+          <a href="<%= paths.globalFeed %>"><i class="fa-solid fa-earth-africa"></i><span>Global Feed</span></a>
+          <a href="<%= paths.marketplace %>"><i class="fa-solid fa-compass"></i><span>Marketplace</span></a>
+
+          <% if (isPublicStore) { %>
+            <% if (isBuyerViewer) { %>
+              <a href="<%= paths.orders %>"><i class="fa-solid fa-bag-shopping"></i><span>Orders</span></a>
+              <a href="<%= paths.cart %>"><i class="fa-solid fa-cart-shopping"></i><span>Cart</span></a>
+            <% } else { %>
+              <a href="<%= paths.signIn %>"><i class="fa-solid fa-right-to-bracket"></i><span>Sign In</span></a>
+            <% } %>
+          <% } else { %>
+            <a href="<%= paths.dashboard %>"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+            <a href="<%= paths.settings %>"><i class="fa-solid fa-sliders"></i><span>Store Settings</span></a>
+            <a href="<%= paths.templateManager %>"><i class="fa-solid fa-swatchbook"></i><span>Templates</span></a>
+          <% } %>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="forge-shell">
+    <section class="forge-hero">
+      <div class="forge-hero__content">
+        <p class="forge-eyebrow">Service storefront</p>
+        <h1 class="forge-title" id="forgeStoreName">Developer Studio</h1>
+        <p class="forge-handle" id="forgeStoreHandle">@devstudio</p>
+        <p class="forge-tagline" id="forgeStoreTagline">Packages, retainers, and productized development work with live Zest checkout underneath.</p>
+        <p class="forge-about" id="forgeStoreAbout">
+          This storefront is tuned for productized services: clear package framing, stack visibility, and a quote-prep flow for larger projects.
+        </p>
+        <div class="forge-pills" id="forgeStoreMeta"></div>
+        <div class="forge-socials" id="forgeStoreSocials" hidden></div>
+      </div>
+
+      <aside class="forge-sidecard">
+        <div class="forge-sidecard__avatar" id="forgeStoreAvatar">D</div>
+        <div class="forge-sidecard__body">
+          <p class="forge-eyebrow">Studio focus</p>
+          <h2 id="forgeStudioTitle">Build work that feels scoped, legible, and ready to buy.</h2>
+          <p id="forgeStudioCopy">
+            Use this layout when the storefront needs to feel like a clear service menu instead of a generic product list.
+          </p>
+          <div class="forge-sidecard__actions">
+            <% if (!isPublicStore) { %>
+              <a class="forge-action forge-action--soft" id="forgePreviewStoreBtn" href="<%= paths.store %>">
+                <i class="fa-regular fa-eye"></i>
+                <span>Preview public store</span>
+              </a>
+              <a class="forge-action" href="<%= paths.products %>">
+                <i class="fa-solid fa-code"></i>
+                <span>Manage offers</span>
+              </a>
+            <% } else if (isBuyerViewer) { %>
+              <button class="forge-action forge-action--soft" id="forgeFollowBtn" type="button">
+                <i class="fa-regular fa-heart"></i>
+                <span>Follow</span>
+              </button>
+              <button class="forge-action forge-action--ghost" id="forgeShareBtn" type="button">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Share</span>
+              </button>
+            <% } else if (isGuestViewer) { %>
+              <a class="forge-action forge-action--soft" href="<%= paths.signIn %>">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Sign in to enquire</span>
+              </a>
+              <button class="forge-action forge-action--ghost" id="forgeShareBtn" type="button">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Share</span>
+              </button>
+            <% } else { %>
+              <button class="forge-action forge-action--ghost" id="forgeShareBtn" type="button">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Share</span>
+              </button>
+            <% } %>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="forge-stats">
+      <article class="forge-stat">
+        <span>Live offers</span>
+        <strong id="forgeMetricOffers">0</strong>
+      </article>
+      <article class="forge-stat">
+        <span>Package highlights</span>
+        <strong id="forgeMetricPackages">0</strong>
+      </article>
+      <article class="forge-stat">
+        <span>Store status</span>
+        <strong id="forgeMetricStatus">Draft</strong>
+      </article>
+      <article class="forge-stat forge-stat--wide">
+        <span>Tech stack</span>
+        <strong id="forgeMetricStack">React, Node.js, PostgreSQL</strong>
+      </article>
+    </section>
+
+    <section class="forge-section">
+      <div class="forge-section__head">
+        <div>
+          <p class="forge-eyebrow">Package spotlight</p>
+          <h2 class="forge-section__title">Starter, growth, and flagship-ready offers</h2>
+          <p class="forge-section__copy">
+            Package framing helps service storefronts scan faster. Keep the first three offers highly legible and let the deeper catalog sit below.
+          </p>
+        </div>
+      </div>
+      <div class="forge-package-grid" id="forgePackageGrid"></div>
+      <p class="forge-empty" id="forgePackageEmpty" hidden>No package-style offers are live yet.</p>
+    </section>
+
+    <section class="forge-section forge-section--split">
+      <div>
+        <div class="forge-section__head forge-section__head--stack">
+          <div>
+            <p class="forge-eyebrow">Offer catalog</p>
+            <h2 class="forge-section__title">Projects, retainers, audits, and support work</h2>
+            <p class="forge-section__copy">
+              The full storefront stays browseable like a marketplace, but shaped like a clean developer menu with visible stack tags and scope labels.
+            </p>
+          </div>
+          <div class="forge-filter-row" id="forgeFilterRow"></div>
+        </div>
+        <div class="forge-offer-grid" id="forgeOfferGrid"></div>
+        <p class="forge-empty" id="forgeOfferEmpty" hidden>No offers match this filter right now.</p>
+      </div>
+
+      <aside class="forge-quote-card">
+        <p class="forge-eyebrow">Request a quote</p>
+        <h3>Prepare a project brief before opening the live listing.</h3>
+        <p class="forge-section__copy">
+          This keeps the storefront feeling service-aware even though the canonical purchase and detail flow still runs through real Zest listings.
+        </p>
+
+        <form class="forge-quote-form" id="forgeQuoteForm">
+          <label>
+            <span>Selected offer</span>
+            <select id="forgeQuoteOffer"></select>
+          </label>
+          <label>
+            <span>Project summary</span>
+            <textarea id="forgeQuoteScope" rows="4" placeholder="What are you trying to build or improve?"></textarea>
+          </label>
+          <label>
+            <span>Timeline</span>
+            <input id="forgeQuoteTimeline" type="text" placeholder="Example: launch in 6 weeks">
+          </label>
+          <button class="forge-action" type="submit">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Prepare scope brief</span>
+          </button>
+          <p class="forge-quote-hint" id="forgeQuoteHint">A brief will be copied to your clipboard and the selected offer will open next.</p>
+        </form>
+
+        <div class="forge-chip-cloud" id="forgeStackCloud"></div>
+      </aside>
+    </section>
+
+    <section class="forge-section">
+      <div class="forge-section__head">
+        <div>
+          <p class="forge-eyebrow">Studio updates</p>
+          <h2 class="forge-section__title">Launch notes, capability updates, and linked project announcements</h2>
+          <p class="forge-section__copy">
+            Feed updates let the service storefront feel current between scoped offers and productized work.
+          </p>
+        </div>
+      </div>
+      <div class="forge-update-grid" id="forgeUpdatesList"></div>
+      <p class="forge-empty" id="forgeUpdatesEmpty" hidden>No studio updates posted yet.</p>
+    </section>
+  </main>
+</div>

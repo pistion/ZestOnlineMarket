@@ -1,0 +1,8 @@
+<div style="font-family: Inter, Arial, sans-serif; color: #0f172a; line-height: 1.6;">
+  <p style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #2563eb;">Zest Market</p>
+  <h1 style="margin: 0 0 12px;">New order received</h1>
+  <p>Hi <%= sellerName || storeName || "seller" %>,</p>
+  <p>A new order <strong><%= orderNumber %></strong> has been placed for <strong><%= storeName %></strong>.</p>
+  <p>Buyer: <strong><%= customerName || customerEmail || "Buyer" %></strong></p>
+  <p>Total: <strong>K<%= Number(totalAmount || 0).toFixed(2) %></strong></p>
+</div>

@@ -1,0 +1,121 @@
+<main class="search-shell" data-search-root>
+  <section class="search-hero">
+    <div>
+      <p class="search-eyebrow">Marketplace discovery</p>
+      <h1>Search products and storefronts</h1>
+      <p class="search-copy">
+        Filter by category, price, store, and rating to quickly find the right listings.
+      </p>
+    </div>
+    <form class="search-hero__form" data-search-form>
+      <input
+        class="search-hero__input"
+        id="searchPageQuery"
+        name="q"
+        type="search"
+        placeholder="Search for products, stores, and categories"
+        autocomplete="off"
+      />
+      <button class="search-hero__submit" type="submit">Search</button>
+    </form>
+  </section>
+
+  <section class="search-layout">
+    <aside class="search-filters">
+      <div class="search-panel">
+        <div class="search-panel__head">
+          <p class="search-eyebrow">Filters</p>
+          <h2>Refine results</h2>
+        </div>
+
+        <div class="search-field">
+          <label for="searchType">Search type</label>
+          <select id="searchType" name="type" data-search-filter>
+            <option value="all">All results</option>
+            <option value="products">Products only</option>
+            <option value="stores">Stores only</option>
+          </select>
+        </div>
+
+        <div class="search-field">
+          <label for="searchCategory">Category</label>
+          <input id="searchCategory" name="category" type="text" placeholder="products, art, music..." data-search-filter />
+        </div>
+
+        <div class="search-field">
+          <label for="searchStore">Store handle</label>
+          <input id="searchStore" name="store" type="text" placeholder="urban-bilum" data-search-filter />
+        </div>
+
+        <div class="search-field-group">
+          <div class="search-field">
+            <label for="searchMinPrice">Min price</label>
+            <input id="searchMinPrice" name="min_price" type="number" min="0" step="0.01" placeholder="0" data-search-filter />
+          </div>
+          <div class="search-field">
+            <label for="searchMaxPrice">Max price</label>
+            <input id="searchMaxPrice" name="max_price" type="number" min="0" step="0.01" placeholder="500" data-search-filter />
+          </div>
+        </div>
+
+        <div class="search-field">
+          <label for="searchRating">Minimum rating</label>
+          <select id="searchRating" name="rating" data-search-filter>
+            <option value="0">Any rating</option>
+            <option value="5">5 stars</option>
+            <option value="4">4+ stars</option>
+            <option value="3">3+ stars</option>
+            <option value="2">2+ stars</option>
+          </select>
+        </div>
+
+        <div class="search-actions">
+          <button class="search-btn search-btn--primary" type="submit" form="searchPageFiltersForm" hidden></button>
+          <button class="search-btn search-btn--ghost" type="button" data-search-reset>Reset filters</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="search-results">
+      <div class="search-panel">
+        <div class="search-results__head">
+          <div>
+            <p class="search-eyebrow">Results</p>
+            <h2 id="searchResultsTitle">Start with a search</h2>
+          </div>
+          <p class="search-results__meta" id="searchResultsMeta">
+            Search products and stores to see ranked results here.
+          </p>
+        </div>
+
+        <div class="search-suggestions" id="searchSuggestions" hidden></div>
+
+        <div class="search-state" id="searchState">
+          <p>Use the search box above or the filters on the left to explore listings and storefronts.</p>
+        </div>
+
+        <div class="search-section" id="searchProductsSection" hidden>
+          <div class="search-section__head">
+            <h3>Products</h3>
+            <span id="searchProductsCount">0</span>
+          </div>
+          <div class="search-card-grid" id="searchProductsGrid"></div>
+        </div>
+
+        <div class="search-section" id="searchStoresSection" hidden>
+          <div class="search-section__head">
+            <h3>Stores</h3>
+            <span id="searchStoresCount">0</span>
+          </div>
+          <div class="search-store-grid" id="searchStoresGrid"></div>
+        </div>
+
+        <div class="search-pagination" id="searchPagination" hidden>
+          <button class="search-btn search-btn--ghost" type="button" data-search-page="prev">Previous</button>
+          <span id="searchPaginationLabel">Page 1</span>
+          <button class="search-btn search-btn--ghost" type="button" data-search-page="next">Next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

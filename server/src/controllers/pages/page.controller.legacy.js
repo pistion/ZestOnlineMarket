@@ -9,7 +9,7 @@ const {
 } = require("../../services/account-routing.service");
 const { resolveStorePayloadByHandle } = require("../../services/storefront.service");
 const { normalizeInternalPath } = require("../../utils/auth-session");
-const { normalizeHandle } = require("../../utils/request-validation");
+const { normalizeHandle } = require("../../schemas/shared.schema");
 const {
   isValidTemplateKey,
   normalizeTemplateKey,
@@ -24,6 +24,14 @@ const MONTSERRAT_FONT =
   "https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap";
 const PLAYFAIR_FONT =
   "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap";
+const MUSIC_FONTS =
+  "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap";
+const CLASSES_FONTS =
+  "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap";
+const PHOTOGRAPHY_FONTS =
+  "https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
+const PROGRAMMER_FONTS =
+  "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap";
 const FONT_AWESOME =
   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css";
 const CHART_JS = "https://cdn.jsdelivr.net/npm/chart.js";
@@ -43,33 +51,141 @@ const SERVICE_STOREFRONT_SCRIPTS = [
   "/assets/js/shared/buyer-interactions.js",
   "/assets/js/seller/template-service-storefront.js",
 ];
+const MUSIC_STOREFRONT_STYLES = ["/assets/css/seller/template-music.css"];
+const MUSIC_STOREFRONT_SCRIPTS = [
+  "/assets/js/shared/template-navigation.js",
+  "/assets/js/shared/store-following.js",
+  "/assets/js/shared/buyer-interactions.js",
+  "/assets/js/seller/template-music.js",
+];
+const CLASSES_STOREFRONT_STYLES = ["/assets/css/seller/template-classes.css"];
+const CLASSES_STOREFRONT_SCRIPTS = [
+  "/assets/js/shared/template-navigation.js",
+  "/assets/js/shared/store-following.js",
+  "/assets/js/shared/buyer-interactions.js",
+  "/assets/js/seller/template-classes.js",
+];
+const PHOTOGRAPHY_STOREFRONT_STYLES = ["/assets/css/seller/template-photography.css"];
+const PHOTOGRAPHY_STOREFRONT_SCRIPTS = [
+  "/assets/js/shared/template-navigation.js",
+  "/assets/js/shared/store-following.js",
+  "/assets/js/shared/buyer-interactions.js",
+  "/assets/js/seller/template-photography.js",
+];
+const PROGRAMMER_STOREFRONT_STYLES = ["/assets/css/seller/template-programmer.css"];
+const PROGRAMMER_STOREFRONT_SCRIPTS = [
+  "/assets/js/shared/template-navigation.js",
+  "/assets/js/shared/store-following.js",
+  "/assets/js/shared/buyer-interactions.js",
+  "/assets/js/seller/template-programmer.js",
+];
 
-function buildServiceStorefrontPageConfig({ path, view, title, templateKey }) {
+function buildStorefrontBodyAttrs(templateKey, storeApiEndpoint = "/api/store/me") {
+  return {
+    "public-store": "0",
+    "store-template-key": templateKey,
+    "store-handle": "",
+    "store-path": "",
+    "product-id": "",
+    "product-path": "",
+    "checkout-path": APP_PATHS.buyerCart,
+    "store-api-endpoint": storeApiEndpoint,
+    "store-feed-endpoint": "/api/feed/store/me",
+    "marketplace-path": APP_PATHS.marketplace,
+    "global-feed-path": APP_PATHS.globalFeed,
+    "seller-dashboard-path": APP_PATHS.sellerDashboard,
+    "seller-settings-path": APP_PATHS.sellerStoreSettings,
+    "seller-template-manager-path": APP_PATHS.sellerStoreTemplate,
+    "seller-products-path": resolveSellerTemplatePath("products"),
+    "signin-path": APP_PATHS.authSignin,
+  };
+}
+
+function buildStorefrontPageConfig({
+  path,
+  view,
+  title,
+  templateKey,
+  styles,
+  scripts,
+  externalStyles = [],
+  bodyClass,
+  storeApiEndpoint,
+}) {
   return {
     path,
     view,
     title,
+    styles,
+    scripts,
+    externalStyles,
+    bodyClass,
+    bodyAttrs: buildStorefrontBodyAttrs(templateKey, storeApiEndpoint),
+  };
+}
+
+function buildServiceStorefrontPageConfig({ path, view, title, templateKey }) {
+  return buildStorefrontPageConfig({
+    path,
+    view,
+    title,
+    templateKey,
     styles: SERVICE_STOREFRONT_STYLES,
     scripts: SERVICE_STOREFRONT_SCRIPTS,
     bodyClass: `service-storefront-page service-storefront-page--${templateKey}`,
-    bodyAttrs: {
-      "public-store": "0",
-      "store-template-key": templateKey,
-      "store-handle": "",
-      "store-path": "",
-      "product-id": "",
-      "product-path": "",
-      "checkout-path": APP_PATHS.buyerCheckout,
-      "store-api-endpoint": "/api/store/me",
-      "store-feed-endpoint": "/api/feed/store/me",
-      "marketplace-path": APP_PATHS.marketplace,
-      "global-feed-path": APP_PATHS.globalFeed,
-      "seller-dashboard-path": APP_PATHS.sellerDashboard,
-      "seller-settings-path": APP_PATHS.sellerStoreSettings,
-      "seller-template-manager-path": APP_PATHS.sellerStoreTemplate,
-      "seller-products-path": resolveSellerTemplatePath("products"),
-    },
-  };
+  });
+}
+
+function buildMusicStorefrontPageConfig({ path, view, title }) {
+  return buildStorefrontPageConfig({
+    path,
+    view,
+    title,
+    templateKey: "music",
+    styles: MUSIC_STOREFRONT_STYLES,
+    scripts: MUSIC_STOREFRONT_SCRIPTS,
+    externalStyles: [MUSIC_FONTS],
+    bodyClass: "pulse-storefront-page",
+  });
+}
+
+function buildClassesStorefrontPageConfig({ path, view, title }) {
+  return buildStorefrontPageConfig({
+    path,
+    view,
+    title,
+    templateKey: "classes",
+    styles: CLASSES_STOREFRONT_STYLES,
+    scripts: CLASSES_STOREFRONT_SCRIPTS,
+    externalStyles: [CLASSES_FONTS],
+    bodyClass: "academy-storefront-page",
+  });
+}
+
+function buildPhotographyStorefrontPageConfig({ path, view, title }) {
+  return buildStorefrontPageConfig({
+    path,
+    view,
+    title,
+    templateKey: "photography",
+    styles: PHOTOGRAPHY_STOREFRONT_STYLES,
+    scripts: PHOTOGRAPHY_STOREFRONT_SCRIPTS,
+    externalStyles: [PHOTOGRAPHY_FONTS],
+    bodyClass: "photography-storefront-page",
+  });
+}
+
+function buildProgrammerStorefrontPageConfig({ path, view, title }) {
+  return buildStorefrontPageConfig({
+    path,
+    view,
+    title,
+    templateKey: "programmer",
+    styles: PROGRAMMER_STOREFRONT_STYLES,
+    scripts: PROGRAMMER_STOREFRONT_SCRIPTS,
+    externalStyles: [PROGRAMMER_FONTS],
+    bodyClass: "programmer-storefront-page",
+  });
 }
 
 function buildArtStorefrontPageConfig({ path, view, title }) {
@@ -88,7 +204,7 @@ function buildArtStorefrontPageConfig({ path, view, title }) {
       "store-path": "",
       "product-id": "",
       "product-path": "",
-      "checkout-path": APP_PATHS.buyerCheckout,
+      "checkout-path": APP_PATHS.buyerCart,
       "store-api-endpoint": "/api/art/store/me",
       "store-feed-endpoint": "/api/feed/store/me",
       "art-store-save-endpoint": "/api/art/store/me",
@@ -236,6 +352,17 @@ const pageCatalog = {
       "/assets/js/buyer/product-viewer.js",
     ],
   },
+  buyerCart: {
+    path: APP_PATHS.buyerCart,
+    view: "pages/buyer/cart",
+    title: "Your cart",
+    styles: ["/assets/css/buyer/cart.css"],
+    scripts: ["/assets/js/buyer/cart.js"],
+    bodyAttrs: {
+      "cart-api-endpoint": "/api/cart",
+      "checkout-page-path": APP_PATHS.buyerCheckout,
+    },
+  },
   buyerCheckout: {
     path: APP_PATHS.buyerCheckout,
     view: "pages/buyer/checkout",
@@ -243,8 +370,10 @@ const pageCatalog = {
     styles: ["/assets/css/buyer/checkout.css"],
     scripts: ["/assets/js/buyer/checkout.js"],
     bodyAttrs: {
+      "cart-api-endpoint": "/api/cart",
       "checkout-summary-endpoint": "/api/buyer/checkout/summary",
       "checkout-order-endpoint": "/api/buyer/checkout/orders",
+      "buyer-cart-path": APP_PATHS.buyerCart,
       "buyer-orders-path": "/buyer/purchases",
     },
   },
@@ -265,6 +394,19 @@ const pageCatalog = {
     styles: ["/assets/css/buyer/order-detail.css"],
     scripts: ["/assets/js/buyer/order-detail.js"],
   },
+  buyerSearch: {
+    path: "/search",
+    view: "pages/buyer/search",
+    title: "Search",
+    styles: ["/assets/css/buyer/search.css"],
+    layoutHeader: true,
+    bodyClass: "buyer-search-page",
+    bodyAttrs: {
+      "search-endpoint": "/api/search",
+      "search-marketplace-path": APP_PATHS.marketplace,
+      "search-feed-path": APP_PATHS.globalFeed,
+    },
+  },
   sellerDashboard: {
     path: APP_PATHS.sellerDashboard,
     view: "pages/seller/dashboard",
@@ -274,6 +416,7 @@ const pageCatalog = {
     externalScripts: [CHART_JS],
     bodyAttrs: {
       "seller-overview-endpoint": "/api/seller/me",
+      "seller-discount-endpoint": "/api/discounts",
       "seller-settings-path": APP_PATHS.sellerStoreSettings,
     },
   },
@@ -383,29 +526,25 @@ const pageCatalog = {
     view: "pages/seller/template-art",
     title: "Artists Studio",
   }),
-  sellerTemplateMusic: buildServiceStorefrontPageConfig({
+  sellerTemplateMusic: buildMusicStorefrontPageConfig({
     path: "/seller/templates/music",
     view: "pages/seller/template-music",
     title: "Music Studio",
-    templateKey: "music",
   }),
-  sellerTemplatePhotography: buildServiceStorefrontPageConfig({
+  sellerTemplatePhotography: buildPhotographyStorefrontPageConfig({
     path: "/seller/templates/photography",
     view: "pages/seller/template-photography",
     title: "Photography Studio",
-    templateKey: "photography",
   }),
-  sellerTemplateProgrammer: buildServiceStorefrontPageConfig({
+  sellerTemplateProgrammer: buildProgrammerStorefrontPageConfig({
     path: "/seller/templates/programmer",
     view: "pages/seller/template-programmer",
     title: "Developer Profile",
-    templateKey: "programmer",
   }),
-  sellerTemplateClasses: buildServiceStorefrontPageConfig({
+  sellerTemplateClasses: buildClassesStorefrontPageConfig({
     path: "/seller/templates/classes",
     view: "pages/seller/template-classes",
     title: "Classes Studio",
-    templateKey: "classes",
   }),
   error400: {
     path: "/errors/400",
@@ -610,6 +749,19 @@ async function renderSellerWizardPage(req, res, next) {
   }
 }
 
+function renderCartPage(req, res) {
+  const productId = Number(req.query.productId);
+  const variantId = Number(req.query.variantId);
+  const bodyAttrs = {
+    "cart-product-id":
+      Number.isInteger(productId) && productId > 0 ? String(productId) : "",
+    "cart-variant-id":
+      Number.isInteger(variantId) && variantId > 0 ? String(variantId) : "",
+  };
+
+  return renderLayout(res, "buyerCart", { bodyAttrs });
+}
+
 function renderCheckoutPage(req, res) {
   const productId = Number(req.query.productId);
   const variantId = Number(req.query.variantId);
@@ -661,7 +813,7 @@ async function renderStorefront(req, res, next) {
         "store-template-key": storefrontTemplateKey,
         "product-id": hasPublicProduct ? String(productId) : "",
         "product-path": hasPublicProduct ? `/products/${productId}` : "",
-        "checkout-path": hasPublicProduct ? `/buyer/checkout?productId=${productId}` : "",
+        "checkout-path": hasPublicProduct ? `${APP_PATHS.buyerCart}?productId=${productId}` : "",
         "store-api-endpoint":
           storefrontTemplateKey === "art"
             ? `/api/art/store/${encodeURIComponent(store.handle || handle)}`
@@ -708,7 +860,7 @@ async function renderProductDetailPage(req, res, next) {
         "product-id": String(payload.product.id),
         "store-handle": payload.store.handle || "",
         "store-path": `/stores/${payload.store.handle || ""}`,
-        "checkout-path": `/buyer/checkout?productId=${payload.product.id}`,
+        "checkout-path": `${APP_PATHS.buyerCart}?productId=${payload.product.id}`,
       },
     });
   } catch (error) {
@@ -739,6 +891,7 @@ module.exports = {
   pageCatalog,
   redirectLegacy,
   renderAuthPage,
+  renderCartPage,
   renderErrorPage,
   renderCheckoutPage,
   renderCompatibilityProductViewer,

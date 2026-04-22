@@ -1,0 +1,21 @@
+:root {
+  --zest-font-sans: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --zest-font-display: "Poppins", var(--zest-font-sans);
+  --zest-color-text: #1f2937;
+  --zest-color-text-soft: #4b5563;
+  --zest-color-muted: #6b7280;
+  --zest-color-line: rgba(15, 23, 42, 0.12);
+  --zest-color-surface: #ffffff;
+  --zest-color-surface-soft: #f8fafc;
+  --zest-color-surface-strong: #e2e8f0;
+  --zest-color-primary: #2563eb;
+  --zest-color-primary-strong: #1d4ed8;
+  --zest-color-success: #0f9f6e;
+  --zest-color-danger: #dc2626;
+  --zest-color-warning: #f59e0b;
+  --zest-shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+  --zest-shadow-card: 0 12px 30px rgba(15, 23, 42, 0.08);
+  --zest-radius-sm: 10px;
+  --zest-radius-md: 16px;
+  --zest-radius-lg: 24px;
+}

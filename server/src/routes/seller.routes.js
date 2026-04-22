@@ -9,6 +9,11 @@ const {
 const { requireAuth } = require("../middleware/auth.middleware");
 const { createRateLimiter } = require("../middleware/rate-limit.middleware");
 const { requireSeller } = require("../middleware/seller.middleware");
+const { orderParamsSchema, sellerOrderStatusBodySchema } = require("../schemas/order.schema");
+const {
+  sellerStoreDraftBodySchema,
+  storeVisibilityBodySchema,
+} = require("../schemas/store.schema");
 const { getSellerWorkspace } = require("../controllers/seller.controller");
 const {
   getSellerOrderDetail,
@@ -16,6 +21,7 @@ const {
   patchSellerOrder,
 } = require("../controllers/commerce.controller");
 const { saveStoreDraft, updateStoreVisibility } = require("../controllers/store.controller");
+const { validate } = require("../utils/validate");
 
 const router = express.Router();
 const sellerWriteLimiter = createRateLimiter({
@@ -33,9 +39,30 @@ const sellerOrderLimiter = createRateLimiter({
 
 router.get("/me", requireAuth, requireSeller, getSellerWorkspace);
 router.get("/orders", requireAuth, requireSeller, getSellerOrders);
-router.get("/orders/:orderId", requireAuth, requireSeller, getSellerOrderDetail);
-router.patch("/orders/:orderId", requireAuth, requireSeller, sellerOrderLimiter, patchSellerOrder);
-router.put("/store/draft", requireAuth, requireSeller, sellerWriteLimiter, saveStoreDraft);
-router.patch("/store/visibility", requireAuth, requireSeller, sellerWriteLimiter, updateStoreVisibility);
+router.get("/orders/:orderId", requireAuth, requireSeller, validate({ params: orderParamsSchema }), getSellerOrderDetail);
+router.patch(
+  "/orders/:orderId",
+  requireAuth,
+  requireSeller,
+  sellerOrderLimiter,
+  validate({ body: sellerOrderStatusBodySchema, params: orderParamsSchema }),
+  patchSellerOrder
+);
+router.put(
+  "/store/draft",
+  requireAuth,
+  requireSeller,
+  sellerWriteLimiter,
+  validate(sellerStoreDraftBodySchema),
+  saveStoreDraft
+);
+router.patch(
+  "/store/visibility",
+  requireAuth,
+  requireSeller,
+  sellerWriteLimiter,
+  validate(storeVisibilityBodySchema),
+  updateStoreVisibility
+);
 
 module.exports = router;

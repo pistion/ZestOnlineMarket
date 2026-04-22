@@ -266,6 +266,11 @@ main {
     font-weight: 700;
 }
 
+.summary-row--discount {
+    color: #15803d;
+    font-weight: 700;
+}
+
 .summary-row--selected {
     font-size: 0.92rem;
     color: #2563eb;
@@ -292,6 +297,24 @@ main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 10px;
+}
+
+.coupon-feedback {
+    margin: 10px 0 0;
+    font-size: 0.88rem;
+    color: #60748b;
+}
+
+.coupon-feedback[data-tone="success"] {
+    color: #15803d;
+}
+
+.coupon-feedback[data-tone="error"] {
+    color: #b42318;
+}
+
+.coupon-feedback[data-tone="warning"] {
+    color: #b45309;
 }
 
 .form-group input,

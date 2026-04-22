@@ -21,12 +21,28 @@ async function getBuyerCheckoutSummary(req, res, next) {
 
 async function postBuyerCheckoutOrder(req, res, next) {
   try {
-    const order = await createBuyerOrder(req.user, req.body || {});
+    const orderResult = await createBuyerOrder(req.user, req.body || {});
+    const orders = Array.isArray(orderResult && orderResult.orders)
+      ? orderResult.orders
+      : orderResult
+        ? [orderResult]
+        : [];
+    const primaryOrder =
+      orders.length === 1
+        ? orders[0]
+        : orderResult && orderResult.id
+          ? orderResult
+          : null;
+
     return sendSuccess(
       res,
       {
-        order,
-        redirectTo: order ? `/buyer/purchases/${order.id}` : "/buyer/purchases",
+        order: primaryOrder,
+        orders,
+        redirectTo:
+          primaryOrder && orders.length === 1
+            ? `/buyer/purchases/${primaryOrder.id}`
+            : "/buyer/purchases",
       },
       "Order created successfully",
       201

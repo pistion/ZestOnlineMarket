@@ -49,6 +49,10 @@
                     <span>Shipping</span>
                     <span id="shipping">K0.00</span>
                 </div>
+            <div class="summary-row summary-row--discount" id="discountRow" hidden>
+                <span>Discount</span>
+                <span id="discountAmount">-K0.00</span>
+            </div>
             <div class="summary-row total">
                 <span>Total</span>
                 <span id="total">K0.00</span>
@@ -65,6 +69,7 @@
                     <input type="text" id="coupon" placeholder="Enter coupon" />
                     <button class="btn btn-secondary btn-inline" id="apply-coupon-btn" type="button">Apply</button>
                 </div>
+                <p class="coupon-feedback" id="coupon-feedback">Apply a seller coupon to preview the adjusted total before ordering.</p>
             </div>
 
             <div class="payment-section payment-section--details">

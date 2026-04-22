@@ -23,8 +23,21 @@
   const wishlistButton = document.getElementById("viewer-wishlist-btn");
   const stockCopy = document.getElementById("viewer-stock-copy");
   const stockIndicator = document.querySelector(".stock-indicator");
+  const reviewsStatusPanel = document.getElementById("reviewsStatusPanel");
+  const reviewsStatusText = document.getElementById("reviewsStatusText");
+  const reviewsAverageRating = document.getElementById("reviewsAverageRating");
+  const reviewsAverageMeta = document.getElementById("reviewsAverageMeta");
+  const reviewBreakdown = document.getElementById("reviewBreakdown");
+  const reviewForm = document.getElementById("reviewForm");
+  const reviewRating = document.getElementById("reviewRating");
+  const reviewTitle = document.getElementById("reviewTitle");
+  const reviewBody = document.getElementById("reviewBody");
+  const reviewSubmitBtn = document.getElementById("reviewSubmitBtn");
+  const reviewEligibilityNote = document.getElementById("reviewEligibilityNote");
+  const reviewsList = document.getElementById("reviewsList");
 
   const buyerInteractions = window.ZestBuyerInteractions || null;
+  const buyerCart = window.ZestCart || null;
   const buyerWishlist = window.ZestBuyerWishlist || null;
 
   let productImages = [];
@@ -33,6 +46,7 @@
   let currentStore = null;
   let currentVariant = null;
   let currentQuantity = 1;
+  let currentReviewViewer = null;
 
   function currency(value) {
     return `K${Number(value || 0).toFixed(2)}`;
@@ -43,7 +57,7 @@
   }
 
   function getBaseCheckoutPath() {
-    return document.body.dataset.checkoutPath || "/buyer/checkout";
+    return document.body.dataset.checkoutPath || "/buyer/cart";
   }
 
   function getRequestedVariantId() {
@@ -103,6 +117,23 @@
     if (viewerStatusText) {
       viewerStatusText.textContent = message;
     }
+  }
+
+  function setReviewsStatus(mode = "empty", message = "") {
+    if (!reviewsStatusPanel || !reviewsStatusText) {
+      return;
+    }
+
+    const variant =
+      mode === "error"
+        ? "ui-state--error"
+        : mode === "success"
+          ? "ui-state--success"
+          : "ui-state--empty";
+
+    reviewsStatusPanel.hidden = mode === "hidden";
+    reviewsStatusPanel.className = `ui-state ${variant} product-status`;
+    reviewsStatusText.textContent = message;
   }
 
   function trackBuyerSignal(payload, options = {}) {
@@ -325,7 +356,7 @@
 
     if (addToCartButton) {
       addToCartButton.disabled = stock <= 0;
-      addToCartButton.textContent = stock > 0 ? "Checkout now" : "Out of stock";
+      addToCartButton.textContent = stock > 0 ? "Add to cart" : "Out of stock";
     }
 
     syncQuantity();
@@ -345,13 +376,13 @@
       ? `Pickup and dispatch are coordinated from ${currentProduct.location}.`
       : "The seller will confirm pickup and delivery handling once you continue to checkout.";
     const delivery = currentProduct.delivery || "Delivery arrangements are confirmed directly with the seller during checkout.";
-    const review = currentStore.about || "Visit the storefront to learn more about this seller.";
+    const seller = currentStore.about || "Visit the storefront to learn more about this seller.";
 
     const tabMap = {
       specs: `${specs}\n\n${variantSummary}`,
       shipping,
       delivery,
-      review,
+      seller,
     };
 
     const activeTab = tabLinks.find((link) => link.classList.contains("active"))?.dataset.tab || "specs";
@@ -360,6 +391,211 @@
       .map((paragraph) => `<p>${paragraph}</p>`)
       .join("");
     tabContent.innerHTML = activeContent;
+  }
+
+  function formatStars(rating) {
+    const normalized = Math.max(0, Math.min(5, Number(rating || 0)));
+    const filled = "★".repeat(Math.round(normalized));
+    const empty = "☆".repeat(Math.max(0, 5 - Math.round(normalized)));
+    return `${filled}${empty}`;
+  }
+
+  function renderReviewBreakdown(summary) {
+    if (!reviewBreakdown) {
+      return;
+    }
+
+    const breakdown = summary && summary.breakdown ? summary.breakdown : {};
+    reviewBreakdown.innerHTML = [5, 4, 3, 2, 1]
+      .map((rating) => {
+        const count = Number(breakdown[rating] || 0);
+        return `
+          <div class="review-breakdown__row">
+            <span>${rating} star</span>
+            <div class="review-breakdown__bar">
+              <span style="width:${Math.min(100, count * 12)}%"></span>
+            </div>
+            <strong>${count}</strong>
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  function renderEligibility(viewer) {
+    currentReviewViewer = viewer || null;
+    if (!reviewForm || !reviewEligibilityNote) {
+      return;
+    }
+
+    reviewForm.hidden = true;
+    reviewEligibilityNote.hidden = true;
+    reviewEligibilityNote.textContent = "";
+
+    if (!viewer) {
+      return;
+    }
+
+    if (!viewer.signedIn) {
+      reviewEligibilityNote.hidden = false;
+      reviewEligibilityNote.textContent = "Sign in with a buyer account after purchase to leave a review.";
+      return;
+    }
+
+    if (viewer.role !== "buyer") {
+      reviewEligibilityNote.hidden = false;
+      reviewEligibilityNote.textContent = "Reviews can only be submitted from buyer accounts.";
+      return;
+    }
+
+    if (viewer.canReview) {
+      reviewForm.hidden = false;
+      return;
+    }
+
+    reviewEligibilityNote.hidden = false;
+    reviewEligibilityNote.textContent = viewer.hasReviewed
+      ? "You already reviewed this product."
+      : viewer.hasDeliveredPurchase
+        ? "This review is already on file."
+        : "Reviews unlock once your order is marked as delivered.";
+  }
+
+  function renderReviewList(items) {
+    if (!reviewsList) {
+      return;
+    }
+
+    if (!Array.isArray(items) || !items.length) {
+      reviewsList.innerHTML = `
+        <article class="review-empty-card">
+          <h3>No reviews yet</h3>
+          <p>This product has not received buyer feedback yet.</p>
+        </article>
+      `;
+      return;
+    }
+
+    reviewsList.innerHTML = items
+      .map((item) => `
+        <article class="review-card review-card--enhanced">
+          <div class="review-header">
+            <div>
+              <div class="review-name">${escapeHtml(item.reviewerName || "Buyer")}</div>
+              <div class="review-stars">${escapeHtml(formatStars(item.rating))} <span>${Number(item.rating || 0).toFixed(1)}</span></div>
+            </div>
+            <div class="review-date">${escapeHtml(new Date(item.createdAt || Date.now()).toLocaleDateString())}</div>
+          </div>
+          ${item.title ? `<h3 class="review-card__title">${escapeHtml(item.title)}</h3>` : ""}
+          <p class="review-body">${escapeHtml(item.body || "")}</p>
+          <div class="review-footer">
+            ${item.isOwner ? `<button class="review-delete-btn" type="button" data-review-delete="${Number(item.id || 0)}">Delete review</button>` : ""}
+          </div>
+        </article>
+      `)
+      .join("");
+  }
+
+  async function loadReviews() {
+    if (!currentProduct || !currentProduct.id) {
+      return;
+    }
+
+    setReviewsStatus("empty", "Loading review summary and buyer feedback.");
+    try {
+      const response = await fetch(`/api/products/${currentProduct.id}/reviews`, {
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok || !data || data.success === false) {
+        throw new Error((data && data.message) || "Could not load reviews");
+      }
+
+      const payload = data;
+      const summary = payload.summary || {};
+      if (reviewsAverageRating) {
+        reviewsAverageRating.textContent = Number(summary.averageRating || 0).toFixed(1);
+      }
+      if (reviewsAverageMeta) {
+        reviewsAverageMeta.textContent = `${Number(summary.reviewCount || 0)} review${Number(summary.reviewCount || 0) === 1 ? "" : "s"}`;
+      }
+      renderReviewBreakdown(summary);
+      renderEligibility(payload.viewer || null);
+      renderReviewList(payload.reviews || []);
+      setReviewsStatus("success", payload.reviews && payload.reviews.length
+        ? "Loaded buyer reviews and rating summary."
+        : "This product does not have reviews yet.");
+    } catch (error) {
+      renderEligibility(null);
+      renderReviewList([]);
+      setReviewsStatus("error", error.message || "Could not load reviews.");
+    }
+  }
+
+  async function submitReview() {
+    if (!currentProduct || !currentProduct.id) {
+      return;
+    }
+
+    reviewSubmitBtn.disabled = true;
+    setReviewsStatus("empty", "Submitting your review.");
+
+    try {
+      const response = await fetch(`/api/products/${currentProduct.id}/reviews`, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          rating: Number(reviewRating.value || 0),
+          title: reviewTitle.value.trim(),
+          body: reviewBody.value.trim(),
+        }),
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok || !data || data.success === false) {
+        throw new Error((data && data.message) || "Could not submit your review");
+      }
+
+      reviewForm.reset();
+      await loadReviews();
+      setReviewsStatus("success", "Your review was submitted.");
+    } catch (error) {
+      setReviewsStatus("error", error.message || "Could not submit your review.");
+    } finally {
+      reviewSubmitBtn.disabled = false;
+    }
+  }
+
+  async function deleteReview(reviewId) {
+    if (!currentProduct || !currentProduct.id || !reviewId) {
+      return;
+    }
+
+    setReviewsStatus("empty", "Removing your review.");
+    try {
+      const response = await fetch(`/api/products/${currentProduct.id}/reviews/${reviewId}`, {
+        method: "DELETE",
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok || !data || data.success === false) {
+        throw new Error((data && data.message) || "Could not remove your review");
+      }
+
+      await loadReviews();
+      setReviewsStatus("success", "Your review was removed.");
+    } catch (error) {
+      setReviewsStatus("error", error.message || "Could not remove your review.");
+    }
   }
 
   async function loadProduct() {
@@ -453,6 +689,7 @@
       "success",
       `Loaded ${productTitle} from ${storeName}. You can review media, choose an option, adjust quantity, and continue to checkout.`
     );
+    await loadReviews();
   }
 
   prevButton?.addEventListener("click", () => {
@@ -499,8 +736,54 @@
     });
   });
 
-  addToCartButton?.addEventListener("click", () => {
-    window.location.href = checkoutHref();
+  addToCartButton?.addEventListener("click", async () => {
+    if (!currentProduct || !currentProduct.id) {
+      return;
+    }
+
+    if (!buyerCart || typeof buyerCart.addToCart !== "function") {
+      window.location.href = checkoutHref();
+      return;
+    }
+
+    try {
+      const result = await buyerCart.addToCart(
+        {
+          productId: currentProduct.id,
+          variantId: currentVariant ? currentVariant.id : 0,
+          quantity: currentQuantity,
+        },
+        {
+          authRedirect: checkoutHref(),
+          openDrawer: true,
+        }
+      );
+
+      if (result && result.authRedirected) {
+        return;
+      }
+
+      setViewerStatus(
+        "success",
+        `${currentProduct.title || "Listing"} was added to your cart.`
+      );
+    } catch (error) {
+      setViewerStatus("error", error.message || "We could not add this listing to your cart.");
+    }
+  });
+
+  reviewForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    void submitReview();
+  });
+
+  reviewsList?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-review-delete]");
+    if (!button) {
+      return;
+    }
+
+    void deleteReview(Number(button.getAttribute("data-review-delete") || 0));
   });
 
   wishlistButton?.addEventListener("click", async () => {
@@ -542,5 +825,6 @@
       "We could not load this listing. Please return to the store and try again."
     );
     document.title = "Product unavailable | Zest Marketplace";
+    setReviewsStatus("error", "Reviews could not be loaded because the product is unavailable.");
   });
 })();

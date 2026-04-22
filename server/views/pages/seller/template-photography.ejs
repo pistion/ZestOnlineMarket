@@ -1,2 +1,218 @@
-<% const storefrontTemplate = "photography"; %>
-<%- include("../../partials/seller/storefront-service-shell", { page, storefrontTemplate }) %>
+<%
+  const bodyAttrs = page.bodyAttrs || {};
+  const isPublicStore = bodyAttrs["public-store"] === "1";
+  const viewer = typeof currentUser !== "undefined" ? currentUser : null;
+  const viewerRole = viewer && viewer.role ? String(viewer.role).trim().toLowerCase() : "";
+  const isBuyerViewer = isPublicStore && viewerRole === "buyer";
+  const isGuestViewer = isPublicStore && !viewerRole;
+  const paths = {
+    marketplace: bodyAttrs["marketplace-path"] || "/marketplace",
+    globalFeed: bodyAttrs["global-feed-path"] || "/feed",
+    cart: bodyAttrs["checkout-path"] || "/buyer/cart",
+    settings: bodyAttrs["seller-settings-path"] || "/seller/store/settings",
+    dashboard: bodyAttrs["seller-dashboard-path"] || "/seller/dashboard",
+    templateManager: bodyAttrs["seller-template-manager-path"] || "/seller/store/template",
+    products: bodyAttrs["seller-products-path"] || "/seller/templates/products",
+    store: bodyAttrs["store-path"] || "/marketplace",
+    signIn: bodyAttrs["signin-path"] || "/auth/signin?role=buyer",
+    orders: "/buyer/purchases",
+  };
+%>
+
+<div class="atelier-storefront">
+  <header class="atelier-topbar">
+    <div class="atelier-topbar__inner">
+      <a class="atelier-brand" id="photoStoreBrand" href="<%= paths.store %>">
+        <span class="atelier-brand__mark" aria-hidden="true"></span>
+        <span id="photoStoreBrandLabel">Photography Studio</span>
+      </a>
+
+      <div class="atelier-topbar__actions">
+        <button
+          class="atelier-nav-toggle"
+          type="button"
+          data-nav-toggle
+          aria-expanded="false"
+          aria-controls="atelier-storefront-nav"
+          aria-label="Toggle store navigation"
+        >
+          <i class="fa-solid fa-bars"></i>
+          <span>Menu</span>
+        </button>
+
+        <nav class="atelier-nav" id="atelier-storefront-nav" data-nav aria-label="Photography storefront navigation">
+          <a href="<%= paths.globalFeed %>"><i class="fa-solid fa-earth-africa"></i><span>Global Feed</span></a>
+          <a href="<%= paths.marketplace %>"><i class="fa-solid fa-compass"></i><span>Marketplace</span></a>
+
+          <% if (isPublicStore) { %>
+            <% if (isBuyerViewer) { %>
+              <a href="<%= paths.orders %>"><i class="fa-solid fa-bag-shopping"></i><span>Orders</span></a>
+              <a href="<%= paths.cart %>"><i class="fa-solid fa-cart-shopping"></i><span>Cart</span></a>
+            <% } else { %>
+              <a href="<%= paths.signIn %>"><i class="fa-solid fa-right-to-bracket"></i><span>Sign In</span></a>
+            <% } %>
+          <% } else { %>
+            <a href="<%= paths.dashboard %>"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+            <a href="<%= paths.settings %>"><i class="fa-solid fa-sliders"></i><span>Store Settings</span></a>
+            <a href="<%= paths.templateManager %>"><i class="fa-solid fa-swatchbook"></i><span>Templates</span></a>
+          <% } %>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="atelier-shell">
+    <section class="atelier-hero">
+      <div class="atelier-hero__image" id="photoStoreCover"></div>
+      <div class="atelier-hero__overlay"></div>
+
+      <div class="atelier-hero__content">
+        <div class="atelier-identity">
+          <div class="atelier-avatar" id="photoStoreAvatar">P</div>
+          <div>
+            <p class="atelier-eyebrow">Photography storefront</p>
+            <h1 class="atelier-title" id="photoStoreName">Photography Studio</h1>
+            <p class="atelier-handle" id="photoStoreHandle">@photo</p>
+            <p class="atelier-tagline" id="photoStoreTagline">Prints, licensing, and bookable work in one live gallery.</p>
+            <p class="atelier-about" id="photoStoreAbout">
+              A visual storefront built for fine-art drops, licensing requests, and session-led photography work without breaking the real Zest buying flow.
+            </p>
+            <div class="atelier-pills" id="photoStoreMeta"></div>
+            <div class="atelier-socials" id="photoStoreSocials" hidden></div>
+          </div>
+        </div>
+
+        <div class="atelier-actions">
+          <% if (!isPublicStore) { %>
+            <a class="atelier-action atelier-action--soft" id="photoPreviewStoreBtn" href="<%= paths.store %>">
+              <i class="fa-regular fa-eye"></i>
+              <span>Preview public store</span>
+            </a>
+            <a class="atelier-action" href="<%= paths.products %>">
+              <i class="fa-solid fa-images"></i>
+              <span>Manage gallery</span>
+            </a>
+          <% } else if (isBuyerViewer) { %>
+            <button class="atelier-action atelier-action--soft" id="photoFollowBtn" type="button">
+              <i class="fa-regular fa-heart"></i>
+              <span>Follow</span>
+            </button>
+            <button class="atelier-action atelier-action--ghost" id="photoShareBtn" type="button">
+              <i class="fa-solid fa-share-nodes"></i>
+              <span>Share</span>
+            </button>
+            <a class="atelier-action" href="<%= paths.cart %>">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span>Open cart</span>
+            </a>
+          <% } else if (isGuestViewer) { %>
+            <a class="atelier-action atelier-action--soft" href="<%= paths.signIn %>">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              <span>Sign in to collect</span>
+            </a>
+            <button class="atelier-action atelier-action--ghost" id="photoShareBtn" type="button">
+              <i class="fa-solid fa-share-nodes"></i>
+              <span>Share</span>
+            </button>
+          <% } else { %>
+            <button class="atelier-action atelier-action--ghost" id="photoShareBtn" type="button">
+              <i class="fa-solid fa-share-nodes"></i>
+              <span>Share</span>
+            </button>
+          <% } %>
+        </div>
+      </div>
+    </section>
+
+    <section class="atelier-stats">
+      <article class="atelier-stat">
+        <span>Gallery pieces</span>
+        <strong id="photoMetricPieces">0</strong>
+      </article>
+      <article class="atelier-stat">
+        <span>Licensing + sessions</span>
+        <strong id="photoMetricServices">0</strong>
+      </article>
+      <article class="atelier-stat">
+        <span>Store status</span>
+        <strong id="photoMetricStatus">Draft</strong>
+      </article>
+      <article class="atelier-stat atelier-stat--wide">
+        <span>Formats</span>
+        <strong id="photoMetricFormats">Prints, licensing, sessions</strong>
+      </article>
+    </section>
+
+    <section class="atelier-section">
+      <div class="atelier-section__head atelier-section__head--stack">
+        <div>
+          <p class="atelier-eyebrow">Gallery</p>
+          <h2 class="atelier-section__title">A storefront built around images first</h2>
+          <p class="atelier-section__copy">
+            Browse the core gallery, filter by offer type, and open any frame in a lightbox before deciding whether to collect, license, or book.
+          </p>
+        </div>
+        <div class="atelier-filter-row" id="photoFilterRow"></div>
+      </div>
+
+      <div class="atelier-gallery" id="photoGallery"></div>
+      <p class="atelier-empty" id="photoGalleryEmpty" hidden>No photography listings are live yet.</p>
+    </section>
+
+    <section class="atelier-section atelier-section--split">
+      <div>
+        <div class="atelier-section__head">
+          <div>
+            <p class="atelier-eyebrow">Bookable work</p>
+            <h2 class="atelier-section__title">Print sizes, licensing options, and session-style offers</h2>
+            <p class="atelier-section__copy">
+              Keep the collectible gallery visible while surfacing the service-led offers buyers usually need to evaluate differently.
+            </p>
+          </div>
+        </div>
+        <div class="atelier-service-grid" id="photoServiceGrid"></div>
+        <p class="atelier-empty" id="photoServiceEmpty" hidden>No service or licensing offers are live yet.</p>
+      </div>
+
+      <aside class="atelier-note-card">
+        <p class="atelier-eyebrow">Studio note</p>
+        <h3>Photography stores need both atmosphere and clear buying detail.</h3>
+        <p id="photoStudioNote">
+          This template gives the gallery real presence while still exposing print size, usage rights, and bookable details on each card.
+        </p>
+        <div class="atelier-chip-cloud" id="photoTypeCloud"></div>
+      </aside>
+    </section>
+
+    <section class="atelier-section">
+      <div class="atelier-section__head">
+        <div>
+          <p class="atelier-eyebrow">Store journal</p>
+          <h2 class="atelier-section__title">Behind-the-scenes notes, launches, and collection updates</h2>
+          <p class="atelier-section__copy">
+            Feed-driven updates keep the storefront feeling alive between gallery refreshes and new client offers.
+          </p>
+        </div>
+      </div>
+      <div class="atelier-update-grid" id="photoUpdatesList"></div>
+      <p class="atelier-empty" id="photoUpdatesEmpty" hidden>No gallery updates posted yet.</p>
+    </section>
+  </main>
+
+  <div class="atelier-lightbox" id="photoLightbox" hidden>
+    <button class="atelier-lightbox__backdrop" type="button" data-lightbox-close aria-label="Close lightbox"></button>
+    <div class="atelier-lightbox__dialog" role="dialog" aria-modal="true" aria-label="Photo preview">
+      <button class="atelier-lightbox__close" type="button" data-lightbox-close aria-label="Close preview">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="atelier-lightbox__media" id="photoLightboxMedia"></div>
+      <div class="atelier-lightbox__body">
+        <p class="atelier-eyebrow" id="photoLightboxType">Gallery</p>
+        <h3 id="photoLightboxTitle">Selected frame</h3>
+        <p id="photoLightboxDescription">Open any listing to continue through the live Zest product flow.</p>
+        <div class="atelier-lightbox__meta" id="photoLightboxMeta"></div>
+        <div class="atelier-lightbox__actions" id="photoLightboxActions"></div>
+      </div>
+    </div>
+  </div>
+</div>

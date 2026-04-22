@@ -1,2 +1,331 @@
-<% const storefrontTemplate = "music"; %>
-<%- include("../../partials/seller/storefront-service-shell", { page, storefrontTemplate }) %>
+<%
+  const bodyAttrs = page.bodyAttrs || {};
+  const isPublicStore = bodyAttrs["public-store"] === "1";
+  const viewer = typeof currentUser !== "undefined" ? currentUser : null;
+  const viewerRole = viewer && viewer.role ? String(viewer.role).trim().toLowerCase() : "";
+  const isBuyerViewer = isPublicStore && viewerRole === "buyer";
+  const isGuestViewer = isPublicStore && !viewerRole;
+  const paths = {
+    marketplace: bodyAttrs["marketplace-path"] || "/marketplace",
+    globalFeed: bodyAttrs["global-feed-path"] || "/feed",
+    cart: bodyAttrs["checkout-path"] || "/buyer/cart",
+    settings: bodyAttrs["seller-settings-path"] || "/seller/store/settings",
+    dashboard: bodyAttrs["seller-dashboard-path"] || "/seller/dashboard",
+    templateManager: bodyAttrs["seller-template-manager-path"] || "/seller/store/template",
+    products: bodyAttrs["seller-products-path"] || "/seller/templates/products",
+    store: bodyAttrs["store-path"] || "/marketplace",
+    signIn: bodyAttrs["signin-path"] || "/auth/signin?role=buyer",
+    orders: "/buyer/purchases",
+  };
+%>
+
+<div class="pulse-storefront">
+  <header class="pulse-topbar">
+    <div class="pulse-topbar__inner">
+      <a class="pulse-brand" id="musicStoreBrand" href="<%= paths.store %>">
+        <span class="pulse-brand__mark" aria-hidden="true"></span>
+        <span id="musicStoreBrandLabel">Music Studio</span>
+      </a>
+
+      <div class="pulse-topbar__actions">
+        <button
+          class="pulse-nav-toggle"
+          type="button"
+          data-nav-toggle
+          aria-expanded="false"
+          aria-controls="pulse-storefront-nav"
+          aria-label="Toggle store navigation"
+        >
+          <i class="fa-solid fa-bars"></i>
+          <span>Menu</span>
+        </button>
+
+        <nav class="pulse-nav" id="pulse-storefront-nav" data-nav aria-label="Music store navigation">
+          <a href="<%= paths.globalFeed %>" data-page="global-feed">
+            <i class="fa-solid fa-earth-africa"></i>
+            <span>Global Feed</span>
+          </a>
+          <a href="<%= paths.marketplace %>" data-page="marketplace">
+            <i class="fa-solid fa-compass"></i>
+            <span>Marketplace</span>
+          </a>
+
+          <% if (isPublicStore) { %>
+            <% if (isBuyerViewer) { %>
+              <a href="<%= paths.orders %>">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span>Orders</span>
+              </a>
+              <a href="<%= paths.cart %>" data-page="cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Cart</span>
+              </a>
+            <% } else { %>
+              <a href="<%= paths.signIn %>">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Sign In</span>
+              </a>
+            <% } %>
+          <% } else { %>
+            <a href="<%= paths.dashboard %>" data-page="dashboard">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Dashboard</span>
+            </a>
+            <a href="<%= paths.settings %>" data-page="settings">
+              <i class="fa-solid fa-sliders"></i>
+              <span>Store Settings</span>
+            </a>
+            <a href="<%= paths.templateManager %>">
+              <i class="fa-solid fa-swatchbook"></i>
+              <span>Templates</span>
+            </a>
+          <% } %>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="pulse-shell">
+    <section class="pulse-hero" id="top">
+      <div class="pulse-hero__cover" id="musicStoreCover">
+        <div class="pulse-hero__wash"></div>
+      </div>
+
+      <div class="pulse-hero__panel">
+        <div class="pulse-hero__identity">
+          <div class="pulse-hero__avatar" id="musicStoreAvatar">M</div>
+
+          <div class="pulse-hero__copy">
+            <p class="pulse-eyebrow">Artist storefront</p>
+            <h1 class="pulse-title" id="musicStoreName">Music Studio</h1>
+            <p class="pulse-handle" id="musicStoreHandle">@store</p>
+            <p class="pulse-tagline" id="musicStoreTagline">
+              Release-led storefront for tracks, packs, lessons, and artist drops.
+            </p>
+            <p class="pulse-about" id="musicStoreAbout">
+              One storefront for singles, collections, licensing, and fan-facing updates, with the real Zest buying flow still underneath.
+            </p>
+
+            <div class="pulse-pills" id="musicStoreMeta"></div>
+            <div class="pulse-socials" id="musicStoreSocials" hidden></div>
+          </div>
+        </div>
+
+        <div class="pulse-hero__actions">
+          <% if (!isPublicStore) { %>
+            <a class="pulse-action pulse-action--soft" id="musicPreviewStoreBtn" href="<%= paths.store %>">
+              <i class="fa-regular fa-eye"></i>
+              <span>Preview public store</span>
+            </a>
+            <a class="pulse-action" href="<%= paths.products %>">
+              <i class="fa-solid fa-wave-square"></i>
+              <span>Manage catalog</span>
+            </a>
+          <% } else if (isBuyerViewer) { %>
+            <button class="pulse-action pulse-action--soft" id="musicFollowBtn" type="button">
+              <i class="fa-regular fa-heart"></i>
+              <span>Follow</span>
+            </button>
+            <button class="pulse-action pulse-action--ghost" id="musicShareBtn" type="button">
+              <i class="fa-solid fa-share-nodes"></i>
+              <span>Share</span>
+            </button>
+            <a class="pulse-action" href="<%= paths.cart %>">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span>Open cart</span>
+            </a>
+          <% } else if (isGuestViewer) { %>
+            <a class="pulse-action pulse-action--soft" href="<%= paths.signIn %>">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              <span>Sign in to buy</span>
+            </a>
+            <button class="pulse-action pulse-action--ghost" id="musicShareBtn" type="button">
+              <i class="fa-solid fa-share-nodes"></i>
+              <span>Share</span>
+            </button>
+          <% } else { %>
+            <button class="pulse-action pulse-action--ghost" id="musicShareBtn" type="button">
+              <i class="fa-solid fa-share-nodes"></i>
+              <span>Share</span>
+            </button>
+          <% } %>
+        </div>
+      </div>
+    </section>
+
+    <section class="pulse-summary-grid">
+      <article class="pulse-stat">
+        <span class="pulse-stat__label">Live releases</span>
+        <strong class="pulse-stat__value" id="musicMetricListings">0</strong>
+      </article>
+      <article class="pulse-stat">
+        <span class="pulse-stat__label">Artist updates</span>
+        <strong class="pulse-stat__value" id="musicMetricUpdates">0</strong>
+      </article>
+      <article class="pulse-stat">
+        <span class="pulse-stat__label">Store status</span>
+        <strong class="pulse-stat__value" id="musicMetricStatus">Draft</strong>
+      </article>
+      <article class="pulse-stat pulse-stat--wide">
+        <span class="pulse-stat__label">Catalog mix</span>
+        <strong class="pulse-stat__value" id="musicMetricKinds">Singles, packs, lessons</strong>
+      </article>
+    </section>
+
+    <section class="pulse-section" id="fresh-drops">
+      <div class="pulse-section__head">
+        <div>
+          <p class="pulse-eyebrow">Fresh drops</p>
+          <h2 class="pulse-section__title">New releases ready for fans</h2>
+          <p class="pulse-section__copy">
+            Lead with tracks, bundles, and guided offers that feel active the moment someone lands.
+          </p>
+        </div>
+      </div>
+
+      <div class="pulse-release-strip" id="musicReleaseStrip"></div>
+      <p class="pulse-empty" id="musicReleaseEmpty" hidden>No releases are live yet.</p>
+    </section>
+
+    <section class="pulse-section pulse-section--split" id="collections">
+      <div>
+        <div class="pulse-section__head">
+          <div>
+            <p class="pulse-eyebrow">Collections</p>
+            <h2 class="pulse-section__title">Albums, packs, and grouped offers</h2>
+            <p class="pulse-section__copy">
+              Keep bigger drops visible without burying the quick-buy listings underneath.
+            </p>
+          </div>
+        </div>
+
+        <div class="pulse-collection-grid" id="musicCollectionGrid"></div>
+        <p class="pulse-empty" id="musicCollectionEmpty" hidden>No collections are ready yet.</p>
+      </div>
+
+      <aside class="pulse-studio-card">
+        <p class="pulse-eyebrow">Studio profile</p>
+        <h3 class="pulse-studio-card__title">A storefront shaped for drops, lessons, and fan energy.</h3>
+        <p class="pulse-studio-card__copy" id="musicStudioNote">
+          The layout keeps music personality up front while staying tied to the live catalog and real buyer actions.
+        </p>
+        <div class="pulse-chip-cloud" id="musicKindChips"></div>
+      </aside>
+    </section>
+
+    <section class="pulse-section" id="library">
+      <div class="pulse-section__head pulse-section__head--stack">
+        <div>
+          <p class="pulse-eyebrow">Library</p>
+          <h2 class="pulse-section__title">Browse the full music catalog</h2>
+          <p class="pulse-section__copy">
+            Filter by release type and scan the whole storefront without falling into a dead demo branch.
+          </p>
+        </div>
+
+        <div class="pulse-toolbar">
+          <div class="pulse-filter-row" id="musicFilterRow"></div>
+          <label class="pulse-search">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input id="musicLibrarySearch" type="search" placeholder="Search by title, mood, or offer">
+          </label>
+        </div>
+      </div>
+
+      <div class="pulse-library-grid" id="musicLibraryGrid"></div>
+      <p class="pulse-empty" id="musicLibraryEmpty" hidden>No releases match this search.</p>
+    </section>
+
+    <section class="pulse-section" id="updates">
+      <div class="pulse-section__head">
+        <div>
+          <p class="pulse-eyebrow">Artist updates</p>
+          <h2 class="pulse-section__title">Announcements, drop notes, and linked store moments</h2>
+          <p class="pulse-section__copy">
+            Updates stay social and alive, but every linked card still points back into the canonical listing flow.
+          </p>
+        </div>
+      </div>
+
+      <div class="pulse-update-grid" id="musicUpdatesList"></div>
+      <p class="pulse-empty" id="musicUpdatesEmpty" hidden>No updates posted yet.</p>
+    </section>
+
+    <section class="pulse-section pulse-section--faq" id="faq">
+      <div class="pulse-section__head">
+        <div>
+          <p class="pulse-eyebrow">FAQ</p>
+          <h2 class="pulse-section__title">Built for more than just singles</h2>
+        </div>
+      </div>
+
+      <div class="pulse-faq">
+        <article class="pulse-faq__item">
+          <button class="pulse-faq__question" type="button">
+            <span>Can this template mix beats, lessons, and licenses?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="pulse-faq__answer">
+            <p>Yes. The storefront can present digital releases, packs, teaching offers, and service-led music work together.</p>
+          </div>
+        </article>
+
+        <article class="pulse-faq__item">
+          <button class="pulse-faq__question" type="button">
+            <span>Do buyers still go through the real Zest listing path?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="pulse-faq__answer">
+            <p>Yes. View and cart actions still resolve through the live product and checkout routes, not template-only shortcuts.</p>
+          </div>
+        </article>
+
+        <article class="pulse-faq__item">
+          <button class="pulse-faq__question" type="button">
+            <span>Can artists post updates between releases?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="pulse-faq__answer">
+            <p>Yes. Feed-driven updates can announce new drops, launch notes, lessons, or linked products without leaving the storefront mode.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <aside class="pulse-player" id="musicPlayer" hidden>
+    <div class="pulse-player__inner">
+      <div class="pulse-player__cover" id="musicPlayerCover"></div>
+      <div class="pulse-player__meta">
+        <strong id="musicPlayerTitle">Preview player</strong>
+        <span id="musicPlayerSubtitle">Select a release preview</span>
+      </div>
+      <button class="pulse-player__toggle" id="musicPlayerToggle" type="button">
+        <i class="fa-solid fa-play"></i>
+        <span>Play</span>
+      </button>
+      <div class="pulse-player__timeline">
+        <span id="musicPlayerCurrent">0:00</span>
+        <input id="musicPlayerSeek" type="range" min="0" max="100" value="0" step="1" aria-label="Preview progress">
+        <span id="musicPlayerDuration">0:00</span>
+      </div>
+      <button class="pulse-player__close" id="musicPlayerClose" type="button" aria-label="Close preview player">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <audio id="musicPreviewAudio" preload="none"></audio>
+    </div>
+  </aside>
+
+  <footer class="pulse-footer">
+    <div class="pulse-footer__inner">
+      <div>
+        <strong>Music Studio</strong>
+        <p>Release-led storefronts for artists, producers, and music-led offers on Zest.</p>
+      </div>
+      <div class="pulse-footer__links">
+        <a href="<%= paths.marketplace %>">Marketplace</a>
+        <a href="<%= paths.globalFeed %>">Global Feed</a>
+      </div>
+    </div>
+  </footer>
+</div>

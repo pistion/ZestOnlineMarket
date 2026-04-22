@@ -8,8 +8,6 @@
   const refundedMetric = document.getElementById("buyerOrdersRefundedMetric");
   const cartMetric = document.getElementById("buyerOrdersCartMetric");
 
-  const cartKeys = ["zest_cart_v1"];
-
   function escapeHtml(value) {
     return String(value || "")
       .replace(/&/g, "&amp;")
@@ -37,27 +35,11 @@
   }
 
   function readCartCount() {
-    if (typeof window === "undefined" || !window.localStorage) {
+    if (!window.ZestCart || typeof window.ZestCart.cartCount !== "function") {
       return 0;
     }
 
-    return cartKeys.reduce((count, storageKey) => {
-      try {
-        const raw = window.localStorage.getItem(storageKey);
-        if (!raw) {
-          return count;
-        }
-
-        const items = JSON.parse(raw);
-        if (!Array.isArray(items)) {
-          return count;
-        }
-
-        return count + items.reduce((sum, item) => sum + Math.max(1, Number(item && item.quantity) || 1), 0);
-      } catch (_error) {
-        return count;
-      }
-    }, 0);
+    return window.ZestCart.cartCount();
   }
 
   async function fetchJson(path) {
@@ -206,6 +188,12 @@
     const href = card.getAttribute("data-href");
     if (href) {
       window.location.href = href;
+    }
+  });
+
+  window.addEventListener("zest:cart-changed", () => {
+    if (cartMetric) {
+      cartMetric.textContent = String(readCartCount());
     }
   });
 

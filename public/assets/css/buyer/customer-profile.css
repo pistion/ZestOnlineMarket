@@ -626,6 +626,45 @@ header{
 
 .recommendation-reason{font-style: italic}
 
+.card-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.55rem;
+  margin-top:.9rem;
+}
+
+.card-action-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:36px;
+  padding:.52rem .82rem;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#ffffff;
+  color:var(--blue);
+  text-decoration:none;
+  font-size:.8rem;
+  font-weight:850;
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.card-action-link:hover{
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.card-action-link--primary{
+  background: var(--blue);
+  border-color: rgba(0,0,0,.10);
+  color:#ffffff;
+}
+
+.card-action-link--primary:hover{
+  background: var(--blue-2);
+}
+
 /* Wishlist remove */
 .wishlist-remove{
   position:absolute;

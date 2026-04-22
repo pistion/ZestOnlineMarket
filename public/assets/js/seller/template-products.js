@@ -276,7 +276,7 @@ function getProductPath(product) {
 
 function getCheckoutPath(product) {
   if (product && product.id) {
-    return `/buyer/checkout?productId=${product.id}`;
+    return `/buyer/cart?productId=${product.id}`;
   }
 
   return document.body.dataset.checkoutPath || "";

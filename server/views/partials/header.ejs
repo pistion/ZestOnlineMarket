@@ -1,20 +1,34 @@
 <% if (page.layoutHeader) { %>
 <%
   const signedInUser = typeof currentUser !== "undefined" ? currentUser : null;
-  const signedInRole = signedInUser && signedInUser.role === "seller" ? "seller" : "buyer";
+  const signedInRole = signedInUser
+    ? signedInUser.role === "seller"
+      ? "seller"
+      : signedInUser.role === "admin"
+        ? "admin"
+        : "buyer"
+    : "";
   const accountHomePath = signedInUser
     ? signedInRole === "seller"
       ? "/seller/store"
-      : "/buyer/profile"
+      : signedInRole === "admin"
+        ? "/admin/dashboard"
+        : "/buyer/profile"
     : "";
   const accountHomeLabel = signedInUser
     ? signedInRole === "seller"
       ? "Seller Workspace"
-      : "Buyer Profile"
+      : signedInRole === "admin"
+        ? "Admin Workspace"
+        : "Buyer Profile"
     : "";
-  const switchAccountPath = signedInUser ? `/auth/signin?role=${signedInRole}` : "/auth/signin";
+  const switchAccountPath = signedInUser && signedInRole !== "admin"
+    ? `/auth/signin?role=${signedInRole}`
+    : "/auth/signin";
   const signOutRedirect = signedInUser
-    ? `/auth/signin?signedOut=1&role=${signedInRole}`
+    ? signedInRole === "admin"
+      ? "/auth/signin?signedOut=1"
+      : `/auth/signin?signedOut=1&role=${signedInRole}`
     : "/auth/signin?signedOut=1";
   const buyerAccessPath = `/auth/signin?role=buyer&returnTo=${encodeURIComponent("/buyer/profile")}`;
   const sellerAccessPath = `/auth/signin?role=seller&returnTo=${encodeURIComponent("/seller/store")}`;
@@ -22,12 +36,40 @@
 <header class="codex-layout-header">
   <div class="codex-layout-header__inner ui-shell ui-shell--wide">
     <a class="codex-layout-header__brand" href="/">Zest Market</a>
+    <form class="codex-layout-search" action="/search" method="get" data-global-search-form>
+      <label class="sr-only" for="globalSearchInput">Search products and stores</label>
+      <input
+        class="codex-layout-search__input"
+        id="globalSearchInput"
+        name="q"
+        type="search"
+        placeholder="Search products, stores, tags..."
+        autocomplete="off"
+        data-global-search-input
+      />
+      <button class="codex-layout-search__submit" type="submit">Search</button>
+      <div class="codex-layout-search__suggestions" data-global-search-suggestions hidden></div>
+    </form>
     <nav class="codex-layout-header__nav" aria-label="Primary">
       <a href="/feed">Global Feed</a>
       <a href="/marketplace">Marketplace</a>
+      <% if (signedInUser && signedInRole === "buyer") { %>
+      <button
+        class="codex-layout-header__cart-toggle"
+        type="button"
+        data-cart-toggle
+        aria-controls="zestCartDrawer"
+        aria-expanded="false"
+      >
+        Cart
+        <span class="codex-layout-header__cart-badge" data-cart-badge hidden>0</span>
+      </button>
+      <% } %>
       <% if (signedInUser) { %>
       <a href="<%= accountHomePath %>"><%= accountHomeLabel %></a>
+      <% if (signedInRole !== "admin") { %>
       <a href="<%= switchAccountPath %>">Switch Account</a>
+      <% } %>
       <form class="codex-layout-header__logout-form" action="/auth/logout" method="post">
         <input type="hidden" name="redirectTo" value="<%= signOutRedirect %>" />
         <button class="codex-layout-header__logout-btn" type="submit">Sign Out</button>
@@ -39,5 +81,31 @@
       <% } %>
     </nav>
   </div>
+  <% if (signedInUser && signedInRole === "buyer") { %>
+  <div class="codex-layout-cart-backdrop" data-cart-drawer-backdrop hidden></div>
+  <aside class="codex-layout-cart-drawer" id="zestCartDrawer" data-cart-drawer hidden aria-hidden="true">
+    <div class="codex-layout-cart-drawer__header">
+      <div>
+        <p class="codex-layout-cart-drawer__eyebrow">Buyer cart</p>
+        <h2>Mini cart</h2>
+      </div>
+      <button class="codex-layout-cart-drawer__close" type="button" data-cart-close aria-label="Close cart">
+        Close
+      </button>
+    </div>
+    <p class="codex-layout-cart-drawer__state" data-cart-drawer-state>Loading your cart.</p>
+    <div class="codex-layout-cart-drawer__items" data-cart-drawer-items></div>
+    <div class="codex-layout-cart-drawer__footer">
+      <div class="codex-layout-cart-drawer__summary">
+        <span>Ready total</span>
+        <strong data-cart-drawer-total>K0.00</strong>
+      </div>
+      <div class="codex-layout-cart-drawer__actions">
+        <a class="codex-layout-cart-drawer__link" data-cart-drawer-cart href="/buyer/cart">Open cart</a>
+        <a class="codex-layout-cart-drawer__link codex-layout-cart-drawer__link--primary" data-cart-drawer-checkout href="/buyer/checkout">Checkout</a>
+      </div>
+    </div>
+  </aside>
+  <% } %>
 </header>
 <% } %>

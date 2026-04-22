@@ -3,6 +3,7 @@
 <title><%= page.title || "Zest Online Market" %></title>
 <meta name="csrf-token" content="<%= csrfToken || '' %>">
 <meta name="request-id" content="<%= requestId || '' %>">
+<link rel="stylesheet" href="/assets/css/variables.css">
 <% (page.externalStyles || []).forEach((href) => { %>
 <link rel="stylesheet" href="<%= href %>">
 <% }); %>

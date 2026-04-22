@@ -33,6 +33,8 @@ Nothing in `reference/` is part of the live app.
 
 - `npm start`: boot the live server from the root entrypoint
 - `npm run dev`: boot with `nodemon`
+- `npm run local:checkpoint -- "<note>"`: save a timestamped local checkpoint and append it to the local history log
+- `npm run local:history`: print the local checkpoint history
 - `npm run check:js`: syntax-check live JS files
 - `npm run check:repo`: fail on forbidden tracked/runtime artifacts and duplicate migration prefixes
 - `npm run check:size`: fail on oversized live JS files outside explicit legacy exceptions

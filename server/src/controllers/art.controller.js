@@ -38,11 +38,6 @@ const {
 } = require("../services/art.service");
 const { sendSuccess, createHttpError } = require("../utils/api-response");
 const { deleteUploadedFiles, saveBase64ImageToFolder } = require("../utils/image.util");
-const {
-  normalizeHandle,
-  validateArtListingPayload,
-  validateArtStoreSettingsPayload,
-} = require("../utils/request-validation");
 
 function isUploadedAssetUrl(value) {
   return typeof value === "string" && value.startsWith("/uploads/");
@@ -173,7 +168,7 @@ async function getSellerArtStore(req, res, next) {
 
 async function getPublicArtStore(req, res, next) {
   try {
-    const handle = normalizeHandle(req.params.handle);
+    const { handle } = req.params;
     const payload = await buildPublicArtStorePayload(handle);
     return sendSuccess(
       res,
@@ -198,7 +193,7 @@ async function saveSellerArtSettings(req, res, next) {
 
   try {
     const storeRow = await resolveSellerArtStore(userId);
-    const payload = validateArtStoreSettingsPayload(req.body);
+    const payload = req.body;
 
     await transaction(async (txContext) => {
       const repoOptions = {
@@ -231,7 +226,7 @@ async function createSellerArtListing(req, res, next) {
 
   try {
     const storeRow = await resolveSellerArtStore(userId);
-    const payload = validateArtListingPayload(req.body);
+    const payload = req.body;
 
     const result = await transaction(async (txContext) => {
       const repoOptions = {
@@ -312,16 +307,9 @@ async function createSellerArtListing(req, res, next) {
 
 async function updateSellerArtListing(req, res, next) {
   const userId = req.user.id;
-  const artListingId = Number(req.params.artListingId);
+  const { artListingId } = req.params;
   const writeSource = resolveCatalogSource();
   let createdImageUrls = [];
-
-  if (!Number.isInteger(artListingId) || artListingId <= 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid art listing id",
-    });
-  }
 
   try {
     const storeRow = await resolveSellerArtStore(userId);
@@ -333,7 +321,7 @@ async function updateSellerArtListing(req, res, next) {
       });
     }
 
-    const payload = validateArtListingPayload(req.body);
+    const payload = req.body;
     const previousImageUrls = (existingListing.images || []).map((image) => image.url || image.src).filter(Boolean);
 
     const result = await transaction(async (txContext) => {
@@ -423,15 +411,8 @@ async function updateSellerArtListing(req, res, next) {
 
 async function deleteSellerArtListing(req, res, next) {
   const userId = req.user.id;
-  const artListingId = Number(req.params.artListingId);
+  const { artListingId } = req.params;
   const writeSource = resolveCatalogSource();
-
-  if (!Number.isInteger(artListingId) || artListingId <= 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid art listing id",
-    });
-  }
 
   try {
     const storeRow = await resolveSellerArtStore(userId);

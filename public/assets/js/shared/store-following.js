@@ -95,6 +95,21 @@
     };
   }
 
+  async function syncLocalHandlesToRemote(localHandles = []) {
+    const handlesToSync = uniqueHandles(localHandles).filter(
+      (handle) => handle && !state.handles.includes(handle)
+    );
+
+    for (const handle of handlesToSync) {
+      const result = await updateRemoteFollow("POST", handle);
+      if (!result || !result.ok) {
+        continue;
+      }
+    }
+
+    return state.handles.slice();
+  }
+
   async function init(force) {
     if (state.loaded && !force) {
       return state.handles.slice();
@@ -106,7 +121,9 @@
     const remoteResult = await loadRemoteHandles().catch(() => null);
     if (remoteResult && remoteResult.ok) {
       state.remoteEnabled = true;
-      return applyHandles(remoteResult.handles, "remote");
+      applyHandles(remoteResult.handles, "remote");
+      await syncLocalHandlesToRemote(localHandles);
+      return state.handles.slice();
     }
 
     if (remoteResult && ![401, 403].includes(Number(remoteResult.status || 0))) {
