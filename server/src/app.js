@@ -37,11 +37,12 @@ function createApp() {
   app.disable("x-powered-by");
   app.set("view engine", "ejs");
   app.set("views", paths.viewsDir);
-  app.use(
-    helmet({
-      contentSecurityPolicy: false,
-    })
-  );
+  // app.use(
+  //   helmet({
+  //     contentSecurityPolicy: false,
+  //   })
+  // );
+  console.log("Serving static files from:", paths.publicDir);
   app.use(compression());
 
   app.use(
