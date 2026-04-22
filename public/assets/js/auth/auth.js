@@ -34,10 +34,15 @@
     roleTabs: document.querySelector("#authRoleTabs"),
     buyerTab: document.querySelector("#authTabBuyer"),
     sellerTab: document.querySelector("#authTabSeller"),
+    dividerCopy: document.querySelector("#authDividerCopy"),
     card: document.querySelector("#authCard"),
     form: document.querySelector("#authForm"),
     email: document.querySelector("#authEmail"),
     password: document.querySelector("#authPassword"),
+    confirmField: document.querySelector("#authConfirmField"),
+    confirmPassword: document.querySelector("#authConfirmPassword"),
+    passwordMeta: document.querySelector("#authPasswordMeta"),
+    passwordRules: document.querySelector("#authPasswordRules"),
     submitBtn: document.querySelector("#authSubmitBtn"),
     submitText: document.querySelector("#authSubmitText"),
     spinner: document.querySelector("#authSpinner"),
@@ -46,6 +51,9 @@
     helper: document.querySelector("#authHelper"),
     toggleCopy: document.querySelector("#authToggleCopy"),
     modeToggle: document.querySelector("#authModeToggle"),
+    googleCopy: document.querySelector("#authGoogleCopy"),
+    facebookCopy: document.querySelector("#authFacebookCopy"),
+    socialButtons: Array.from(document.querySelectorAll("[data-provider]")),
     sessionBanner: document.querySelector("#authSessionBanner"),
     sessionEmail: document.querySelector("#authSessionEmail"),
     sessionContinue: document.querySelector("#authSessionContinueLink"),
@@ -53,6 +61,10 @@
     sessionLogout: document.querySelector("#authSessionLogoutBtn"),
     sessionTimerRow: document.querySelector("#authSessionTimerRow"),
     sessionTimer: document.querySelector("#authSessionTimer"),
+    supportBox: document.querySelector("#authSupportBox"),
+    supportHint: document.querySelector("#authSupportHint"),
+    supportTips: document.querySelector("#authSupportTips"),
+    supportRequestId: document.querySelector("#authSupportRequestId"),
   };
 
   function safePath(value) {
@@ -67,6 +79,10 @@
   function getCsrfToken() {
     const meta = document.querySelector('meta[name="csrf-token"]');
     return meta && meta.content ? String(meta.content).trim() : "";
+  }
+
+  function getQueryParams() {
+    return new URLSearchParams(window.location.search || "");
   }
 
   function setElementHidden(element, shouldHide) {
@@ -92,6 +108,16 @@
     return `${base}?${params.toString()}`;
   }
 
+  function buildSocialAuthPath(provider) {
+    const params = new URLSearchParams();
+    params.set("role", state.role);
+    if (session.returnTo) {
+      params.set("returnTo", session.returnTo);
+    }
+
+    return `/auth/oauth/${encodeURIComponent(provider)}?${params.toString()}`;
+  }
+
   function defaultRedirectForRole(role) {
     return role === "seller" ? routes.sellerHome : routes.buyerHome;
   }
@@ -101,19 +127,120 @@
     return redirectTo || defaultRedirectForRole(result && result.role);
   }
 
-  function setError(message) {
-    if (!elements.error) {
+  function clearSupportPanel() {
+    if (elements.supportHint) {
+      elements.supportHint.textContent = "";
+    }
+    if (elements.supportTips) {
+      elements.supportTips.innerHTML = "";
+    }
+    if (elements.supportRequestId) {
+      elements.supportRequestId.textContent = "";
+      setElementHidden(elements.supportRequestId, true);
+    }
+    setElementHidden(elements.supportBox, true);
+  }
+
+  function buildTroubleshootingTips(payload = {}) {
+    const code = String(payload.code || "").trim().toUpperCase();
+    const details = Array.isArray(payload.details) ? payload.details : [];
+
+    if (details.length) {
+      return details.map((detail) => detail.message).filter(Boolean).slice(0, 4);
+    }
+
+    switch (code) {
+      case "INVALID_CREDENTIALS":
+        return [
+          "Check that the email address is spelled correctly.",
+          "Passwords are case-sensitive, including symbols and numbers.",
+          "If you originally used Google or Facebook, use that provider button instead.",
+        ];
+      case "EMAIL_TAKEN":
+        return [
+          "This email already belongs to an account.",
+          "Try the sign-in mode instead of creating a second account.",
+          "If the account started with Google or Facebook, continue with that provider.",
+        ];
+      case "SOCIAL_PROVIDER_NOT_CONFIGURED":
+        return [
+          "The button is wired into the app, but the provider keys are still missing on the server.",
+          "Set the provider client ID, secret, and redirect URI, then retry the social sign-in flow.",
+        ];
+      case "SOCIAL_AUTH_STATE_INVALID":
+        return [
+          "The provider redirected back after the temporary auth state expired.",
+          "Start the Google or Facebook flow again from this page.",
+        ];
+      case "SOCIAL_AUTH_EMAIL_MISSING":
+        return [
+          "This provider account did not return an email address.",
+          "Use an account that shares email access, or create the account with email and password instead.",
+        ];
+      case "GOOGLE_TOKEN_EXCHANGE_FAILED":
+      case "FACEBOOK_TOKEN_EXCHANGE_FAILED":
+      case "GOOGLE_NETWORK_FAILURE":
+      case "FACEBOOK_NETWORK_FAILURE":
+        return [
+          "Check the provider client ID, secret, and callback URL on the server.",
+          "Confirm the deployment can make outbound HTTPS requests to the provider.",
+        ];
+      default:
+        return [
+          "Retry the request once to rule out an expired form or temporary provider issue.",
+          "If it keeps failing, use the request ID below to trace the server-side error quickly.",
+        ];
+    }
+  }
+
+  function renderSupportPanel(payload = {}) {
+    const hint = String(payload.hint || "").trim();
+    const tips = buildTroubleshootingTips(payload);
+    const requestId = String(payload.requestId || "").trim();
+
+    if (elements.supportHint) {
+      elements.supportHint.textContent = hint || "Try the suggestions below before retrying the form.";
+    }
+    if (elements.supportTips) {
+      elements.supportTips.innerHTML = tips.map((tip) => `<li>${tip}</li>`).join("");
+    }
+    if (elements.supportRequestId) {
+      if (requestId) {
+        elements.supportRequestId.textContent = `Request ${requestId}`;
+        setElementHidden(elements.supportRequestId, false);
+      } else {
+        elements.supportRequestId.textContent = "";
+        setElementHidden(elements.supportRequestId, true);
+      }
+    }
+
+    setElementHidden(elements.supportBox, false);
+  }
+
+  function setError(message, payload = {}) {
+    if (elements.error) {
+      elements.error.textContent = message || "";
+      setElementHidden(elements.error, !message);
+    }
+
+    if (message) {
+      renderSupportPanel(payload);
       return;
     }
 
-    elements.error.textContent = message || "";
-    elements.error.hidden = !message;
+    clearSupportPanel();
   }
 
   function setNotice(message) {
     if (elements.notice) {
       elements.notice.textContent = message || "";
+      setElementHidden(elements.notice, !message);
     }
+  }
+
+  function clearFeedback() {
+    setError("");
+    setNotice("");
   }
 
   function setLoading(isLoading) {
@@ -141,10 +268,10 @@
       elements.intro.textContent =
         state.role === "seller"
           ? isSignup
-            ? "Create a seller account, then continue into store setup and workspace tools."
-            : "Sign in to resume your seller workspace based on your store setup status."
+            ? "Create a seller account, confirm the password, then continue into the seller setup flow."
+            : "Sign in to resume your seller workspace, or switch to Google or Facebook if you use social sign-in."
           : isSignup
-            ? "Create a buyer account, then continue into buyer setup before landing in your profile."
+            ? "Create a buyer account with a confirmed password, then continue into buyer setup before landing in your profile."
             : "Sign in to continue into your buyer profile, feed, marketplace, and checkout flow.";
     }
 
@@ -152,11 +279,11 @@
       elements.helper.textContent =
         state.role === "seller"
           ? isSignup
-            ? "Seller sign-up opens /seller/store first so the store can be configured immediately."
-            : "Seller sign-in returns to the seller workspace or store setup if it is still incomplete."
+            ? "Seller sign-up now bootstraps the Postgres store records immediately so the wizard can continue without missing tables."
+            : "Seller sign-in returns to the seller wizard or workspace based on the current store setup state."
           : isSignup
-            ? "Buyer sign-up opens /buyer/wizard-setup first, then moves into /buyer/profile."
-            : "Buyer sign-in goes to /buyer/profile. From there, buyers can open their feed, the global feed, and the marketplace.";
+            ? "Buyer sign-up creates the buyer profile and preference records immediately, then opens /buyer/wizard-setup."
+            : "Buyer sign-in goes to /buyer/profile. If something fails, the troubleshooting card below will surface the request ID and server hint.";
     }
 
     if (elements.submitText) {
@@ -173,6 +300,16 @@
         returnTo: session.returnTo,
       });
     }
+
+    if (elements.passwordMeta) {
+      elements.passwordMeta.textContent = isSignup
+        ? "Use 8 to 128 characters with both letters and numbers. You will confirm it before submitting."
+        : "Use the same password you created for this account, or switch to Google/Facebook if that is how you registered.";
+    }
+
+    if (elements.dividerCopy) {
+      elements.dividerCopy.textContent = isSignup ? "or create an account with email" : "or continue with email";
+    }
   }
 
   function renderRoleTabs() {
@@ -185,6 +322,48 @@
       elements.sellerTab.classList.toggle("is-active", !buyerActive);
       elements.sellerTab.setAttribute("aria-selected", buyerActive ? "false" : "true");
     }
+  }
+
+  function renderModeState() {
+    const isSignup = state.mode === "signup";
+
+    if (elements.confirmPassword) {
+      elements.confirmPassword.value = "";
+      elements.confirmPassword.required = isSignup;
+    }
+    setElementHidden(elements.confirmField, !isSignup);
+    setElementHidden(elements.passwordRules, !isSignup);
+
+    if (elements.password) {
+      elements.password.setAttribute("autocomplete", isSignup ? "new-password" : "current-password");
+      elements.password.placeholder = isSignup ? "Create a password" : "Enter your password";
+    }
+  }
+
+  function renderSocialButtons() {
+    const isSignup = state.mode === "signup";
+    elements.socialButtons.forEach((button) => {
+      const provider = button.getAttribute("data-provider");
+      if (!provider) {
+        return;
+      }
+
+      button.href = buildSocialAuthPath(provider);
+    });
+
+    if (elements.googleCopy) {
+      elements.googleCopy.textContent = isSignup ? "Sign up with Google" : "Continue with Google";
+    }
+
+    if (elements.facebookCopy) {
+      elements.facebookCopy.textContent = isSignup ? "Sign up with Facebook" : "Continue with Facebook";
+    }
+  }
+
+  function syncPageStateToUrl() {
+    window.history.replaceState({}, "", buildAuthPagePath(state.mode, state.role, {
+      returnTo: session.returnTo,
+    }));
   }
 
   function renderSessionBanner() {
@@ -292,13 +471,18 @@
     state.role = role === "seller" ? "seller" : "buyer";
     renderRoleTabs();
     renderHeaderCopy();
-    setError("");
+    renderSocialButtons();
+    clearFeedback();
+    syncPageStateToUrl();
   }
 
   function setMode(mode) {
     state.mode = mode === "signup" ? "signup" : "signin";
     renderHeaderCopy();
-    setError("");
+    renderModeState();
+    renderSocialButtons();
+    clearFeedback();
+    syncPageStateToUrl();
   }
 
   async function postJson(url, payload) {
@@ -320,7 +504,12 @@
 
     const result = await response.json().catch(() => null);
     if (!response.ok || !result || result.success === false) {
-      throw new Error((result && result.message) || `Request failed (${response.status})`);
+      const error = new Error((result && result.message) || `Request failed (${response.status})`);
+      error.code = result && result.code ? result.code : "";
+      error.hint = result && result.hint ? result.hint : "";
+      error.details = result && Array.isArray(result.details) ? result.details : [];
+      error.requestId = result && result.requestId ? result.requestId : "";
+      throw error;
     }
 
     return result;
@@ -352,16 +541,53 @@
     }
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setError("");
-    setNotice("");
-
+  function validateForm() {
     const email = String(elements.email?.value || "").trim();
     const password = String(elements.password?.value || "");
+    const confirmPassword = String(elements.confirmPassword?.value || "");
 
     if (!email || !password) {
-      setError("Enter your email and password.");
+      return {
+        valid: false,
+        message: "Enter your email and password.",
+        code: "FORM_INCOMPLETE",
+      };
+    }
+
+    if (state.mode === "signup") {
+      if (!confirmPassword) {
+        return {
+          valid: false,
+          message: "Confirm your password before creating the account.",
+          code: "PASSWORD_CONFIRM_REQUIRED",
+        };
+      }
+
+      if (password !== confirmPassword) {
+        return {
+          valid: false,
+          message: "Passwords do not match.",
+          code: "PASSWORD_MISMATCH",
+          hint: "Re-enter the password in both fields so the new account starts with the intended credentials.",
+        };
+      }
+    }
+
+    return {
+      valid: true,
+      email,
+      password,
+      confirmPassword,
+    };
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    clearFeedback();
+
+    const validation = validateForm();
+    if (!validation.valid) {
+      setError(validation.message, validation);
       return;
     }
 
@@ -372,14 +598,15 @@
       const payload =
         state.mode === "signup"
           ? {
-              email,
-              password,
+              email: validation.email,
+              password: validation.password,
+              confirmPassword: validation.confirmPassword,
               role: state.role,
               returnTo: session.returnTo,
             }
           : {
-              email,
-              password,
+              email: validation.email,
+              password: validation.password,
               intentRole: state.role,
               returnTo: session.returnTo,
             };
@@ -400,7 +627,12 @@
 
       window.location.href = resolveRedirect(result);
     } catch (error) {
-      setError(error.message || "Authentication failed.");
+      setError(error.message || "Authentication failed.", {
+        code: error.code,
+        hint: error.hint,
+        details: error.details,
+        requestId: error.requestId,
+      });
     } finally {
       setLoading(false);
     }
@@ -419,9 +651,6 @@
     elements.modeToggle?.addEventListener("click", (event) => {
       event.preventDefault();
       setMode(state.mode === "signup" ? "signin" : "signup");
-      window.history.replaceState({}, "", buildAuthPagePath(state.mode, state.role, {
-        returnTo: session.returnTo,
-      }));
     });
 
     elements.form?.addEventListener("submit", handleSubmit);
@@ -429,10 +658,27 @@
     elements.sessionLogout?.addEventListener("click", signOutAndStay);
   }
 
-  function initNotices() {
+  function initFeedbackFromQuery() {
+    const params = getQueryParams();
+    const errorMessage = String(params.get("error") || "").trim();
+    const noticeMessage = String(params.get("notice") || "").trim();
+
+    if (errorMessage) {
+      setError(errorMessage, {
+        code: String(params.get("errorCode") || "").trim(),
+        hint: String(params.get("hint") || "").trim(),
+        requestId: String(params.get("requestId") || "").trim(),
+      });
+      return;
+    }
+
     if (session.signedOut) {
       setNotice("You signed out successfully. Sign in again whenever you're ready.");
       return;
+    }
+
+    if (noticeMessage) {
+      setNotice(noticeMessage);
     }
   }
 
@@ -444,10 +690,12 @@
 
     renderRoleTabs();
     renderHeaderCopy();
+    renderModeState();
+    renderSocialButtons();
     renderSessionBanner();
     startSessionCountdown();
     bindEvents();
-    initNotices();
+    initFeedbackFromQuery();
   }
 
   document.addEventListener("DOMContentLoaded", init);

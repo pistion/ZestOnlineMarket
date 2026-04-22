@@ -119,6 +119,7 @@ test("auth writes require csrf and bearer writes remain usable", async (t) => {
     body: JSON.stringify({
       email: blockedEmail,
       password: "Password123!",
+      confirmPassword: "Password123!",
       role: "seller",
     }),
   });
@@ -146,6 +147,7 @@ test("auth writes require csrf and bearer writes remain usable", async (t) => {
     body: JSON.stringify({
       email: sellerEmail,
       password: "Password123!",
+      confirmPassword: "Password123!",
       role: "seller",
     }),
   });

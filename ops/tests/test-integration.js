@@ -100,6 +100,7 @@ async function runIntegrationTests() {
       body: JSON.stringify({
         email: blockedEmail,
         password: "Password123!",
+        confirmPassword: "Password123!",
         role: "seller",
       }),
     });
@@ -128,6 +129,7 @@ async function runIntegrationTests() {
       body: JSON.stringify({
         email: sellerEmail,
         password: "Password123!",
+        confirmPassword: "Password123!",
         role: "seller",
       }),
     });

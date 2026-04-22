@@ -35,6 +35,7 @@ function createApp() {
   const app = express();
 
   app.disable("x-powered-by");
+  app.set("trust proxy", 1);
   app.set("view engine", "ejs");
   app.set("views", paths.viewsDir);
   // app.use(

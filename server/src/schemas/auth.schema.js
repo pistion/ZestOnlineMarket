@@ -51,8 +51,12 @@ const optionalInternalPathSchema = z.preprocess(
 const registerBodySchema = z.object({
   email: emailSchema,
   password: registerPasswordSchema,
+  confirmPassword: registerPasswordSchema,
   role: roleSchema,
   returnTo: optionalInternalPathSchema,
+}).refine((value) => value.password === value.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
 });
 
 const loginBodySchema = z.object({

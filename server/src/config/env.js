@@ -72,6 +72,10 @@ function parseNumber(value, fallback) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+function normalizeBaseUrl(value) {
+  return String(value || "").trim().replace(/\/+$/, "");
+}
+
 function normalizeAppEnv(value, fallback = "local") {
   const normalized = String(value || "").trim().toLowerCase();
   if (!normalized) {
@@ -149,6 +153,7 @@ module.exports = {
   featureDiscountsEnabled: parseBoolean(process.env.FEATURE_DISCOUNTS, true),
   featureAdminEnabled: parseBoolean(process.env.FEATURE_ADMIN, true),
   databaseUrl: String(process.env.DATABASE_URL || "").trim(),
+  appBaseUrl: normalizeBaseUrl(process.env.APP_BASE_URL),
   dbRunMigrationsOnStartup: parseBoolean(
     process.env.DB_RUN_MIGRATIONS_ON_STARTUP,
     appEnv !== "local"
@@ -173,6 +178,12 @@ module.exports = {
   smtpUser: String(process.env.SMTP_USER || "").trim(),
   smtpPass: String(process.env.SMTP_PASS || "").trim(),
   smtpFrom: String(process.env.SMTP_FROM || "Zest Market <no-reply@zest.local>").trim(),
+  googleClientId: String(process.env.GOOGLE_CLIENT_ID || "").trim(),
+  googleClientSecret: String(process.env.GOOGLE_CLIENT_SECRET || "").trim(),
+  googleRedirectUri: normalizeBaseUrl(process.env.GOOGLE_REDIRECT_URI),
+  facebookClientId: String(process.env.FACEBOOK_CLIENT_ID || "").trim(),
+  facebookClientSecret: String(process.env.FACEBOOK_CLIENT_SECRET || "").trim(),
+  facebookRedirectUri: normalizeBaseUrl(process.env.FACEBOOK_REDIRECT_URI),
   pgConfig: {
     host: process.env.PGHOST || "127.0.0.1",
     port: parseNumber(process.env.PGPORT, 5432),

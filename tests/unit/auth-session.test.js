@@ -1,6 +1,9 @@
 const {
+  OAUTH_STATE_COOKIE_NAME,
   appendResponseCookie,
   buildAuthCookie,
+  buildClearedOAuthStateCookie,
+  buildOAuthStateCookie,
   getCookieValue,
   hasBearerAuthHeader,
   normalizeInternalPath,
@@ -54,5 +57,19 @@ describe("auth session helpers", () => {
       "zest_csrf"
     );
     expect(value).toBe("abc");
+  });
+
+  it("builds an oauth state cookie with a short lifetime", () => {
+    const cookie = buildOAuthStateCookie("nonce-123");
+    expect(cookie).toContain(`${OAUTH_STATE_COOKIE_NAME}=nonce-123`);
+    expect(cookie).toContain("HttpOnly");
+    expect(cookie).toContain("Max-Age=600");
+  });
+
+  it("clears the oauth state cookie explicitly", () => {
+    const cookie = buildClearedOAuthStateCookie();
+    expect(cookie).toContain(`${OAUTH_STATE_COOKIE_NAME}=`);
+    expect(cookie).toContain("Expires=Thu, 01 Jan 1970 00:00:00 GMT");
+    expect(cookie).toContain("Max-Age=0");
   });
 });

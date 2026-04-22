@@ -21,6 +21,7 @@ describe("foundation helpers", () => {
       {
         email: "  PERSON@Example.com ",
         password: "Password123!",
+        confirmPassword: "Password123!",
         role: "SELLER",
         returnTo: " /seller/store ",
       },
@@ -28,6 +29,7 @@ describe("foundation helpers", () => {
     );
 
     expect(payload.email).toBe("person@example.com");
+    expect(payload.confirmPassword).toBe("Password123!");
     expect(payload.role).toBe("seller");
     expect(payload.returnTo).toBe("/seller/store");
   });
@@ -86,12 +88,28 @@ describe("foundation helpers", () => {
         {
           email: "person@example.com",
           password: "password",
+          confirmPassword: "password",
           role: "buyer",
           returnTo: "/buyer/profile",
         },
         "register"
       )
     ).toThrow(/letters and numbers/i);
+  });
+
+  it("requires registration passwords to match", () => {
+    expect(() =>
+      validateAuthPayload(
+        {
+          email: "person@example.com",
+          password: "Password123!",
+          confirmPassword: "Password1234!",
+          role: "buyer",
+          returnTo: "/buyer/profile",
+        },
+        "register"
+      )
+    ).toThrow(/passwords do not match/i);
   });
 
   it("forwards AppError details on invalid input", async () => {

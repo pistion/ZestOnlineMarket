@@ -36,6 +36,7 @@ class AppError extends Error {
     this.status = this.statusCode;
     this.code = code || defaultErrorCode(this.statusCode);
     this.details = options.details || null;
+    this.hint = options.hint || "";
     this.expose = options.expose ?? this.statusCode < 500;
     this.isOperational = options.isOperational ?? true;
 

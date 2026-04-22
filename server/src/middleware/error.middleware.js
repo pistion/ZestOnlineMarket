@@ -61,6 +61,9 @@ function errorHandler(error, req, res, next) {
           : isAppError(normalizedError)
             ? normalizedError.code
             : "REQUEST_FAILED";
+      if (normalizedError && normalizedError.hint) {
+        payload.hint = normalizedError.hint;
+      }
       if (normalizedError && normalizedError.details) {
         payload.details = normalizedError.details;
       }

@@ -4,6 +4,7 @@ const { isProduction, jwtSecret } = require("../config/env");
 
 const AUTH_COOKIE_NAME = "zest_auth";
 const CSRF_COOKIE_NAME = "zest_csrf";
+const OAUTH_STATE_COOKIE_NAME = "zest_oauth_state";
 
 function parseCookies(cookieHeader = "") {
   return cookieHeader
@@ -64,66 +65,79 @@ function verifyRequestUser(req) {
   }
 }
 
-function buildAuthCookie(token) {
+function buildCookie(name, value, options = {}) {
   const parts = [
-    `${AUTH_COOKIE_NAME}=${encodeURIComponent(token)}`,
+    `${name}=${encodeURIComponent(value)}`,
     "Path=/",
-    "HttpOnly",
     "SameSite=Lax",
   ];
+
+  if (options.httpOnly) {
+    parts.push("HttpOnly");
+  }
+
+  if (options.maxAgeSeconds != null) {
+    parts.push(`Max-Age=${Number(options.maxAgeSeconds)}`);
+  }
 
   if (isProduction) {
     parts.push("Secure");
   }
 
   return parts.join("; ");
+}
+
+function buildClearedCookie(name, options = {}) {
+  const parts = [
+    `${name}=`,
+    "Path=/",
+    "SameSite=Lax",
+    "Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+    "Max-Age=0",
+  ];
+
+  if (options.httpOnly) {
+    parts.push("HttpOnly");
+  }
+
+  if (isProduction) {
+    parts.push("Secure");
+  }
+
+  return parts.join("; ");
+}
+
+function buildAuthCookie(token) {
+  return buildCookie(AUTH_COOKIE_NAME, token, {
+    httpOnly: true,
+  });
 }
 
 function buildClearedAuthCookie() {
-  const parts = [
-    `${AUTH_COOKIE_NAME}=`,
-    "Path=/",
-    "HttpOnly",
-    "SameSite=Lax",
-    "Expires=Thu, 01 Jan 1970 00:00:00 GMT",
-    "Max-Age=0",
-  ];
-
-  if (isProduction) {
-    parts.push("Secure");
-  }
-
-  return parts.join("; ");
+  return buildClearedCookie(AUTH_COOKIE_NAME, {
+    httpOnly: true,
+  });
 }
 
 function buildClearedCsrfCookie() {
-  const parts = [
-    `${CSRF_COOKIE_NAME}=`,
-    "Path=/",
-    "SameSite=Lax",
-    "Expires=Thu, 01 Jan 1970 00:00:00 GMT",
-    "Max-Age=0",
-  ];
-
-  if (isProduction) {
-    parts.push("Secure");
-  }
-
-  return parts.join("; ");
+  return buildClearedCookie(CSRF_COOKIE_NAME);
 }
 
 function buildCsrfCookie(token) {
-  const parts = [
-    `${CSRF_COOKIE_NAME}=${encodeURIComponent(token)}`,
-    "Path=/",
-    "SameSite=Lax",
-  ];
+  return buildCookie(CSRF_COOKIE_NAME, token);
+}
 
-  if (isProduction) {
-    parts.push("Secure");
-  }
+function buildOAuthStateCookie(token) {
+  return buildCookie(OAUTH_STATE_COOKIE_NAME, token, {
+    httpOnly: true,
+    maxAgeSeconds: 10 * 60,
+  });
+}
 
-  return parts.join("; ");
+function buildClearedOAuthStateCookie() {
+  return buildClearedCookie(OAUTH_STATE_COOKIE_NAME, {
+    httpOnly: true,
+  });
 }
 
 function appendResponseCookie(res, cookieValue) {
@@ -153,11 +167,14 @@ function normalizeInternalPath(value, fallback = "/") {
 module.exports = {
   AUTH_COOKIE_NAME,
   CSRF_COOKIE_NAME,
+  OAUTH_STATE_COOKIE_NAME,
   appendResponseCookie,
   buildAuthCookie,
   buildClearedCsrfCookie,
   buildCsrfCookie,
   buildClearedAuthCookie,
+  buildClearedOAuthStateCookie,
+  buildOAuthStateCookie,
   getCookieValue,
   getAuthTokenFromRequest,
   hasBearerAuthHeader,

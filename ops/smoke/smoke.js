@@ -148,6 +148,38 @@ async function verifyRoutes() {
   }
 }
 
+async function verifyAuthPages() {
+  const signinResponse = await request("/auth/signin?role=seller");
+  if (signinResponse.statusCode !== 200) {
+    throw new Error("Sign-in page failed during auth UI smoke verification.");
+  }
+
+  if (!signinResponse.body.includes('id="authGoogleBtn"')) {
+    throw new Error("Sign-in page is missing the Google auth button.");
+  }
+
+  if (!signinResponse.body.includes('id="authFacebookBtn"')) {
+    throw new Error("Sign-in page is missing the Facebook auth button.");
+  }
+
+  if (!signinResponse.body.includes('id="authSupportBox"')) {
+    throw new Error("Sign-in page is missing the troubleshooting panel.");
+  }
+
+  const signupResponse = await request("/auth/signup?role=buyer");
+  if (signupResponse.statusCode !== 200) {
+    throw new Error("Sign-up page failed during auth UI smoke verification.");
+  }
+
+  if (!signupResponse.body.includes('id="authConfirmPassword"')) {
+    throw new Error("Sign-up page is missing the confirm-password field.");
+  }
+
+  if (!signupResponse.body.includes("Password confirm")) {
+    throw new Error("Sign-up page is missing the password-confirm guidance copy.");
+  }
+}
+
 async function verifyPostgresWritePath() {
   const smokeStamp = Date.now();
   const sellerEmail = `smoke_seller_${smokeStamp}@example.com`;
@@ -171,6 +203,7 @@ async function verifyPostgresWritePath() {
     body: JSON.stringify({
       email: sellerEmail,
       password,
+      confirmPassword: password,
       role: "seller",
     }),
   });
@@ -318,6 +351,7 @@ async function verifyPostgresWritePath() {
     body: JSON.stringify({
       email: buyerEmail,
       password,
+      confirmPassword: password,
       role: "buyer",
     }),
   });
@@ -835,6 +869,7 @@ async function run() {
   try {
     await waitForServer();
     await verifyRoutes();
+    await verifyAuthPages();
     await verifyPostgresWritePath();
     console.log("Smoke checks passed.");
   } finally {

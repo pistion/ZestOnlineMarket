@@ -2,10 +2,10 @@
   <aside class="auth-aside">
     <div class="auth-aside__copy">
       <span class="auth-eyebrow">Zest Access</span>
-      <h2>One account, two clear paths.</h2>
+      <h2>Secure entry, clearer recovery, and a stronger first impression.</h2>
       <p>
-        Buyers move into profile and discovery. Sellers move into store setup and workspace tools.
-        This entry page keeps those flows clean without mixing them.
+        Sign in with email, Google, or Facebook. New accounts confirm their password before
+        they continue into the buyer or seller flow.
       </p>
     </div>
 
@@ -13,20 +13,20 @@
       <article class="auth-highlight">
         <strong>Buyer flow</strong>
         <span>/buyer/profile</span>
-        <p>Profile, feed, marketplace, and checkout stay connected.</p>
+        <p>Profiles, feed, marketplace discovery, and checkout stay connected after sign-in.</p>
       </article>
       <article class="auth-highlight">
         <strong>Seller flow</strong>
-        <span>/seller/store</span>
-        <p>Store setup, dashboard, listings, and storefront tools stay separate.</p>
+        <span>/seller/wizard-setup</span>
+        <p>New seller accounts bootstrap directly into the setup path with Postgres-backed state.</p>
       </article>
     </div>
 
     <div class="auth-chip-row">
-      <span class="auth-chip">Cookie session</span>
-      <span class="auth-chip">Role-aware routing</span>
-      <span class="auth-chip">Buyer onboarding</span>
-      <span class="auth-chip">Seller setup</span>
+      <span class="auth-chip">Password confirm</span>
+      <span class="auth-chip">Request IDs</span>
+      <span class="auth-chip">Troubleshooting hints</span>
+      <span class="auth-chip">Social auth ready</span>
     </div>
   </aside>
 
@@ -74,6 +74,21 @@
         </button>
       </div>
 
+      <div class="auth-social">
+        <a class="auth-social-btn auth-social-btn--google" id="authGoogleBtn" data-provider="google" href="/auth/oauth/google">
+          <i class="fa-brands fa-google"></i>
+          <span id="authGoogleCopy">Continue with Google</span>
+        </a>
+        <a class="auth-social-btn auth-social-btn--facebook" id="authFacebookBtn" data-provider="facebook" href="/auth/oauth/facebook">
+          <i class="fa-brands fa-facebook-f"></i>
+          <span id="authFacebookCopy">Continue with Facebook</span>
+        </a>
+      </div>
+
+      <div class="auth-divider">
+        <span id="authDividerCopy">or continue with email</span>
+      </div>
+
       <form class="auth-form" id="authForm" novalidate>
         <label class="auth-field">
           <span>Email</span>
@@ -83,7 +98,21 @@
         <label class="auth-field">
           <span>Password</span>
           <input id="authPassword" type="password" autocomplete="current-password" required placeholder="Enter your password" />
+          <small class="auth-field__meta" id="authPasswordMeta">
+            Use at least 8 characters with both letters and numbers.
+          </small>
         </label>
+
+        <label class="auth-field" id="authConfirmField" hidden>
+          <span>Confirm password</span>
+          <input id="authConfirmPassword" type="password" autocomplete="new-password" placeholder="Repeat your password" />
+        </label>
+
+        <div class="auth-password-rules" id="authPasswordRules">
+          <span class="auth-rule">8-128 chars</span>
+          <span class="auth-rule">Letters + numbers</span>
+          <span class="auth-rule">Confirm before submit</span>
+        </div>
 
         <button class="auth-btn auth-btn--primary auth-btn--block" id="authSubmitBtn" type="submit">
           <span id="authSubmitText">Sign in</span>
@@ -91,8 +120,19 @@
         </button>
       </form>
 
-      <p class="auth-error" id="authError" aria-live="polite" hidden></p>
-      <p class="auth-notice" id="authNotice" aria-live="polite"></p>
+      <div class="auth-feedback">
+        <p class="auth-error" id="authError" aria-live="polite" hidden></p>
+        <p class="auth-notice" id="authNotice" aria-live="polite" hidden></p>
+      </div>
+
+      <section class="auth-troubleshoot" id="authSupportBox" hidden>
+        <div class="auth-troubleshoot__header">
+          <strong>Troubleshooting</strong>
+          <span class="auth-support-request" id="authSupportRequestId" hidden></span>
+        </div>
+        <p class="auth-troubleshoot__hint" id="authSupportHint"></p>
+        <ul class="auth-troubleshoot__list" id="authSupportTips"></ul>
+      </section>
 
       <div class="auth-toggle">
         <span id="authToggleCopy">Need an account?</span>

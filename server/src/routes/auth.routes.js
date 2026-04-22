@@ -6,7 +6,13 @@ const {
   authRateLimitWindowMs,
 } = require("../config/env");
 const { loginBodySchema, registerBodySchema } = require("../schemas/auth.schema");
-const { login, logout, register } = require("../controllers/auth.controller");
+const {
+  finishSocialAuth,
+  login,
+  logout,
+  register,
+  startSocialAuth,
+} = require("../controllers/auth.controller");
 const { createRateLimiter } = require("../middleware/rate-limit.middleware");
 const { validate } = require("../utils/validate");
 
@@ -43,6 +49,8 @@ router.post(
   validate(loginBodySchema),
   login
 );
+router.get("/oauth/:provider", startSocialAuth);
+router.get("/oauth/:provider/callback", finishSocialAuth);
 router.post("/logout", logout);
 router.get("/logout", logout);
 

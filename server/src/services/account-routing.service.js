@@ -2,7 +2,7 @@ const {
   ensureBuyerProfileByUserId,
   findBuyerProfileByUserId,
 } = require("../repositories/buyer.repository");
-const { findStoreByUserId } = require("../repositories/store.repository");
+const { findStoreByUserId, upsertStoreByUserId } = require("../repositories/store.repository");
 const { normalizeInternalPath } = require("../utils/auth-session");
 const {
   isValidTemplateKey,
@@ -155,6 +155,65 @@ function resolveSellerAppPath(store) {
   return resolveSellerTemplatePath(store.templateKey);
 }
 
+function buildSellerBootstrapSeed(userId) {
+  return {
+    userId,
+    storeName: `Draft seller store ${userId}`,
+    handle: `draft-seller-${userId}`,
+    templateKey: "products",
+    tagline: "",
+    about: "",
+    accentColor: "#2563eb",
+    avatarUrl: "",
+    coverUrl: "",
+    instagram: "",
+    facebook: "",
+    tiktok: "",
+    xhandle: "",
+    profileCompleted: false,
+    visibilityStatus: "draft",
+    setupStep: 1,
+    setupState: {
+      templateKey: "products",
+      setupStep: 1,
+      store: {
+        storeName: "",
+        handle: "",
+        tagline: "",
+        about: "",
+        accentColor: "#2563eb",
+        avatarUrl: "",
+        coverUrl: "",
+        socials: {
+          instagram: "",
+          facebook: "",
+          tiktok: "",
+          xhandle: "",
+        },
+      },
+      product: {
+        name: "",
+        description: "",
+        price: 0,
+        delivery: "",
+        location: "",
+        transportFee: 0,
+        images: [],
+      },
+    },
+  };
+}
+
+async function ensureSellerStoreByUserId(userId, options = {}) {
+  const existingStore = await findStoreByUserId(userId, options);
+  if (existingStore) {
+    return existingStore;
+  }
+
+  await upsertStoreByUserId(buildSellerBootstrapSeed(userId), options);
+  return findStoreByUserId(userId, options);
+}
+
 async function resolveAuthenticatedAppState(user, options = {}) {
   if (!user) {
     return {
@@ -169,7 +228,7 @@ async function resolveAuthenticatedAppState(user, options = {}) {
   }
 
   if (user.role === "seller") {
-    const sellerStore = await findStoreByUserId(user.id, options);
+    const sellerStore = await ensureSellerStoreByUserId(user.id, options);
     const sellerProfileCompleted = Boolean(sellerStore && sellerStore.profileCompleted);
 
     return {
@@ -200,8 +259,8 @@ async function resolveAuthenticatedAppState(user, options = {}) {
   const buyerProfileCompleted = Boolean(buyerProfile && buyerProfile.profileCompleted);
 
   return {
-      role: "buyer",
-      redirectTo: resolveBuyerAppPath(buyerProfile),
+    role: "buyer",
+    redirectTo: resolveBuyerAppPath(buyerProfile),
     profileCompleted: buyerProfileCompleted,
     buyerProfileCompleted,
     sellerProfileCompleted: false,
@@ -222,6 +281,7 @@ module.exports = {
   resolveMarketplacePath,
   resolveRoleAwareReturnPath,
   resolveSellerAppPath,
+  ensureSellerStoreByUserId,
   resolveSellerSettingsPath,
   resolveSellerSetupPath,
   resolveSellerTemplateManagerPath,

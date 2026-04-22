@@ -15,11 +15,12 @@ Nothing in `reference/` is part of the live app.
 ## Setup
 
 1. Copy `.env.example` to `.env` and set `JWT_SECRET`.
-2. Set `APP_ENV` to `local`, `staging`, or `production`.
+2. Set `APP_ENV` to `local`, `staging`, or `production`, and set `APP_BASE_URL` to the public app origin for hosted callbacks.
 3. Make sure PostgreSQL is running and that `.env` points to the correct database credentials.
-4. Run `npm install` from this directory.
-5. Run `npm run db:migrate` for the first local bootstrap, or leave `DB_RUN_MIGRATIONS_ON_STARTUP=true` so the app applies pending migrations when it starts.
-6. Start the app with `npm start`.
+4. If you want Google or Facebook sign-in, set the provider client ID, secret, and redirect URI values in `.env`.
+5. Run `npm install` from this directory.
+6. Run `npm run db:migrate` for the first local bootstrap, or leave `DB_RUN_MIGRATIONS_ON_STARTUP=true` so the app applies pending migrations when it starts.
+7. Start the app with `npm start`.
 
 ## Runtime Rules
 
@@ -81,6 +82,10 @@ Nothing in `reference/` is part of the live app.
 - `POST /auth/register`
 - `POST /auth/login`
 - `POST /auth/logout`
+- `GET /auth/oauth/google`
+- `GET /auth/oauth/google/callback`
+- `GET /auth/oauth/facebook`
+- `GET /auth/oauth/facebook/callback`
 - `GET /api/feed`
 - `GET /api/marketplace/stalls`
 - `GET /api/buyer/me`
@@ -109,6 +114,8 @@ Nothing in `reference/` is part of the live app.
 
 - Browser writes use CSRF protection with the `zest_csrf` cookie plus the `X-CSRF-Token` header.
 - The auth page now sends the CSRF token on sign-in, sign-up, and sign-out requests.
+- Sign-up requires `password` and `confirmPassword`, and buyer/seller bootstrap records are created immediately after registration.
+- Social auth is available through Google and Facebook when the matching provider env vars are configured.
 - Bearer-token API clients remain supported for scripts, smoke checks, and integration tooling.
 - Request IDs are attached to responses through `X-Request-Id`.
 - Write-rate limiting is PostgreSQL-backed.
