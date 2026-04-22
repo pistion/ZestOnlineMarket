@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const { transaction } = require("../config/db");
 const { jwtSecret } = require("../config/env");
 const { createUser, findUserByEmail } = require("../repositories/user.repository");
 const {
@@ -51,13 +52,26 @@ async function register(req, res, next) {
   try {
     const { email, password, role, returnTo } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await createUser({
-      email,
-      password: hashedPassword,
-      role,
+    const { appState, user } = await transaction(async (txContext) => {
+      const repoOptions = {
+        transaction: txContext,
+      };
+      const createdUser = await createUser(
+        {
+          email,
+          password: hashedPassword,
+          role,
+        },
+        repoOptions
+      );
+      const nextAppState = await resolveAuthenticatedAppState(createdUser, repoOptions);
+
+      return {
+        appState: nextAppState,
+        user: createdUser,
+      };
     });
     const token = signToken(user);
-    const appState = await resolveAuthenticatedAppState(user);
     const safeReturnTo = normalizeInternalPath(returnTo, "");
     const redirectTo =
       user.role === "buyer"

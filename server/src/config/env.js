@@ -149,8 +149,20 @@ module.exports = {
   featureDiscountsEnabled: parseBoolean(process.env.FEATURE_DISCOUNTS, true),
   featureAdminEnabled: parseBoolean(process.env.FEATURE_ADMIN, true),
   databaseUrl: String(process.env.DATABASE_URL || "").trim(),
+  dbRunMigrationsOnStartup: parseBoolean(
+    process.env.DB_RUN_MIGRATIONS_ON_STARTUP,
+    appEnv !== "local"
+  ),
+  dbConnectRetries: parseNumber(process.env.DB_CONNECT_RETRIES, appEnv === "local" ? 0 : 6),
+  dbConnectRetryDelayMs: parseNumber(process.env.DB_CONNECT_RETRY_DELAY_MS, 2000),
   dbPoolMin: parseNumber(process.env.DB_POOL_MIN, isProduction ? 2 : 0),
   dbPoolMax: parseNumber(process.env.DB_POOL_MAX, isProduction ? 12 : 10),
+  dbSslEnabled: String(process.env.DB_SSL || "").trim(),
+  dbSslMode: String(process.env.PGSSLMODE || process.env.DB_SSL_MODE || "").trim().toLowerCase(),
+  dbSslRejectUnauthorized: parseBoolean(
+    process.env.DB_SSL_REJECT_UNAUTHORIZED,
+    false
+  ),
   storageProvider: String(process.env.STORAGE_PROVIDER || "local").trim().toLowerCase(),
   s3Bucket: String(process.env.S3_BUCKET || "").trim(),
   s3Region: String(process.env.S3_REGION || "").trim(),

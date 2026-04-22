@@ -1,8 +1,17 @@
 const path = require("path");
 
-const { databaseUrl, pgConfig } = require("../../config/env");
+const { dbConnectRetries, dbConnectRetryDelayMs } = require("../../config/env");
+const { logInfo, logWarn } = require("../../utils/logger");
+const {
+  buildConnectionConfig,
+  buildPoolConfig,
+  resolveKnexEnvironment,
+} = require("./connection");
 
 let knexInstance = null;
+const migrationsDirectory = path.join(__dirname, "..", "migrations");
+const seedsDirectory = path.join(__dirname, "..", "seeds");
+const projectRoot = path.resolve(__dirname, "..", "..", "..", "..");
 
 function requireKnexRuntime() {
   try {
@@ -14,21 +23,49 @@ function requireKnexRuntime() {
   }
 }
 
-function buildConnectionConfig() {
-  if (databaseUrl) {
-    const isRender = databaseUrl.includes("render.com");
-    return {
-      connectionString: databaseUrl,
-      ssl: isRender ? { rejectUnauthorized: false } : false,
-    };
+function buildMigrationConfig() {
+  return {
+    directory: migrationsDirectory,
+    tableName: "knex_migrations",
+  };
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function repairMigrationHistoryIfNeeded(knex) {
+  try {
+    const repairModule = require(path.join(projectRoot, "ops", "db", "repair-migration-history"));
+    if (!repairModule || typeof repairModule.repairMigrationHistory !== "function") {
+      return [];
+    }
+
+    return repairModule.repairMigrationHistory(knex);
+  } catch (error) {
+    logWarn("db.migration_history_repair_skipped", {
+      message: error && error.message ? error.message : String(error),
+    });
+    return [];
   }
+}
+
+async function runPendingMigrations(knex) {
+  const repaired = await repairMigrationHistoryIfNeeded(knex);
+  const envName = resolveKnexEnvironment();
+  const [batchNo, migrations] = await knex.migrate.latest(buildMigrationConfig());
+
+  logInfo("db.migrations_ready", {
+    env: envName,
+    batchNo,
+    repaired: repaired.length,
+    applied: migrations.length,
+  });
 
   return {
-    host: pgConfig.host,
-    port: pgConfig.port,
-    database: pgConfig.database,
-    user: pgConfig.user,
-    password: pgConfig.password,
+    batchNo,
+    migrations,
+    repaired,
   };
 }
 
@@ -37,16 +74,10 @@ function createKnexInstance() {
   return knex({
     client: "pg",
     connection: buildConnectionConfig(),
-    pool: {
-      min: 0,
-      max: 10,
-    },
-    migrations: {
-      directory: path.join(__dirname, "..", "migrations"),
-      tableName: "knex_migrations",
-    },
+    pool: buildPoolConfig(),
+    migrations: buildMigrationConfig(),
     seeds: {
-      directory: path.join(__dirname, "..", "seeds"),
+      directory: seedsDirectory,
     },
   });
 }
@@ -61,11 +92,40 @@ function getPostgresKnex() {
 
 async function initPostgresConnection(options = {}) {
   const knex = getPostgresKnex();
-  if (options.validate !== false) {
-    await knex.raw("select 1");
-  }
 
-  return knex;
+  const validate = options.validate !== false;
+  const runMigrations = options.runMigrations === true;
+  const retries = Number.isInteger(options.retries) ? options.retries : dbConnectRetries;
+  const retryDelayMs = Number.isInteger(options.retryDelayMs)
+    ? options.retryDelayMs
+    : dbConnectRetryDelayMs;
+
+  let attempt = 0;
+  while (true) {
+    try {
+      if (validate) {
+        await knex.raw("select 1");
+      }
+      if (runMigrations) {
+        await runPendingMigrations(knex);
+      }
+
+      return knex;
+    } catch (error) {
+      if (attempt >= retries) {
+        throw error;
+      }
+
+      attempt += 1;
+      logWarn("db.connection_retry", {
+        attempt,
+        retries,
+        retryDelayMs,
+        message: error && error.message ? error.message : String(error),
+      });
+      await wait(retryDelayMs);
+    }
+  }
 }
 
 async function destroyPostgresKnex() {
@@ -86,5 +146,6 @@ module.exports = {
   destroyPostgresKnex,
   getPostgresKnex,
   initPostgresConnection,
+  runPendingMigrations,
   withPostgresTransaction,
 };

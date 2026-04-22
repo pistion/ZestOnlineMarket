@@ -17,6 +17,10 @@ function toNumber(value) {
   return Number.isFinite(parsed) ? parsed : value;
 }
 
+function toJsonb(knex, value) {
+  return knex.raw("?::jsonb", [JSON.stringify(value == null ? {} : value)]);
+}
+
 function mapPostgresUser(row) {
   if (!row) {
     return null;
@@ -95,7 +99,7 @@ async function createUser({ email, password, role }, options = {}) {
     .returning(["id", "email", "role"]);
 
   if (role === "buyer") {
-    await knex("customer_profiles")
+    const [profileRow] = await knex("customer_profiles")
       .insert({
         user_id: row.id,
         email,
@@ -106,7 +110,21 @@ async function createUser({ email, password, role }, options = {}) {
         email,
         profile_completed: false,
         updated_at: knex.fn.now(),
-      });
+      })
+      .returning(["id"]);
+
+    if (profileRow && profileRow.id) {
+      await knex("customer_preferences")
+        .insert({
+          customer_profile_id: profileRow.id,
+          popular_categories: toJsonb(knex, []),
+          favorite_templates: toJsonb(knex, []),
+          viewed_products: toJsonb(knex, []),
+          interaction_summary: toJsonb(knex, {}),
+        })
+        .onConflict("customer_profile_id")
+        .ignore();
+    }
   }
 
   return {

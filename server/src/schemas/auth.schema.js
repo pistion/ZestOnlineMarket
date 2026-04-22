@@ -11,7 +11,7 @@ const emailSchema = z.preprocess(
     .email("Email format is invalid")
 ).transform((value) => value.toLowerCase());
 
-const passwordSchema = z.preprocess(
+const registerPasswordSchema = z.preprocess(
   (value) => (value == null ? "" : String(value)),
   z
     .string()
@@ -20,6 +20,14 @@ const passwordSchema = z.preprocess(
     .refine((value) => /[a-z]/i.test(value) && /\d/.test(value), {
       message: "Password must include letters and numbers",
     })
+);
+
+const loginPasswordSchema = z.preprocess(
+  (value) => (value == null ? "" : String(value)),
+  z
+    .string()
+    .min(1, "Password is required")
+    .max(128, "Password is too long")
 );
 
 const roleSchema = z
@@ -42,14 +50,14 @@ const optionalInternalPathSchema = z.preprocess(
 
 const registerBodySchema = z.object({
   email: emailSchema,
-  password: passwordSchema,
+  password: registerPasswordSchema,
   role: roleSchema,
   returnTo: optionalInternalPathSchema,
 });
 
 const loginBodySchema = z.object({
   email: emailSchema,
-  password: passwordSchema,
+  password: loginPasswordSchema,
   intentRole: optionalRoleSchema,
   returnTo: optionalInternalPathSchema,
 });

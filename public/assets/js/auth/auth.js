@@ -64,6 +64,11 @@
     return normalized;
   }
 
+  function getCsrfToken() {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    return meta && meta.content ? String(meta.content).trim() : "";
+  }
+
   function setElementHidden(element, shouldHide) {
     if (!element) {
       return;
@@ -297,13 +302,19 @@
   }
 
   async function postJson(url, payload) {
+    const csrfToken = getCsrfToken();
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    if (csrfToken) {
+      headers["X-CSRF-Token"] = csrfToken;
+    }
+
     const response = await fetch(url, {
       method: "POST",
       credentials: "same-origin",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify(payload),
     });
 
@@ -316,14 +327,20 @@
   }
 
   async function signOutAndStay() {
+    const csrfToken = getCsrfToken();
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    if (csrfToken) {
+      headers["X-CSRF-Token"] = csrfToken;
+    }
+
     try {
       await fetch("/auth/logout", {
         method: "POST",
         credentials: "same-origin",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({
           redirectTo: buildAuthPagePath("signin", state.role, { signedOut: 1 }),
         }),

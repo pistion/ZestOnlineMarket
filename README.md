@@ -18,12 +18,13 @@ Nothing in `reference/` is part of the live app.
 2. Set `APP_ENV` to `local`, `staging`, or `production`.
 3. Make sure PostgreSQL is running and that `.env` points to the correct database credentials.
 4. Run `npm install` from this directory.
-5. Run `npm run db:migrate`.
+5. Run `npm run db:migrate` for the first local bootstrap, or leave `DB_RUN_MIGRATIONS_ON_STARTUP=true` so the app applies pending migrations when it starts.
 6. Start the app with `npm start`.
 
 ## Runtime Rules
 
 - Live app runtime is PostgreSQL-only.
+- Production and staging can auto-apply pending Knex migrations on startup.
 - Uploads live under `storage/uploads`.
 - Legacy SQLite is archived under `reference/sqlite/users.db` and is used only by `ops/db/*`.
 - Migration snapshots live under `reference/migration-snapshots`.
@@ -107,7 +108,9 @@ Nothing in `reference/` is part of the live app.
 ## Reliability Notes
 
 - Browser writes use CSRF protection with the `zest_csrf` cookie plus the `X-CSRF-Token` header.
+- The auth page now sends the CSRF token on sign-in, sign-up, and sign-out requests.
 - Bearer-token API clients remain supported for scripts, smoke checks, and integration tooling.
 - Request IDs are attached to responses through `X-Request-Id`.
 - Write-rate limiting is PostgreSQL-backed.
+- Hosted PostgreSQL connections can opt into SSL with `DATABASE_URL`, `PGSSLMODE`, `DB_SSL`, and `DB_SSL_REJECT_UNAUTHORIZED`.
 - CI runs migrations, tests, repo guards, size guards, and smoke before passing.

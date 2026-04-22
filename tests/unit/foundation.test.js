@@ -61,6 +61,39 @@ describe("foundation helpers", () => {
     });
   });
 
+  it("allows login payloads to use legacy passwords that do not match sign-up strength rules", () => {
+    const payload = validateAuthPayload(
+      {
+        email: " legacy@example.com ",
+        password: "abc",
+        intentRole: "SELLER",
+        returnTo: " /seller/store ",
+      },
+      "login"
+    );
+
+    expect(payload).toEqual({
+      email: "legacy@example.com",
+      password: "abc",
+      intentRole: "seller",
+      returnTo: "/seller/store",
+    });
+  });
+
+  it("keeps strong-password enforcement on registration", () => {
+    expect(() =>
+      validateAuthPayload(
+        {
+          email: "person@example.com",
+          password: "password",
+          role: "buyer",
+          returnTo: "/buyer/profile",
+        },
+        "register"
+      )
+    ).toThrow(/letters and numbers/i);
+  });
+
   it("forwards AppError details on invalid input", async () => {
     const middleware = validate(authSchemas.loginBodySchema);
     const req = {

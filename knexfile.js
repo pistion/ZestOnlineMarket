@@ -1,33 +1,15 @@
 const path = require("path");
 
-const { databaseUrl, dbPoolMax, dbPoolMin, pgConfig } = require("./server/src/config/env");
-
-function buildConnection() {
-  if (databaseUrl) {
-    const isRender = databaseUrl.includes("render.com");
-    return {
-      connectionString: databaseUrl,
-      ssl: isRender ? { rejectUnauthorized: false } : false,
-    };
-  }
-
-  return {
-    host: pgConfig.host,
-    port: pgConfig.port,
-    database: pgConfig.database,
-    user: pgConfig.user,
-    password: pgConfig.password,
-  };
-}
+const {
+  buildConnectionConfig,
+  buildPoolConfig,
+} = require("./server/src/database/postgres/connection");
 
 function buildEnvironmentConfig() {
   return {
     client: "pg",
-    connection: buildConnection(),
-    pool: {
-      min: dbPoolMin,
-      max: dbPoolMax,
-    },
+    connection: buildConnectionConfig(),
+    pool: buildPoolConfig(),
     migrations: {
       directory: path.join(__dirname, "server", "src", "database", "migrations"),
       tableName: "knex_migrations",
